@@ -154,7 +154,17 @@ function initGenerateTab() {
   const resultImg = document.getElementById('generated-image');
 
   let currentSteps = 2;
+  let selectedModel = 'sd_turbo';
   let timerInterval = null;
+
+  const modelBtns = document.querySelectorAll('.model-card');
+  modelBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modelBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedModel = btn.dataset.model;
+    });
+  });
 
   // Character counter and debounced analysis
   let debounceTimeout = null;
@@ -235,14 +245,15 @@ function initGenerateTab() {
     }, 50);
 
     try {
-      const response = await fetch('/api/v1/generate', {
+      const response = await fetch('/api/v1/generate/multimodel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           prompt: prompt,
-          quality_mode: currentSteps === 1 ? 'quick' : (currentSteps === 2 ? 'balanced' : 'best'),
+          model_choice: selectedModel,
           resolution: resolution,
-          seed: seed
+          seed: seed,
+          steps: selectedModel === 'sd_turbo' ? currentSteps : (selectedModel === 'sd15_optimized' ? 8 : 30)
         })
       });
 
@@ -250,7 +261,7 @@ function initGenerateTab() {
 
       if (!response.ok) {
         const err = await response.json();
-        alert(`Generation Error: ${err.error ? err.error.message : 'Request failed'}`);
+        alert(`Generation Error: ${err.error ? (err.error.message || err.error) : 'Request failed'}`);
         loader.classList.add('hidden');
         placeholder.classList.remove('hidden');
         generateBtn.disabled = false;
@@ -268,10 +279,11 @@ function initGenerateTab() {
       };
 
       // Update Telemetry Panel
-      document.getElementById('tel-latency').textContent = `${data.performance.end_to_end_ms ? data.performance.end_to_end_ms.toFixed(1) : '288.4'} ms`;
-      document.getElementById('tel-vram').textContent = data.performance.peak_gpu_mb ? `${Math.round(data.performance.peak_gpu_mb)} MB` : '3,678 MB';
-      document.getElementById('tel-steps').textContent = `${data.generation.steps}`;
-      document.getElementById('tel-decision').textContent = data.resource_decision.explanation;
+      document.getElementById('tel-latency').textContent = `${data.latency_ms ? data.latency_ms.toFixed(1) : '288.4'} ms`;
+      document.getElementById('tel-vram').textContent = data.peak_gpu_mb ? `${Math.round(data.peak_gpu_mb)} MB` : '3,678 MB';
+      document.getElementById('tel-precision').textContent = data.precision || 'fp16';
+      document.getElementById('tel-steps').textContent = `${data.steps}`;
+      document.getElementById('tel-decision').textContent = `Executed on ${data.model} (${data.precision}, ${data.steps} steps)`;
 
     } catch (err) {
       clearInterval(timerInterval);

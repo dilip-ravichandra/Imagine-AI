@@ -12,6 +12,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from ai_engine.prompt import PromptAnalysis, analyze_prompt
+from pydantic import BaseModel, Field
 
 from .config import Settings, load_settings
 from .schemas.model import AdapterStatus, ModelInfoResponse
@@ -22,6 +23,7 @@ from .services.adaptive import build_controller
 from .services.engine import DiffusionEngine, SDTurboEngine
 from .services.errors import ServiceError
 from .services.generation import GenerationService
+from .services.multi_model import generate_with_model
 from .services.storage import ImageStore
 
 log = logging.getLogger("imagineai")
@@ -153,6 +155,33 @@ def create_app(engine: Optional[DiffusionEngine] = None, settings: Optional[Sett
             import json
             return json.loads(cmp_file.read_text(encoding="utf-8"))
         return {"error": "Comparison file not found"}
+
+    class MultiModelRequest(BaseModel):
+        prompt: str = Field(min_length=1, max_length=500)
+        model_choice: str = "sd_turbo"
+        resolution: int = 512
+        seed: Optional[int] = None
+        steps: Optional[int] = None
+
+    @app.post("/api/v1/generate/multimodel")
+    def generate_multimodel(req: MultiModelRequest, request: Request):
+        rid = uuid.uuid4().hex
+        res = generate_with_model(req.prompt, req.model_choice, req.seed, req.resolution, req.steps)
+        image_name = store.save(res["image"], rid)
+        base = str(request.base_url).rstrip("/")
+        return {
+            "status": "success",
+            "request_id": rid,
+            "image_url": f"{base}/images/{image_name}",
+            "model": res["model"],
+            "model_choice": res["model_choice"],
+            "precision": res["precision"],
+            "steps": res["steps"],
+            "seed": res["seed"],
+            "resolution": res["resolution"],
+            "latency_ms": res["latency_ms"],
+            "peak_gpu_mb": res["peak_vram_mb"]
+        }
 
     return app
 

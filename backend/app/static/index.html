@@ -384,6 +384,31 @@
               <button class="pill-btn sample-prompt" data-prompt="A futuristic cyberpunk street with glowing neon signs and rain reflections">Cyberpunk Street</button>
             </div>
 
+            <!-- Model Architecture Selector -->
+            <div class="control-group">
+              <label class="control-label">Model Architecture</label>
+              <div class="preset-selector" style="grid-template-columns: 1fr 1fr; margin-bottom: 12px;">
+                <button type="button" class="preset-card model-card active" data-model="sd_turbo">
+                  <div class="preset-badge">Ultra-Fast</div>
+                  <div class="preset-name">SD-Turbo (Distilled)</div>
+                  <div class="preset-desc">1-2 steps · ~345 ms · fp16</div>
+                </button>
+                <button type="button" class="preset-card model-card" data-model="sd15_optimized">
+                  <div class="preset-badge" style="background: #3fb950;">Optimized</div>
+                  <div class="preset-name">SD 1.5 + LoRA</div>
+                  <div class="preset-desc">8 steps · ~1.6 s · fp16</div>
+                </button>
+                <button type="button" class="preset-card model-card" data-model="sd15_adapted">
+                  <div class="preset-name">SD 1.5 Adapted</div>
+                  <div class="preset-desc">30 steps · ~11.8 s · fp32</div>
+                </button>
+                <button type="button" class="preset-card model-card" data-model="sd15_baseline">
+                  <div class="preset-name">SD 1.5 Baseline</div>
+                  <div class="preset-desc">30 steps · ~12.4 s · fp32</div>
+                </button>
+              </div>
+            </div>
+
             <!-- Quality Presets -->
             <div class="control-group">
               <label class="control-label">Quality Preset</label>
