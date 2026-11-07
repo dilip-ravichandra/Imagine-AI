@@ -39,6 +39,7 @@ import {
   FiLayers,
 } from 'react-icons/fi';
 import WorkspaceLayout from '../components/WorkspaceLayout';
+import InteractiveCanvasMask from '../components/InteractiveCanvasMask';
 
 interface StoryScene {
   id: number;
@@ -618,45 +619,42 @@ const StoryBookStudio: React.FC = () => {
           </Box>
         )}
 
-        {/* SELECTIVE PANEL RECREATOR MODAL */}
-        <Modal isOpen={isRecreating} onClose={() => setIsRecreating(false)} isCentered size="md">
-          <ModalOverlay bg="rgba(0,0,0,0.85)" backdropFilter="blur(6px)" />
-          <ModalContent bg="#111713" border="1px solid #2A3A2C" borderRadius="18px" color="#F4F7F0">
+        {/* SELECTIVE PANEL RECREATOR MODAL WITH CANVAS CIRCLING */}
+        <Modal isOpen={isRecreating} onClose={() => setIsRecreating(false)} isCentered size="2xl">
+          <ModalOverlay bg="rgba(0,0,0,0.88)" backdropFilter="blur(8px)" />
+          <ModalContent bg="#111713" border="1px solid #2A3A2C" borderRadius="20px" color="#F4F7F0" maxW="700px">
             <ModalHeader borderBottom="1px solid #1A2A1C" py={4}>
               <Flex align="center" gap={2}>
                 <Box w="28px" h="28px" borderRadius="full" bg="#B7FF35" display="flex" alignItems="center" justifyContent="center" color="#080B0A" fontSize="14px">
-                  🔄
+                  ⭕
                 </Box>
-                <Text fontSize="md" fontWeight="bold">
-                  Recreate Scene Panel
-                </Text>
+                <Box>
+                  <Text fontSize="md" fontWeight="bold">
+                    Selective Panel Recreate — Circle Region
+                  </Text>
+                  <Text fontSize="xs" color="#A5B1A7" fontWeight="normal">
+                    Circle or brush the exact part of the comic panel you want to alter
+                  </Text>
+                </Box>
               </Flex>
             </ModalHeader>
             <ModalCloseButton color="#A5B1A7" />
 
-            <ModalBody py={5}>
-              <Text fontSize="xs" color="#A5B1A7" mb={4}>
-                Re-generate only this individual panel while keeping the character consistency and story sequence intact!
-              </Text>
-
+            <ModalBody py={4}>
               {selectedScene && (
-                <Flex gap={3} mb={4} p={3} bg="#0D120E" borderRadius="12px" border="1px solid #2A3A2C" align="center">
-                  <Image src={selectedScene.imageUrl} w="70px" h="50px" objectFit="cover" borderRadius="8px" />
-                  <Box>
-                    <Text fontSize="xs" fontWeight="bold" color="#F4F7F0">{selectedScene.title}</Text>
-                    <Text fontSize="10px" color="#6B7B6D">{selectedScene.character}</Text>
-                  </Box>
-                </Flex>
+                <Box mb={4}>
+                  <InteractiveCanvasMask imageUrl={selectedScene.imageUrl} />
+                </Box>
               )}
 
-              <Box mb={4}>
-                <Text fontSize="xs" color="#6B7B6D" mb={1.5} textTransform="uppercase">
-                  Adjustments for this panel
+              <Box mb={3}>
+                <Text fontSize="xs" color="#A5B1A7" fontWeight="600" mb={1.5} textTransform="uppercase">
+                  What should appear in the circled area?
                 </Text>
                 <Input
                   value={recreatePromptChange}
                   onChange={(e) => setRecreatePromptChange(e.target.value)}
-                  placeholder="e.g. Change angle to close-up, add whimsical rainbow in sky"
+                  placeholder="e.g. Change expression to joyful laughter, add rainbow sparkles"
                   bg="#0F1A11"
                   color="#F4F7F0"
                   border="1px solid #2A3A2C"
@@ -678,8 +676,9 @@ const StoryBookStudio: React.FC = () => {
                 fontWeight="bold"
                 onClick={handleApplySceneRecreation}
                 isLoading={isRegeneratingPanel}
+                leftIcon={<Text>✨</Text>}
               >
-                Recreate This Panel
+                Recreate Circled Area
               </Button>
             </ModalFooter>
           </ModalContent>

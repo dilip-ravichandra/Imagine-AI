@@ -38,6 +38,7 @@ import {
   FiCheck,
 } from 'react-icons/fi';
 import WorkspaceLayout from '../components/WorkspaceLayout';
+import InteractiveCanvasMask from '../components/InteractiveCanvasMask';
 
 interface GenerationItem {
   id: string;
@@ -136,7 +137,9 @@ const CreateStudio: React.FC = () => {
   const [isRecreationOpen, setIsRecreationOpen] = useState(false);
   const [selectedTargetImage, setSelectedTargetImage] = useState<GenerationItem | null>(null);
   const [recreationInstruction, setRecreationInstruction] = useState('');
-  const [recreationRegion, setRecreationRegion] = useState('Background & Sky');
+  const [recreationRegion, setRecreationRegion] = useState('Circled Area');
+  const [hasMaskSelected, setHasMaskSelected] = useState(false);
+  const [maskDataUrl, setMaskDataUrl] = useState<string | null>(null);
 
   // Question / Vision Inspector state
   const [activeQuestionId, setActiveQuestionId] = useState<string | null>(null);
@@ -247,7 +250,7 @@ const CreateStudio: React.FC = () => {
         imageUrl: `https://picsum.photos/seed/recreate${Date.now()}/900/500`,
         isRecreation: true,
         parentImageId: selectedTargetImage.id,
-        recreationNote: `Selective Edit (${recreationRegion}): "${recreationInstruction}"`,
+        recreationNote: `Selective Inpaint on ${recreationRegion}: "${recreationInstruction}"`,
       };
 
       setGenerations((prev) => [recreated, ...prev]);
@@ -895,71 +898,52 @@ const CreateStudio: React.FC = () => {
           </ModalContent>
         </Modal>
 
-        {/* SELECTIVE RECREATION MODAL */}
-        <Modal isOpen={isRecreationOpen} onClose={() => setIsRecreationOpen(false)} isCentered size="lg">
-          <ModalOverlay bg="rgba(0,0,0,0.85)" backdropFilter="blur(6px)" />
-          <ModalContent bg="#111713" border="1px solid #2A3A2C" borderRadius="18px" color="#F4F7F0">
+        {/* SELECTIVE RECREATION MODAL WITH INTERACTIVE CANVAS CIRCLING & MASKING */}
+        <Modal isOpen={isRecreationOpen} onClose={() => setIsRecreationOpen(false)} isCentered size="2xl">
+          <ModalOverlay bg="rgba(0,0,0,0.88)" backdropFilter="blur(8px)" />
+          <ModalContent bg="#111713" border="1px solid #2A3A2C" borderRadius="20px" color="#F4F7F0" maxW="720px">
             <ModalHeader borderBottom="1px solid #1A2A1C" py={4}>
-              <Flex align="center" gap={2}>
-                <Box w="28px" h="28px" borderRadius="full" bg="#B7FF35" display="flex" alignItems="center" justifyContent="center" color="#080B0A" fontSize="14px">
-                  🔄
-                </Box>
-                <Text fontSize="md" fontWeight="bold">
-                  Selective Image Recreator
-                </Text>
-              </Flex>
-            </ModalHeader>
-            <ModalCloseButton color="#A5B1A7" />
-
-            <ModalBody py={5}>
-              <Text fontSize="xs" color="#A5B1A7" mb={4}>
-                Specify which element or region you want to alter while preserving the core style and structure of your chosen output.
-              </Text>
-
-              {/* Target Image Preview */}
-              {selectedTargetImage && (
-                <Flex gap={4} mb={4} p={3} bg="#0D120E" borderRadius="12px" border="1px solid #2A3A2C" align="center">
-                  <Image src={selectedTargetImage.imageUrl} w="80px" h="60px" objectFit="cover" borderRadius="8px" />
-                  <Box flex={1}>
-                    <Text fontSize="xs" color="#6B7B6D">Selected Target Image</Text>
-                    <Text fontSize="xs" color="#F4F7F0" fontWeight="600" noOfLines={1}>
-                      {selectedTargetImage.prompt}
+              <Flex align="center" justify="space-between">
+                <Flex align="center" gap={2.5}>
+                  <Box w="30px" h="30px" borderRadius="full" bg="#B7FF35" display="flex" alignItems="center" justifyContent="center" color="#080B0A" fontSize="15px">
+                    ⭕
+                  </Box>
+                  <Box>
+                    <Text fontSize="md" fontWeight="bold">
+                      Selective Recreate — Circle & Inpaint Region
+                    </Text>
+                    <Text fontSize="xs" color="#A5B1A7" fontWeight="normal">
+                      Click and drag directly on the image to circle the exact area you want recreated
                     </Text>
                   </Box>
                 </Flex>
+                <ModalCloseButton position="static" color="#A5B1A7" />
+              </Flex>
+            </ModalHeader>
+
+            <ModalBody py={4}>
+              {/* Interactive Mask Canvas */}
+              {selectedTargetImage && (
+                <Box mb={4}>
+                  <InteractiveCanvasMask
+                    imageUrl={selectedTargetImage.imageUrl}
+                    onMaskChange={(hasMask, dataUrl) => {
+                      setHasMaskSelected(hasMask);
+                      setMaskDataUrl(dataUrl || null);
+                    }}
+                  />
+                </Box>
               )}
 
-              {/* Region Selector */}
-              <Box mb={4}>
-                <Text fontSize="xs" color="#6B7B6D" mb={1.5} textTransform="uppercase" letterSpacing="0.05em">
-                  Target Region to Recreate
-                </Text>
-                <Select
-                  value={recreationRegion}
-                  onChange={(e) => setRecreationRegion(e.target.value)}
-                  bg="#0F1A11"
-                  color="#F4F7F0"
-                  border="1px solid #2A3A2C"
-                  borderRadius="10px"
-                  size="sm"
-                >
-                  <option value="Background & Sky" style={{ background: '#111713' }}>Background & Sky</option>
-                  <option value="Main Subject Clothing / Armor" style={{ background: '#111713' }}>Main Subject Clothing / Armor</option>
-                  <option value="Lighting & Atmosphere" style={{ background: '#111713' }}>Lighting & Atmosphere</option>
-                  <option value="Color Palette & Mood" style={{ background: '#111713' }}>Color Palette & Mood</option>
-                  <option value="Face & Expression" style={{ background: '#111713' }}>Face & Expression</option>
-                </Select>
-              </Box>
-
-              {/* Recreation Instruction Input */}
-              <Box mb={4}>
-                <Text fontSize="xs" color="#6B7B6D" mb={1.5} textTransform="uppercase" letterSpacing="0.05em">
-                  Specific Change Instructions
+              {/* Inpainting Instruction Input */}
+              <Box mb={3}>
+                <Text fontSize="xs" color="#A5B1A7" fontWeight="600" mb={1.5} textTransform="uppercase" letterSpacing="0.05em">
+                  What should appear in the circled region?
                 </Text>
                 <Input
                   value={recreationInstruction}
                   onChange={(e) => setRecreationInstruction(e.target.value)}
-                  placeholder="e.g. Change the sky to deep violet with shooting stars"
+                  placeholder="e.g. Add a glowing golden visor with neon cyber reflections, or make flowers bloom"
                   bg="#0F1A11"
                   color="#F4F7F0"
                   border="1px solid #2A3A2C"
@@ -968,14 +952,31 @@ const CreateStudio: React.FC = () => {
                   _focus={{ borderColor: '#B7FF35' }}
                 />
               </Box>
+
+              <Flex justify="space-between" align="center" bg="#0D120E" p={2.5} borderRadius="8px" border="1px solid #1A2A1C">
+                <Text fontSize="11px" color="#6B7B6D">
+                  Region targeted: <span style={{ color: hasMaskSelected ? '#B7FF35' : '#FFB800', fontWeight: 'bold' }}>{hasMaskSelected ? '✓ Active Canvas Circle / Mask' : '⚠️ No area circled yet (Full image will be varied)'}</span>
+                </Text>
+                <Badge bg="rgba(183, 255, 53, 0.15)" color="#B7FF35" fontSize="10px">
+                  Inpaint Engine Ready
+                </Badge>
+              </Flex>
             </ModalBody>
 
             <ModalFooter borderTop="1px solid #1A2A1C" py={3}>
               <Button size="sm" variant="ghost" color="#A5B1A7" mr={3} onClick={() => setIsRecreationOpen(false)}>
                 Cancel
               </Button>
-              <Button size="sm" bg="#B7FF35" color="#080B0A" fontWeight="bold" onClick={handleApplySelectiveRecreation}>
-                Recreate Region
+              <Button
+                size="sm"
+                bg="#B7FF35"
+                color="#080B0A"
+                fontWeight="bold"
+                onClick={handleApplySelectiveRecreation}
+                leftIcon={<Text>✨</Text>}
+                _hover={{ bg: '#8DDB39' }}
+              >
+                Recreate Circled Region
               </Button>
             </ModalFooter>
           </ModalContent>
