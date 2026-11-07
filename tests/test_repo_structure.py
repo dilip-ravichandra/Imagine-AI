@@ -18,5 +18,7 @@ def test_tree():
 def test_no_binaries_or_secrets():
     bad = {".safetensors", ".ckpt", ".pt", ".pth", ".onnx", ".apk"}
     for p in ROOT.rglob("*"):
+        if any(part in {"__pycache__", ".pytest_cache", ".git", ".venv"} for part in p.parts) or not p.is_file():
+            continue
         assert p.suffix not in bad, p
     assert not (ROOT / ".env").exists()
