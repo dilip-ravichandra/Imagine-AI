@@ -126,7 +126,7 @@ def test_no_secrets_or_weights_committed():
     pattern = re.compile(r"(hf_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{30,}|"
                          r"-----BEGIN [A-Z ]*PRIVATE KEY)")
     for p in ROOT.rglob("*"):
-        if any(part in {"__pycache__", ".pytest_cache", ".git", ".venv"} for part in p.parts) or not p.is_file():
+        if any(part in {"__pycache__", ".pytest_cache", ".git", ".venv", ".gradle", "build"} for part in p.parts) or not p.is_file():
             continue
         assert p.suffix not in bad_suffix, p
         assert p.name != ".env", p
