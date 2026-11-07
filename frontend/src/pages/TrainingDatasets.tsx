@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import {
   Box, Flex, Text, Heading, Button, Grid, GridItem,
+  Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton,
+  Select, Input,
 } from '@chakra-ui/react';
 import WorkspaceLayout from '../components/WorkspaceLayout';
 
@@ -98,6 +100,27 @@ const statusColor = (status: TrainingJob['status']) => {
 };
 
 const TrainingDatasets: React.FC = () => {
+  const [jobs, setJobs] = useState<TrainingJob[]>(TRAINING_JOBS);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [jobName, setJobName] = useState('Multimodal SD Fine-tune');
+  const [selectedModel, setSelectedModel] = useState('Stable Diffusion 1.5');
+  const [selectedDataset, setSelectedDataset] = useState('Custom Portraits v3');
+  const [batchSize, setBatchSize] = useState('16');
+  const [epochs, setEpochs] = useState('50');
+  const [learningRate, setLearningRate] = useState('1e-4');
+
+  const handleStartTraining = () => {
+    const newJob: TrainingJob = {
+      name: jobName,
+      model: selectedModel,
+      status: 'Active',
+      progress: 2,
+      epoch: `1 / ${epochs}`,
+      eta: '~3h 40m',
+    };
+    setJobs([newJob, ...jobs]);
+    setIsModalOpen(false);
+  };
   return (
     <WorkspaceLayout>
       <Box p={8} minH="100vh" bg="#080B0A">
@@ -119,6 +142,7 @@ const TrainingDatasets: React.FC = () => {
             _hover={{ bg: '#8DDB39' }}
             _active={{ bg: '#7BC82E' }}
             leftIcon={<PlusIcon />}
+            onClick={() => setIsModalOpen(true)}
           >
             Start New Training
           </Button>
@@ -228,12 +252,12 @@ const TrainingDatasets: React.FC = () => {
             </Flex>
 
             {/* Table Rows */}
-            {TRAINING_JOBS.map((job, i) => (
+            {jobs.map((job, i) => (
               <Flex
                 key={job.name}
                 px={5}
                 py={4}
-                borderBottom={i < TRAINING_JOBS.length - 1 ? '1px solid #2A3A2C' : 'none'}
+                borderBottom={i < jobs.length - 1 ? '1px solid #2A3A2C' : 'none'}
                 bg={i % 2 === 1 ? 'rgba(13,18,14,0.5)' : 'transparent'}
                 _hover={{ bg: '#1A2A1C' }}
                 transition="background 0.2s ease"
@@ -405,6 +429,154 @@ const TrainingDatasets: React.FC = () => {
             ))}
           </Grid>
         </Box>
+
+        {/* Start New Training Modal */}
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} isCentered size="lg">
+          <ModalOverlay bg="rgba(0,0,0,0.85)" backdropFilter="blur(6px)" />
+          <ModalContent bg="#111713" border="1px solid #2A3A2C" borderRadius="18px" color="#F4F7F0">
+            <ModalHeader borderBottom="1px solid #1A2A1C" py={4}>
+              <Flex align="center" gap={2}>
+                <Box w="28px" h="28px" borderRadius="full" bg="#B7FF35" display="flex" alignItems="center" justifyContent="center" color="#080B0A" fontSize="14px">
+                  ⚡
+                </Box>
+                <Text fontSize="md" fontWeight="bold">
+                  Configure Training Job
+                </Text>
+              </Flex>
+            </ModalHeader>
+            <ModalCloseButton color="#A5B1A7" />
+
+            <ModalBody py={5}>
+              <Box mb={4}>
+                <Text fontSize="xs" color="#6B7B6D" mb={1.5} textTransform="uppercase">
+                  Job Name
+                </Text>
+                <Input
+                  value={jobName}
+                  onChange={(e) => setJobName(e.target.value)}
+                  bg="#0F1A11"
+                  color="#F4F7F0"
+                  border="1px solid #2A3A2C"
+                  borderRadius="10px"
+                  size="sm"
+                  _focus={{ borderColor: '#B7FF35' }}
+                />
+              </Box>
+
+              <Grid templateColumns="1fr 1fr" gap={4} mb={4}>
+                <Box>
+                  <Text fontSize="xs" color="#6B7B6D" mb={1.5} textTransform="uppercase">
+                    Target Base Model
+                  </Text>
+                  <Select
+                    value={selectedModel}
+                    onChange={(e) => setSelectedModel(e.target.value)}
+                    bg="#0F1A11"
+                    color="#F4F7F0"
+                    border="1px solid #2A3A2C"
+                    borderRadius="10px"
+                    size="sm"
+                  >
+                    <option value="Stable Diffusion 1.5" style={{ background: '#111713' }}>Stable Diffusion 1.5 (LoRA)</option>
+                    <option value="SD-Turbo" style={{ background: '#111713' }}>SD-Turbo (Distillation)</option>
+                    <option value="MobileDiffusion" style={{ background: '#111713' }}>MobileDiffusion (Edge)</option>
+                    <option value="Multimodal Vision Adapter" style={{ background: '#111713' }}>Multimodal Vision Adapter</option>
+                  </Select>
+                </Box>
+
+                <Box>
+                  <Text fontSize="xs" color="#6B7B6D" mb={1.5} textTransform="uppercase">
+                    Dataset
+                  </Text>
+                  <Select
+                    value={selectedDataset}
+                    onChange={(e) => setSelectedDataset(e.target.value)}
+                    bg="#0F1A11"
+                    color="#F4F7F0"
+                    border="1px solid #2A3A2C"
+                    borderRadius="10px"
+                    size="sm"
+                  >
+                    <option value="Custom Portraits v3" style={{ background: '#111713' }}>Custom Portraits v3 (2.4k imgs)</option>
+                    <option value="Anime Characters" style={{ background: '#111713' }}>Anime Characters (8.2k imgs)</option>
+                    <option value="Product Shots" style={{ background: '#111713' }}>Product Shots (1.8k imgs)</option>
+                    <option value="Architectural Renders" style={{ background: '#111713' }}>Architectural Renders (3.1k imgs)</option>
+                  </Select>
+                </Box>
+              </Grid>
+
+              <Grid templateColumns="1fr 1fr 1fr" gap={3} mb={4}>
+                <Box>
+                  <Text fontSize="xs" color="#6B7B6D" mb={1.5} textTransform="uppercase">
+                    Batch Size
+                  </Text>
+                  <Select
+                    value={batchSize}
+                    onChange={(e) => setBatchSize(e.target.value)}
+                    bg="#0F1A11"
+                    color="#F4F7F0"
+                    border="1px solid #2A3A2C"
+                    borderRadius="10px"
+                    size="sm"
+                  >
+                    <option value="4" style={{ background: '#111713' }}>4 (VRAM Safe)</option>
+                    <option value="8" style={{ background: '#111713' }}>8 (Standard)</option>
+                    <option value="16" style={{ background: '#111713' }}>16 (Optimal)</option>
+                    <option value="32" style={{ background: '#111713' }}>32 (Cluster)</option>
+                  </Select>
+                </Box>
+
+                <Box>
+                  <Text fontSize="xs" color="#6B7B6D" mb={1.5} textTransform="uppercase">
+                    Epochs
+                  </Text>
+                  <Select
+                    value={epochs}
+                    onChange={(e) => setEpochs(e.target.value)}
+                    bg="#0F1A11"
+                    color="#F4F7F0"
+                    border="1px solid #2A3A2C"
+                    borderRadius="10px"
+                    size="sm"
+                  >
+                    <option value="25" style={{ background: '#111713' }}>25 Epochs</option>
+                    <option value="50" style={{ background: '#111713' }}>50 Epochs</option>
+                    <option value="100" style={{ background: '#111713' }}>100 Epochs</option>
+                    <option value="200" style={{ background: '#111713' }}>200 Epochs</option>
+                  </Select>
+                </Box>
+
+                <Box>
+                  <Text fontSize="xs" color="#6B7B6D" mb={1.5} textTransform="uppercase">
+                    Learning Rate
+                  </Text>
+                  <Select
+                    value={learningRate}
+                    onChange={(e) => setLearningRate(e.target.value)}
+                    bg="#0F1A11"
+                    color="#F4F7F0"
+                    border="1px solid #2A3A2C"
+                    borderRadius="10px"
+                    size="sm"
+                  >
+                    <option value="1e-4" style={{ background: '#111713' }}>1e-4 (Fast)</option>
+                    <option value="5e-5" style={{ background: '#111713' }}>5e-5 (Balanced)</option>
+                    <option value="1e-5" style={{ background: '#111713' }}>1e-5 (Fine)</option>
+                  </Select>
+                </Box>
+              </Grid>
+            </ModalBody>
+
+            <ModalFooter borderTop="1px solid #1A2A1C" py={3}>
+              <Button size="sm" variant="ghost" color="#A5B1A7" mr={3} onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button size="sm" bg="#B7FF35" color="#080B0A" fontWeight="bold" onClick={handleStartTraining}>
+                Start Training Job
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Box>
     </WorkspaceLayout>
   );

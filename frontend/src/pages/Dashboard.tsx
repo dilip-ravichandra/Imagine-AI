@@ -16,30 +16,30 @@ import WorkspaceLayout from '../components/WorkspaceLayout';
 const quickActions = [
   {
     icon: '🎨',
-    title: 'Generate Image',
-    description: 'Create stunning visuals from text prompts',
+    title: 'Create Studio',
+    description: 'Multimodal chat, voice prompts & selective recreate',
     route: '/create',
     gradient: 'linear(to-br, #1a2a1c, #111713)',
   },
   {
+    icon: '📖',
+    title: 'Storybook & Comics',
+    description: 'Illustrated multi-scene books & graphic novels',
+    route: '/storybook',
+    gradient: 'linear(to-br, #1a2a1c, #111713)',
+  },
+  {
     icon: '📚',
-    title: 'Learn & Explore',
-    description: 'Visual learning for any topic',
+    title: 'Learning Studio',
+    description: 'Visual diagrams & educational explanations',
     route: '/learn',
     gradient: 'linear(to-br, #1a2a1c, #111713)',
   },
   {
     icon: '✏️',
-    title: 'Edit Image',
-    description: 'Transform and enhance your images',
+    title: 'Image Editor',
+    description: 'Inpaint, remove objects & enhance images',
     route: '/edit',
-    gradient: 'linear(to-br, #1a2a1c, #111713)',
-  },
-  {
-    icon: '🖼️',
-    title: 'Imagine Canvas',
-    description: 'Freeform creative workspace',
-    route: '/canvas',
     gradient: 'linear(to-br, #1a2a1c, #111713)',
   },
 ];

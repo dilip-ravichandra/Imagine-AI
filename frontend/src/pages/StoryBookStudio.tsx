@@ -12,535 +12,774 @@ import {
   VStack,
   HStack,
   IconButton,
-  Divider,
   Badge,
+  Grid,
+  GridItem,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  ModalFooter,
+  Tooltip,
 } from '@chakra-ui/react';
 import {
-  FiChevronLeft,
-  FiChevronRight,
   FiBookOpen,
+  FiMic,
+  FiRefreshCw,
   FiEdit3,
   FiDownload,
-  FiShare2,
-  FiStar,
+  FiVolume2,
+  FiChevronLeft,
+  FiChevronRight,
+  FiPlus,
+  FiTrash2,
+  FiSliders,
+  FiLayers,
 } from 'react-icons/fi';
 import WorkspaceLayout from '../components/WorkspaceLayout';
 
-interface StoryPage {
+interface StoryScene {
   id: number;
-  image: string;
-  text: string;
+  title: string;
+  imagePrompt: string;
+  imageUrl: string;
+  narration: string;
+  dialogue?: string;
+  character: string;
 }
 
+const GENRES = [
+  'Children Storybook (Ages 4-8)',
+  'Youth Adventure (Ages 9-14)',
+  'Comic Book / Graphic Novel',
+  'Manga & Anime Style',
+  'Sci-Fi Fantasy Epic',
+];
+
+const ART_STYLES = [
+  'Pixar 3D Animation',
+  'Classic Watercolor',
+  'Modern Comic Strip',
+  'Retro Manga Ink',
+  'Vintage Children Illustration',
+  'Oil Painting Fantasy',
+];
+
+const LANGUAGES = [
+  { code: 'hi', name: 'Hindi (हिंदी)', sample: 'एक दयालु भालू जो जंगल के सारे जानवरों की मदद करता है और अपनी शहद की दुकान खोलता है' },
+  { code: 'es', name: 'Spanish (Español)', sample: 'Un joven astrónomo que descubre un planeta hecho de cristal y música' },
+  { code: 'fr', name: 'French (Français)', sample: 'Deux petits chats courageux qui partent à la recherche d\'un trésor secret' },
+  { code: 'en', name: 'English', sample: 'A friendly little robot who rescues a lost kitten in a neon city and learns what family means' },
+  { code: 'ja', name: 'Japanese (日本語)', sample: '雲の上に住むドラゴンの子どもと空飛ぶクジラの冒険物語' },
+];
+
+const INITIAL_SCENES: StoryScene[] = [
+  {
+    id: 1,
+    title: 'Scene 1: The Waking City',
+    imagePrompt: 'A friendly little brass robot named Bolt rolling through a gleaming sunlit futuristic city with solar trees, Pixar 3D style',
+    imageUrl: 'https://picsum.photos/seed/story-scene1/600/400',
+    narration: 'In a city made of sunlight and glass, lived a little robot named Bolt. Every morning, Bolt polished his silver gears and rolled out to explore the bustling avenues.',
+    dialogue: 'Bolt: "Another beautiful day for new discoveries!"',
+    character: 'Bolt the Robot',
+  },
+  {
+    id: 2,
+    title: 'Scene 2: A Tiny Surprise',
+    imagePrompt: 'Bolt peering behind a green recycle container and discovering a small shivering orange kitten, soft cinematic lighting',
+    imageUrl: 'https://picsum.photos/seed/story-scene2/600/400',
+    narration: 'Behind a solar charging post, Bolt heard a soft sound: "Meow!" Cuddled inside an old cardboard box was a tiny calico kitten, looking up with curious emerald eyes.',
+    dialogue: 'Bolt: "Beep! You have fur and no batteries... are you lost?"',
+    character: 'Bolt & Spark',
+  },
+  {
+    id: 3,
+    title: 'Scene 3: The Rain & Shelter',
+    imagePrompt: 'Bolt holding an umbrella over the kitten as colorful neon rain falls on the futuristic sidewalk, warm heart-warming lighting',
+    imageUrl: 'https://picsum.photos/seed/story-scene3/600/400',
+    narration: 'When neon raindrops began to sprinkle from the clouds, Bolt gently scooped the kitten into his arms and popped open his built-in umbrella dome.',
+    dialogue: 'Spark: "*Purrrr...*"',
+    character: 'Bolt & Spark',
+  },
+  {
+    id: 4,
+    title: 'Scene 4: True Friendship',
+    imagePrompt: 'Bolt and the kitten sitting together on a high rooftop terrace watching shooting stars and glowing auroras above the city',
+    imageUrl: 'https://picsum.photos/seed/story-scene4/600/400',
+    narration: 'Together on the high rooftop, Bolt and his new friend Spark watched the stars shimmer. Bolt learned that the greatest circuits in the universe are the ones that feel friendship.',
+    dialogue: 'Bolt: "You and me, Spark. Best friends in the whole galaxy."',
+    character: 'Bolt & Spark',
+  },
+];
+
 const StoryBookStudio: React.FC = () => {
-  const [storyTitle, setStoryTitle] = useState('The Little Robot and His New Friend');
+  const [viewMode, setViewMode] = useState<'book' | 'comic'>('comic');
+  const [genre, setGenre] = useState(GENRES[0]);
+  const [artStyle, setArtStyle] = useState(ART_STYLES[0]);
+  const [storyTitle, setStoryTitle] = useState('The Little Robot and His Kitten Friend');
   const [storyIdea, setStoryIdea] = useState(
-    'A little robot who lives in a futuristic city discovers a stray kitten. Together they learn about friendship, kindness, and what it means to care for someone.'
+    'A friendly little brass robot named Bolt discovers a lost kitten in a futuristic eco-city, protecting it from the rain and learning the true meaning of friendship.'
   );
-  const [style, setStyle] = useState('children');
-  const [pageCount, setPageCount] = useState(6);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [scenes, setScenes] = useState<StoryScene[]>(INITIAL_SCENES);
+  const [activeBookIndex, setActiveBookIndex] = useState(0);
+  const [isGeneratingStory, setIsGeneratingStory] = useState(false);
 
-  const storyPages: StoryPage[] = [
-    {
-      id: 1,
-      image: 'https://picsum.photos/seed/story-robot1/600/400',
-      text: 'In a shimmering city of glass and light, there lived a little robot named Bolt. Every morning, Bolt would wake up, polish his silver arms, and roll out to explore the world.',
-    },
-    {
-      id: 2,
-      image: 'https://picsum.photos/seed/story-kitten2/600/400',
-      text: 'One rainy afternoon, Bolt heard a tiny sound coming from behind a recycling bin. "Meow!" It was a small orange kitten, shivering and alone. Bolt had never seen anything so soft.',
-    },
-    {
-      id: 3,
-      image: 'https://picsum.photos/seed/story-friends3/600/400',
-      text: '"Don\'t worry," said Bolt, carefully scooping the kitten into his metal arms. "I\'ll keep you warm." The kitten purred, and for the first time, Bolt felt something glow inside his circuits.',
-    },
-    {
-      id: 4,
-      image: 'https://picsum.photos/seed/story-play4/600/400',
-      text: 'Bolt named the kitten Spark. Together they explored the city — Spark chasing butterflies while Bolt rolled alongside, his eyes flashing with joy.',
-    },
-    {
-      id: 5,
-      image: 'https://picsum.photos/seed/story-learn5/600/400',
-      text: 'Spark taught Bolt that friendship isn\'t about being the same. It\'s about caring for each other, even when you\'re made of different things — fur and metal, whiskers and wires.',
-    },
-    {
-      id: 6,
-      image: 'https://picsum.photos/seed/story-end6/600/400',
-      text: 'And every night, as the city lights painted the sky, Bolt and Spark would sit on the rooftop together — a robot and his best friend — watching the stars come alive. The End.',
-    },
-  ];
+  // Selective Scene Recreator Modal
+  const [isRecreating, setIsRecreating] = useState(false);
+  const [selectedScene, setSelectedScene] = useState<StoryScene | null>(null);
+  const [recreatePromptChange, setRecreatePromptChange] = useState('');
+  const [isRegeneratingPanel, setIsRegeneratingPanel] = useState(false);
 
-  const currentStory = storyPages[currentPage];
+  // Voice Translation Modal
+  const [isVoiceModalOpen, setIsVoiceModalOpen] = useState(false);
+  const [selectedLang, setSelectedLang] = useState(LANGUAGES[0]);
+  const [isRecording, setIsRecording] = useState(false);
+  const [spokenStory, setSpokenStory] = useState(LANGUAGES[0].sample);
+  const [translatedStoryPlot, setTranslatedStoryPlot] = useState(
+    'A kind-hearted bear who helps all forest creatures with his handmade honey bakery, teaching teamwork and generosity.'
+  );
+
+  // Text to speech active state
+  const [readingSceneId, setReadingSceneId] = useState<number | null>(null);
+
+  // Handle Full Story Generation
+  const handleGenerateStory = () => {
+    setIsGeneratingStory(true);
+    setTimeout(() => {
+      const generated: StoryScene[] = [
+        {
+          id: 1,
+          title: 'Scene 1: The Beginning',
+          imagePrompt: `${storyIdea} - Opening scene, ${artStyle}, high detail`,
+          imageUrl: `https://picsum.photos/seed/storygen1${Date.now()}/600/400`,
+          narration: `Once upon a time in a vibrant world, the story begins: ${storyIdea.slice(0, 90)}...`,
+          dialogue: 'Hero: "Our journey starts today!"',
+          character: 'Main Character',
+        },
+        {
+          id: 2,
+          title: 'Scene 2: The Adventure Unfolds',
+          imagePrompt: `${storyIdea} - Mid journey conflict or mystery, ${artStyle}`,
+          imageUrl: `https://picsum.photos/seed/storygen2${Date.now()}/600/400`,
+          narration: 'As obstacles appeared along the path, unexpected companions joined hands to solve the mystery.',
+          dialogue: 'Companion: "Look ahead, there is light beyond the misty horizon!"',
+          character: 'Companion',
+        },
+        {
+          id: 3,
+          title: 'Scene 3: The Climax',
+          imagePrompt: `${storyIdea} - Climax moment with emotional connection, ${artStyle}`,
+          imageUrl: `https://picsum.photos/seed/storygen3${Date.now()}/600/400`,
+          narration: 'Facing the greatest challenge of all, kindness and courage turned darkness into radiant joy.',
+          dialogue: 'All: "Together we can accomplish anything!"',
+          character: 'Heroes Together',
+        },
+        {
+          id: 4,
+          title: 'Scene 4: The Happy Ending',
+          imagePrompt: `${storyIdea} - Warm celebration sunset scene, ${artStyle}`,
+          imageUrl: `https://picsum.photos/seed/storygen4${Date.now()}/600/400`,
+          narration: 'And from that memorable day forward, joy echoed across the kingdom. The end.',
+          dialogue: 'Narrator: "A journey remembered for generations."',
+          character: 'Happy Ensemble',
+        },
+      ];
+      setScenes(generated);
+      setIsGeneratingStory(false);
+    }, 2000);
+  };
+
+  // Open Selective Recreator
+  const handleOpenRecreate = (scene: StoryScene) => {
+    setSelectedScene(scene);
+    setRecreatePromptChange('Make the lighting dramatic golden hour, with playful sparks floating around');
+    setIsRecreating(true);
+  };
+
+  // Apply Selective Recreation to just that one scene
+  const handleApplySceneRecreation = () => {
+    if (!selectedScene) return;
+    setIsRegeneratingPanel(true);
+
+    setTimeout(() => {
+      setScenes((prev) =>
+        prev.map((s) =>
+          s.id === selectedScene.id
+            ? {
+                ...s,
+                imageUrl: `https://picsum.photos/seed/recreated${Date.now()}/600/400`,
+                imagePrompt: `${s.imagePrompt} [Recreated: ${recreatePromptChange}]`,
+              }
+            : s
+        )
+      );
+      setIsRegeneratingPanel(false);
+      setIsRecreating(false);
+    }, 1500);
+  };
+
+  // Voice Dictation handler
+  const handleToggleVoice = () => {
+    if (!isRecording) {
+      setIsRecording(true);
+      setTimeout(() => {
+        setIsRecording(false);
+        setSpokenStory(selectedLang.sample);
+        setTranslatedStoryPlot(
+          `An enchanting illustrated tale about: ${selectedLang.sample}, filled with whimsical wonder, teamwork, and colorful scenes.`
+        );
+      }, 2000);
+    } else {
+      setIsRecording(false);
+    }
+  };
+
+  const handleApplyVoiceStory = () => {
+    setStoryIdea(translatedStoryPlot);
+    setIsVoiceModalOpen(false);
+  };
+
+  // Read Aloud Simulation
+  const handleReadAloud = (sceneId: number) => {
+    setReadingSceneId(sceneId);
+    setTimeout(() => {
+      setReadingSceneId(null);
+    }, 3000);
+  };
 
   return (
     <WorkspaceLayout>
-      <Box p={6} minH="100vh" bg="#080B0A">
-        {/* Header */}
-        <Flex align="center" justify="space-between" mb={6}>
-          <Box>
-            <Flex align="center" gap={3} mb={1}>
-              <FiBookOpen size={24} color="#B7FF35" />
-              <Heading size="lg" color="#F4F7F0" fontWeight="700">
-                Storybook Studio
-              </Heading>
-            </Flex>
-            <Text color="#A5B1A7" fontSize="sm">
-              Create magical stories with AI-generated illustrations and narratives
-            </Text>
-          </Box>
-          <HStack spacing={2}>
-            <Button
-              size="sm"
-              variant="outline"
-              borderColor="#2A3A2C"
-              color="#A5B1A7"
-              _hover={{ bg: '#1A2A1C', borderColor: '#B7FF35', color: '#F4F7F0' }}
-              leftIcon={<FiShare2 size={14} />}
-              fontSize="xs"
-            >
-              Share
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              borderColor="#2A3A2C"
-              color="#A5B1A7"
-              _hover={{ bg: '#1A2A1C', borderColor: '#B7FF35', color: '#F4F7F0' }}
-              leftIcon={<FiDownload size={14} />}
-              fontSize="xs"
-            >
-              Export PDF
-            </Button>
-          </HStack>
-        </Flex>
-
-        {/* Main Layout */}
-        <Flex gap={6} h="calc(100vh - 160px)">
-          {/* Left Panel: Story Configuration */}
-          <Box
-            w="360px"
-            minW="360px"
-            bg="#111713"
-            borderRadius="xl"
-            border="1px solid #2A3A2C"
-            p={6}
-            overflowY="auto"
-            css={{
-              '&::-webkit-scrollbar': { width: '4px' },
-              '&::-webkit-scrollbar-track': { bg: 'transparent' },
-              '&::-webkit-scrollbar-thumb': {
-                bg: '#2A3A2C',
-                borderRadius: '4px',
-              },
-            }}
-          >
-            <VStack spacing={5} align="stretch">
-              {/* Section Header */}
-              <Flex align="center" gap={2}>
-                <FiEdit3 size={16} color="#B7FF35" />
-                <Text
-                  color="#F4F7F0"
-                  fontSize="sm"
-                  fontWeight="700"
-                >
-                  Story Configuration
+      <Box p={{ base: 4, md: 6 }} minH="100vh" bg="#080B0A">
+        {/* Top Header */}
+        <Box bg="#111713" border="1px solid #2A3A2C" borderRadius="16px" p={5} mb={6}>
+          <Flex direction={{ base: 'column', lg: 'row' }} justify="space-between" align={{ base: 'flex-start', lg: 'center' }} gap={4}>
+            <Flex align="center" gap={3}>
+              <Box
+                w="40px"
+                h="40px"
+                borderRadius="10px"
+                bg="#B7FF35"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                fontSize="20px"
+                color="#080B0A"
+              >
+                📖
+              </Box>
+              <Box>
+                <Flex align="center" gap={2}>
+                  <Heading size="md" color="#F4F7F0" fontWeight="700">
+                    Storybook & Comic Studio
+                  </Heading>
+                  <Badge bg="rgba(183, 255, 53, 0.15)" color="#B7FF35" px={2} py={0.5} borderRadius="full" fontSize="10px">
+                    Multi-Scene Creator
+                  </Badge>
+                </Flex>
+                <Text color="#A5B1A7" fontSize="xs">
+                  Create illustrated storybooks and comics for kids & adults — with voice dictation & selective panel recreator
                 </Text>
+              </Box>
+            </Flex>
+
+            {/* View Mode Toggle: Comic Strip vs Storybook */}
+            <Flex align="center" gap={3}>
+              <Flex bg="#0F1A11" p={1} borderRadius="10px" border="1px solid #2A3A2C">
+                <Button
+                  size="xs"
+                  borderRadius="8px"
+                  bg={viewMode === 'comic' ? '#B7FF35' : 'transparent'}
+                  color={viewMode === 'comic' ? '#080B0A' : '#A5B1A7'}
+                  fontWeight="bold"
+                  onClick={() => setViewMode('comic')}
+                  leftIcon={<Text fontSize="12px">💬</Text>}
+                >
+                  Comic Strip Panels
+                </Button>
+                <Button
+                  size="xs"
+                  borderRadius="8px"
+                  bg={viewMode === 'book' ? '#B7FF35' : 'transparent'}
+                  color={viewMode === 'book' ? '#080B0A' : '#A5B1A7'}
+                  fontWeight="bold"
+                  onClick={() => setViewMode('book')}
+                  leftIcon={<Text fontSize="12px">📖</Text>}
+                >
+                  Storybook Reader
+                </Button>
               </Flex>
 
-              {/* Story Title */}
-              <Box>
-                <Text color="#A5B1A7" fontSize="xs" fontWeight="600" mb={2}>
-                  Story Title
-                </Text>
-                <Input
-                  value={storyTitle}
-                  onChange={(e) => setStoryTitle(e.target.value)}
-                  bg="#0F1A11"
-                  border="1px solid #2A3A2C"
-                  borderRadius="lg"
-                  color="#F4F7F0"
-                  fontSize="sm"
-                  _placeholder={{ color: '#A5B1A7' }}
-                  _hover={{ borderColor: '#B7FF35' }}
-                  _focus={{
-                    borderColor: '#B7FF35',
-                    boxShadow: '0 0 0 1px #B7FF35',
-                  }}
-                  placeholder="Enter your story title..."
-                />
-              </Box>
+              <Button
+                size="sm"
+                variant="outline"
+                borderColor="#2A3A2C"
+                color="#A5B1A7"
+                _hover={{ color: '#B7FF35', borderColor: '#B7FF35' }}
+                leftIcon={<FiDownload />}
+              >
+                Export PDF
+              </Button>
+            </Flex>
+          </Flex>
 
-              {/* Story Idea */}
+          {/* Story Prompt & Controls Bar */}
+          <Box mt={5} pt={4} borderTop="1px solid #1A2A1C">
+            <Grid templateColumns={{ base: '1fr', lg: '3fr 1fr 1fr auto' }} gap={3} align="flex-end">
               <Box>
-                <Text color="#A5B1A7" fontSize="xs" fontWeight="600" mb={2}>
-                  Story Idea / Description
-                </Text>
-                <Textarea
+                <Flex justify="space-between" align="center" mb={1.5}>
+                  <Text fontSize="xs" color="#A5B1A7" fontWeight="600">
+                    Story Concept or Plotline
+                  </Text>
+                  <Button
+                    size="xs"
+                    variant="link"
+                    color="#B7FF35"
+                    leftIcon={<FiMic />}
+                    onClick={() => setIsVoiceModalOpen(true)}
+                  >
+                    Dictate in any language
+                  </Button>
+                </Flex>
+                <Input
                   value={storyIdea}
                   onChange={(e) => setStoryIdea(e.target.value)}
+                  placeholder="Describe your story idea or characters..."
                   bg="#0F1A11"
-                  border="1px solid #2A3A2C"
-                  borderRadius="lg"
                   color="#F4F7F0"
-                  fontSize="sm"
-                  rows={5}
-                  resize="none"
-                  _placeholder={{ color: '#A5B1A7' }}
-                  _hover={{ borderColor: '#B7FF35' }}
-                  _focus={{
-                    borderColor: '#B7FF35',
-                    boxShadow: '0 0 0 1px #B7FF35',
-                  }}
-                  placeholder="Describe your story idea..."
+                  border="1px solid #2A3A2C"
+                  borderRadius="10px"
+                  size="sm"
+                  _focus={{ borderColor: '#B7FF35' }}
                 />
               </Box>
 
-              {/* Style */}
               <Box>
-                <Text color="#A5B1A7" fontSize="xs" fontWeight="600" mb={2}>
-                  Illustration Style
-                </Text>
+                <Text fontSize="xs" color="#6B7B6D" mb={1.5}>Genre / Audience</Text>
                 <Select
-                  value={style}
-                  onChange={(e) => setStyle(e.target.value)}
+                  value={genre}
+                  onChange={(e) => setGenre(e.target.value)}
                   bg="#0F1A11"
-                  border="1px solid #2A3A2C"
-                  borderRadius="lg"
                   color="#F4F7F0"
-                  fontSize="sm"
-                  _hover={{ borderColor: '#B7FF35' }}
-                  _focus={{
-                    borderColor: '#B7FF35',
-                    boxShadow: '0 0 0 1px #B7FF35',
-                  }}
+                  border="1px solid #2A3A2C"
+                  borderRadius="10px"
+                  size="sm"
                 >
-                  <option value="children" style={{ background: '#111713' }}>
-                    Children&apos;s Illustration
-                  </option>
-                  <option value="comic" style={{ background: '#111713' }}>
-                    Comic Book
-                  </option>
-                  <option value="watercolor" style={{ background: '#111713' }}>
-                    Watercolor
-                  </option>
-                  <option value="pixel" style={{ background: '#111713' }}>
-                    Pixel Art
-                  </option>
-                  <option value="anime" style={{ background: '#111713' }}>
-                    Anime / Manga
-                  </option>
-                  <option value="storybook" style={{ background: '#111713' }}>
-                    Classic Storybook
-                  </option>
+                  {GENRES.map((g) => (
+                    <option key={g} value={g} style={{ background: '#111713' }}>
+                      {g}
+                    </option>
+                  ))}
                 </Select>
               </Box>
 
-              {/* Page Count */}
               <Box>
-                <Text color="#A5B1A7" fontSize="xs" fontWeight="600" mb={3}>
-                  Number of Pages
-                </Text>
-                <HStack spacing={2}>
-                  {[4, 6, 8, 12].map((count) => (
-                    <Button
-                      key={count}
-                      size="sm"
-                      flex={1}
-                      bg={pageCount === count ? '#B7FF35' : '#0F1A11'}
-                      color={pageCount === count ? '#080B0A' : '#A5B1A7'}
-                      border="1px solid"
-                      borderColor={pageCount === count ? '#B7FF35' : '#2A3A2C'}
-                      borderRadius="lg"
-                      fontWeight={pageCount === count ? '700' : '500'}
-                      fontSize="sm"
-                      _hover={{
-                        bg: pageCount === count ? '#8DDB39' : '#1A2A1C',
-                        borderColor: '#B7FF35',
-                      }}
-                      onClick={() => setPageCount(count)}
-                      transition="all 0.2s"
-                    >
-                      {count}
-                    </Button>
+                <Text fontSize="xs" color="#6B7B6D" mb={1.5}>Art Style</Text>
+                <Select
+                  value={artStyle}
+                  onChange={(e) => setArtStyle(e.target.value)}
+                  bg="#0F1A11"
+                  color="#F4F7F0"
+                  border="1px solid #2A3A2C"
+                  borderRadius="10px"
+                  size="sm"
+                >
+                  {ART_STYLES.map((a) => (
+                    <option key={a} value={a} style={{ background: '#111713' }}>
+                      {a}
+                    </option>
                   ))}
-                </HStack>
+                </Select>
               </Box>
 
-              <Divider borderColor="#2A3A2C" />
-
-              {/* Create Button */}
               <Button
                 bg="#B7FF35"
                 color="#080B0A"
-                size="lg"
-                borderRadius="xl"
                 fontWeight="700"
-                fontSize="sm"
-                _hover={{
-                  bg: '#8DDB39',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 8px 30px rgba(183,255,53,0.3)',
-                }}
-                _active={{ transform: 'translateY(0)' }}
-                transition="all 0.2s"
-                boxShadow="0 4px 20px rgba(183,255,53,0.2)"
-                h="50px"
+                size="sm"
+                h="36px"
+                px={6}
+                borderRadius="10px"
+                _hover={{ bg: '#8DDB39', transform: 'translateY(-1px)' }}
+                onClick={handleGenerateStory}
+                isLoading={isGeneratingStory}
+                leftIcon={<Text>✨</Text>}
               >
-                ✨ Create Storybook
+                Generate Scenes
               </Button>
-
-              {/* Stats */}
-              <Flex
-                bg="#0F1A11"
-                borderRadius="lg"
-                p={3}
-                justify="space-around"
-                border="1px solid #2A3A2C"
-              >
-                <VStack spacing={0}>
-                  <Text color="#B7FF35" fontSize="lg" fontWeight="700">
-                    {pageCount}
-                  </Text>
-                  <Text color="#A5B1A7" fontSize="10px">
-                    Pages
-                  </Text>
-                </VStack>
-                <Divider
-                  orientation="vertical"
-                  h="36px"
-                  borderColor="#2A3A2C"
-                />
-                <VStack spacing={0}>
-                  <Text color="#B7FF35" fontSize="lg" fontWeight="700">
-                    {pageCount}
-                  </Text>
-                  <Text color="#A5B1A7" fontSize="10px">
-                    Images
-                  </Text>
-                </VStack>
-                <Divider
-                  orientation="vertical"
-                  h="36px"
-                  borderColor="#2A3A2C"
-                />
-                <VStack spacing={0}>
-                  <Text color="#B7FF35" fontSize="lg" fontWeight="700">
-                    ~2m
-                  </Text>
-                  <Text color="#A5B1A7" fontSize="10px">
-                    Est. Time
-                  </Text>
-                </VStack>
-              </Flex>
-            </VStack>
+            </Grid>
           </Box>
+        </Box>
 
-          {/* Right Panel: Preview */}
-          <Box
-            flex={1}
-            bg="#111713"
-            borderRadius="xl"
-            border="1px solid #2A3A2C"
-            display="flex"
-            flexDir="column"
-            overflow="hidden"
-          >
-            {/* Preview Header */}
-            <Flex
-              align="center"
-              justify="space-between"
-              px={6}
-              py={3}
-              borderBottom="1px solid #2A3A2C"
-            >
-              <Flex align="center" gap={2}>
-                <FiBookOpen size={14} color="#B7FF35" />
-                <Text color="#F4F7F0" fontSize="sm" fontWeight="600">
-                  Preview
-                </Text>
-                <Badge
-                  bg="rgba(183,255,53,0.1)"
-                  color="#B7FF35"
-                  fontSize="10px"
-                  borderRadius="full"
-                  px={2}
+        {/* VIEW 1: COMIC STRIP PANELS VIEW */}
+        {viewMode === 'comic' && (
+          <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={6}>
+            {scenes.map((scene, idx) => (
+              <GridItem key={scene.id}>
+                <Box
+                  bg="#111713"
+                  border="1px solid #2A3A2C"
+                  borderRadius="16px"
+                  overflow="hidden"
+                  boxShadow="0 8px 30px rgba(0,0,0,0.5)"
+                  transition="all 0.25s"
+                  _hover={{ borderColor: '#3A4A3C', transform: 'translateY(-2px)' }}
                 >
-                  Live
-                </Badge>
-              </Flex>
-              <Text color="#A5B1A7" fontSize="xs">
-                {storyTitle}
-              </Text>
-            </Flex>
+                  {/* Panel Header */}
+                  <Flex px={4} py={3} justify="space-between" align="center" bg="#0D120E" borderBottom="1px solid #1A2A1C">
+                    <Flex align="center" gap={2}>
+                      <Badge bg="#182019" color="#B7FF35" px={2} py={0.5} borderRadius="6px" fontSize="11px">
+                        Panel {idx + 1}
+                      </Badge>
+                      <Text fontSize="xs" fontWeight="bold" color="#F4F7F0">
+                        {scene.title}
+                      </Text>
+                    </Flex>
+                    <HStack spacing={1}>
+                      {/* Selective Recreate Button */}
+                      <Tooltip label="Selective recreation: re-generate only this panel">
+                        <Button
+                          size="xs"
+                          variant="ghost"
+                          color="#B7FF35"
+                          _hover={{ bg: '#182019' }}
+                          leftIcon={<FiRefreshCw size={12} />}
+                          onClick={() => handleOpenRecreate(scene)}
+                        >
+                          Recreate Panel
+                        </Button>
+                      </Tooltip>
 
-            {/* Book Preview Area */}
-            <Flex
-              flex={1}
-              align="center"
-              justify="center"
-              p={8}
-              bg="radial-gradient(ellipse at center, #182019 0%, #111713 70%)"
-            >
-              <Box
-                maxW="520px"
-                w="100%"
-                bg="#182019"
-                borderRadius="2xl"
-                overflow="hidden"
-                border="1px solid #2A3A2C"
-                boxShadow="0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(183,255,53,0.03)"
-              >
-                {/* Book Image */}
-                <Box position="relative" overflow="hidden">
-                  <Image
-                    src={currentStory?.image}
-                    alt={`Page ${currentPage + 1}`}
-                    w="100%"
-                    h="280px"
-                    objectFit="cover"
-                  />
-                  {/* Page number overlay */}
-                  <Box
-                    position="absolute"
-                    top={3}
-                    right={3}
-                    bg="rgba(8,11,10,0.7)"
-                    px={3}
-                    py={1}
-                    borderRadius="full"
-                    backdropFilter="blur(10px)"
-                  >
-                    <Text color="#B7FF35" fontSize="10px" fontWeight="700">
-                      {currentPage + 1} / {storyPages.length}
+                      {/* Read Aloud Narration */}
+                      <Tooltip label="Read dialogue aloud">
+                        <IconButton
+                          aria-label="Read aloud"
+                          icon={<FiVolume2 size={13} />}
+                          size="xs"
+                          variant="ghost"
+                          color={readingSceneId === scene.id ? '#B7FF35' : '#A5B1A7'}
+                          _hover={{ color: '#F4F7F0', bg: '#182019' }}
+                          onClick={() => handleReadAloud(scene.id)}
+                        />
+                      </Tooltip>
+                    </HStack>
+                  </Flex>
+
+                  {/* Panel Image */}
+                  <Box position="relative" overflow="hidden" bg="#080B0A">
+                    <Image
+                      src={scene.imageUrl}
+                      alt={scene.title}
+                      w="100%"
+                      h="260px"
+                      objectFit="cover"
+                      transition="transform 0.4s ease"
+                    />
+
+                    {/* Comic Dialogue Bubble overlay */}
+                    {scene.dialogue && (
+                      <Box
+                        position="absolute"
+                        bottom={3}
+                        left={3}
+                        right={3}
+                        bg="rgba(17, 23, 19, 0.88)"
+                        border="1px solid #B7FF35"
+                        borderRadius="12px"
+                        p={2.5}
+                        backdropFilter="blur(8px)"
+                        boxShadow="0 4px 16px rgba(0,0,0,0.6)"
+                      >
+                        <Text fontSize="xs" color="#F4F7F0" fontWeight="600" fontStyle="italic">
+                          💬 {scene.dialogue}
+                        </Text>
+                      </Box>
+                    )}
+                  </Box>
+
+                  {/* Panel Narration */}
+                  <Box p={4}>
+                    <Text fontSize="xs" color="#A5B1A7" lineHeight="1.6">
+                      {scene.narration}
                     </Text>
+                    <Flex justify="space-between" align="center" mt={3} pt={2} borderTop="1px solid #1A2A1C">
+                      <Text fontSize="10px" color="#6B7B6D">
+                        Character: <span style={{ color: '#F4F7F0' }}>{scene.character}</span>
+                      </Text>
+                      <Text fontSize="10px" color="#8DDB39">
+                        Consistent Model Style
+                      </Text>
+                    </Flex>
                   </Box>
                 </Box>
+              </GridItem>
+            ))}
+          </Grid>
+        )}
 
-                {/* Book Text */}
-                <Box p={6}>
-                  {currentPage === 0 && (
-                    <Text
-                      color="#B7FF35"
-                      fontSize="lg"
-                      fontWeight="700"
-                      mb={3}
-                      lineHeight="1.3"
-                    >
-                      {storyTitle}
-                    </Text>
-                  )}
-                  <Text
-                    color="#F4F7F0"
-                    fontSize="sm"
-                    lineHeight="1.8"
-                    fontStyle={currentPage === storyPages.length - 1 ? 'italic' : 'normal'}
-                  >
-                    {currentStory?.text}
-                  </Text>
+        {/* VIEW 2: STORYBOOK READER MODE */}
+        {viewMode === 'book' && scenes.length > 0 && (
+          <Box maxW="880px" mx="auto" my={4}>
+            <Box
+              bg="#111713"
+              border="2px solid #2A3A2C"
+              borderRadius="24px"
+              overflow="hidden"
+              boxShadow="0 16px 64px rgba(0,0,0,0.8)"
+            >
+              <Grid templateColumns={{ base: '1fr', md: '1fr 1fr' }}>
+                {/* Left Page: Artwork */}
+                <Box bg="#080B0A" p={6} display="flex" alignItems="center" justifyContent="center">
+                  <Image
+                    src={scenes[activeBookIndex].imageUrl}
+                    alt={scenes[activeBookIndex].title}
+                    borderRadius="16px"
+                    w="100%"
+                    maxH="400px"
+                    objectFit="cover"
+                    border="1px solid #2A3A2C"
+                  />
                 </Box>
 
-                {/* Navigation */}
-                <Flex
-                  align="center"
-                  justify="space-between"
-                  px={6}
-                  py={4}
-                  borderTop="1px solid #2A3A2C"
-                >
-                  <IconButton
-                    aria-label="Previous page"
-                    icon={<FiChevronLeft size={18} />}
-                    size="sm"
-                    bg={currentPage > 0 ? '#0F1A11' : 'transparent'}
-                    color={currentPage > 0 ? '#F4F7F0' : '#2A3A2C'}
-                    border="1px solid"
-                    borderColor={currentPage > 0 ? '#2A3A2C' : 'transparent'}
-                    borderRadius="lg"
-                    _hover={
-                      currentPage > 0
-                        ? { bg: '#1A2A1C', borderColor: '#B7FF35' }
-                        : {}
-                    }
-                    onClick={() =>
-                      setCurrentPage(Math.max(0, currentPage - 1))
-                    }
-                    isDisabled={currentPage === 0}
-                  />
-                  <HStack spacing={1.5}>
-                    {storyPages.map((_, idx) => (
-                      <Box
-                        key={idx}
-                        w={currentPage === idx ? '20px' : '6px'}
-                        h="6px"
-                        bg={currentPage === idx ? '#B7FF35' : '#2A3A2C'}
-                        borderRadius="full"
-                        cursor="pointer"
-                        onClick={() => setCurrentPage(idx)}
-                        transition="all 0.3s ease"
-                        _hover={{ bg: '#8DDB39' }}
-                      />
-                    ))}
-                  </HStack>
-                  <IconButton
-                    aria-label="Next page"
-                    icon={<FiChevronRight size={18} />}
-                    size="sm"
-                    bg={
-                      currentPage < storyPages.length - 1
-                        ? '#0F1A11'
-                        : 'transparent'
-                    }
-                    color={
-                      currentPage < storyPages.length - 1
-                        ? '#F4F7F0'
-                        : '#2A3A2C'
-                    }
-                    border="1px solid"
-                    borderColor={
-                      currentPage < storyPages.length - 1
-                        ? '#2A3A2C'
-                        : 'transparent'
-                    }
-                    borderRadius="lg"
-                    _hover={
-                      currentPage < storyPages.length - 1
-                        ? { bg: '#1A2A1C', borderColor: '#B7FF35' }
-                        : {}
-                    }
-                    onClick={() =>
-                      setCurrentPage(
-                        Math.min(storyPages.length - 1, currentPage + 1)
-                      )
-                    }
-                    isDisabled={currentPage === storyPages.length - 1}
-                  />
-                </Flex>
-              </Box>
-            </Flex>
+                {/* Right Page: Narrative & Dialogue */}
+                <Flex direction="column" justify="space-between" p={8} bg="#0D120E">
+                  <Box>
+                    <Flex justify="space-between" align="center" mb={4}>
+                      <Badge bg="rgba(183,255,53,0.15)" color="#B7FF35" px={3} py={1} borderRadius="full" fontSize="xs">
+                        Page {activeBookIndex + 1} of {scenes.length}
+                      </Badge>
+                      <Button
+                        size="xs"
+                        variant="ghost"
+                        color="#B7FF35"
+                        leftIcon={<FiRefreshCw size={11} />}
+                        onClick={() => handleOpenRecreate(scenes[activeBookIndex])}
+                      >
+                        Recreate Page
+                      </Button>
+                    </Flex>
 
-            {/* Bottom Bar */}
-            <Flex
-              align="center"
-              justify="center"
-              px={6}
-              py={3}
-              borderTop="1px solid #2A3A2C"
-              bg="#0D120E"
-            >
-              <Text color="#A5B1A7" fontSize="xs">
-                Page {currentPage + 1} of {storyPages.length} •{' '}
-                <Text as="span" color="#B7FF35">
-                  Children&apos;s Illustration
-                </Text>{' '}
-                style
-              </Text>
-            </Flex>
+                    <Heading size="md" color="#F4F7F0" mb={4}>
+                      {scenes[activeBookIndex].title}
+                    </Heading>
+
+                    <Text fontSize="sm" color="#A5B1A7" lineHeight="1.8" mb={6}>
+                      {scenes[activeBookIndex].narration}
+                    </Text>
+
+                    {scenes[activeBookIndex].dialogue && (
+                      <Box bg="#111713" borderLeft="3px solid #B7FF35" p={3} borderRadius="8px" mb={4}>
+                        <Text fontSize="xs" color="#F4F7F0" fontWeight="600">
+                          {scenes[activeBookIndex].dialogue}
+                        </Text>
+                      </Box>
+                    )}
+                  </Box>
+
+                  {/* Page Navigation */}
+                  <Flex justify="space-between" align="center" pt={4} borderTop="1px solid #1A2A1C">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      color="#A5B1A7"
+                      isDisabled={activeBookIndex === 0}
+                      onClick={() => setActiveBookIndex((prev) => Math.max(0, prev - 1))}
+                      leftIcon={<FiChevronLeft />}
+                    >
+                      Previous
+                    </Button>
+
+                    <IconButton
+                      aria-label="Read aloud"
+                      icon={<FiVolume2 />}
+                      size="sm"
+                      bg="#182019"
+                      color="#B7FF35"
+                      borderRadius="full"
+                      onClick={() => handleReadAloud(scenes[activeBookIndex].id)}
+                    />
+
+                    <Button
+                      size="sm"
+                      bg="#B7FF35"
+                      color="#080B0A"
+                      fontWeight="bold"
+                      isDisabled={activeBookIndex === scenes.length - 1}
+                      onClick={() => setActiveBookIndex((prev) => Math.min(scenes.length - 1, prev + 1))}
+                      rightIcon={<FiChevronRight />}
+                    >
+                      Next
+                    </Button>
+                  </Flex>
+                </Flex>
+              </Grid>
+            </Box>
           </Box>
-        </Flex>
+        )}
+
+        {/* SELECTIVE PANEL RECREATOR MODAL */}
+        <Modal isOpen={isRecreating} onClose={() => setIsRecreating(false)} isCentered size="md">
+          <ModalOverlay bg="rgba(0,0,0,0.85)" backdropFilter="blur(6px)" />
+          <ModalContent bg="#111713" border="1px solid #2A3A2C" borderRadius="18px" color="#F4F7F0">
+            <ModalHeader borderBottom="1px solid #1A2A1C" py={4}>
+              <Flex align="center" gap={2}>
+                <Box w="28px" h="28px" borderRadius="full" bg="#B7FF35" display="flex" alignItems="center" justifyContent="center" color="#080B0A" fontSize="14px">
+                  🔄
+                </Box>
+                <Text fontSize="md" fontWeight="bold">
+                  Recreate Scene Panel
+                </Text>
+              </Flex>
+            </ModalHeader>
+            <ModalCloseButton color="#A5B1A7" />
+
+            <ModalBody py={5}>
+              <Text fontSize="xs" color="#A5B1A7" mb={4}>
+                Re-generate only this individual panel while keeping the character consistency and story sequence intact!
+              </Text>
+
+              {selectedScene && (
+                <Flex gap={3} mb={4} p={3} bg="#0D120E" borderRadius="12px" border="1px solid #2A3A2C" align="center">
+                  <Image src={selectedScene.imageUrl} w="70px" h="50px" objectFit="cover" borderRadius="8px" />
+                  <Box>
+                    <Text fontSize="xs" fontWeight="bold" color="#F4F7F0">{selectedScene.title}</Text>
+                    <Text fontSize="10px" color="#6B7B6D">{selectedScene.character}</Text>
+                  </Box>
+                </Flex>
+              )}
+
+              <Box mb={4}>
+                <Text fontSize="xs" color="#6B7B6D" mb={1.5} textTransform="uppercase">
+                  Adjustments for this panel
+                </Text>
+                <Input
+                  value={recreatePromptChange}
+                  onChange={(e) => setRecreatePromptChange(e.target.value)}
+                  placeholder="e.g. Change angle to close-up, add whimsical rainbow in sky"
+                  bg="#0F1A11"
+                  color="#F4F7F0"
+                  border="1px solid #2A3A2C"
+                  borderRadius="10px"
+                  size="sm"
+                  _focus={{ borderColor: '#B7FF35' }}
+                />
+              </Box>
+            </ModalBody>
+
+            <ModalFooter borderTop="1px solid #1A2A1C" py={3}>
+              <Button size="sm" variant="ghost" color="#A5B1A7" mr={3} onClick={() => setIsRecreating(false)}>
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                bg="#B7FF35"
+                color="#080B0A"
+                fontWeight="bold"
+                onClick={handleApplySceneRecreation}
+                isLoading={isRegeneratingPanel}
+              >
+                Recreate This Panel
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+
+        {/* VOICE DICTATION & TRANSLATION MODAL */}
+        <Modal isOpen={isVoiceModalOpen} onClose={() => setIsVoiceModalOpen(false)} isCentered size="lg">
+          <ModalOverlay bg="rgba(0,0,0,0.85)" backdropFilter="blur(6px)" />
+          <ModalContent bg="#111713" border="1px solid #2A3A2C" borderRadius="18px" color="#F4F7F0">
+            <ModalHeader borderBottom="1px solid #1A2A1C" py={4}>
+              <Flex align="center" gap={2}>
+                <Box w="28px" h="28px" borderRadius="full" bg="#B7FF35" display="flex" alignItems="center" justifyContent="center" color="#080B0A" fontSize="14px">
+                  🎤
+                </Box>
+                <Text fontSize="md" fontWeight="bold">
+                  Story Voice Dictator & Translator
+                </Text>
+              </Flex>
+            </ModalHeader>
+            <ModalCloseButton color="#A5B1A7" />
+
+            <ModalBody py={5}>
+              <Text fontSize="xs" color="#A5B1A7" mb={4}>
+                Tell your story verbally in your mother tongue! The voice translator converts it into a multi-scene plotline ready for generation.
+              </Text>
+
+              <Box mb={4}>
+                <Text fontSize="xs" color="#6B7B6D" mb={1.5} textTransform="uppercase">
+                  Select Speaking Language
+                </Text>
+                <Select
+                  value={selectedLang.code}
+                  onChange={(e) => {
+                    const l = LANGUAGES.find((item) => item.code === e.target.value) || LANGUAGES[0];
+                    setSelectedLang(l);
+                    setSpokenStory(l.sample);
+                  }}
+                  bg="#0F1A11"
+                  color="#F4F7F0"
+                  border="1px solid #2A3A2C"
+                  borderRadius="10px"
+                  size="sm"
+                >
+                  {LANGUAGES.map((l) => (
+                    <option key={l.code} value={l.code} style={{ background: '#111713' }}>
+                      {l.name}
+                    </option>
+                  ))}
+                </Select>
+              </Box>
+
+              <Flex direction="column" align="center" py={4}>
+                <Box
+                  w="70px"
+                  h="70px"
+                  borderRadius="full"
+                  bg={isRecording ? '#FF4444' : '#182019'}
+                  border="2px solid"
+                  borderColor={isRecording ? '#FF4444' : '#B7FF35'}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  cursor="pointer"
+                  onClick={handleToggleVoice}
+                  boxShadow={isRecording ? '0 0 25px rgba(255,68,68,0.5)' : '0 0 20px rgba(183,255,53,0.3)'}
+                >
+                  <FiMic size={28} color={isRecording ? '#F4F7F0' : '#B7FF35'} />
+                </Box>
+                <Text fontSize="xs" color={isRecording ? '#FF4444' : '#B7FF35'} fontWeight="600" mt={2}>
+                  {isRecording ? 'Recording your voice...' : 'Tap to narrate your story'}
+                </Text>
+              </Flex>
+
+              <Box bg="#0D120E" p={4} borderRadius="12px" border="1px solid #2A3A2C">
+                <Text fontSize="10px" color="#6B7B6D" textTransform="uppercase" fontWeight="bold">
+                  Transcribed ({selectedLang.name})
+                </Text>
+                <Text fontSize="xs" color="#F4F7F0" mt={1}>
+                  "{spokenStory}"
+                </Text>
+                <Box h="1px" bg="#1A2A1C" my={2.5} />
+                <Text fontSize="10px" color="#8DDB39" textTransform="uppercase" fontWeight="bold">
+                  ✨ Translated Story Concept
+                </Text>
+                <Text fontSize="xs" color="#B7FF35" mt={1}>
+                  {translatedStoryPlot}
+                </Text>
+              </Box>
+            </ModalBody>
+
+            <ModalFooter borderTop="1px solid #1A2A1C" py={3}>
+              <Button size="sm" variant="ghost" color="#A5B1A7" mr={3} onClick={() => setIsVoiceModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button size="sm" bg="#B7FF35" color="#080B0A" fontWeight="bold" onClick={handleApplyVoiceStory}>
+                Use As Story Plot
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Box>
     </WorkspaceLayout>
   );
