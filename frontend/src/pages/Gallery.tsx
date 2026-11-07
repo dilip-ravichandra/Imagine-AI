@@ -1,8 +1,27 @@
 import React, { useState } from 'react';
 import {
-  Box, Flex, Text, Heading, Button, Input, Grid, GridItem,
-  InputGroup, InputLeftElement,
+  Box,
+  Flex,
+  Text,
+  Heading,
+  Button,
+  Input,
+  Grid,
+  GridItem,
+  InputGroup,
+  InputLeftElement,
+  Badge,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalCloseButton,
+  HStack,
+  IconButton,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import WorkspaceLayout from '../components/WorkspaceLayout';
 
 const SearchIcon: React.FC = () => (
@@ -24,52 +43,43 @@ const DownloadIcon: React.FC = () => (
   </svg>
 );
 
-const EditIcon: React.FC = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F4F7F0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-  </svg>
-);
-
-const FilterIcon: React.FC = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A5B1A7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
-  </svg>
-);
-
 interface ImageCard {
   id: number;
   seed: number;
   prompt: string;
+  category: 'Single' | 'Storybook' | 'Selective Inpaint';
+  model: string;
   date: string;
   liked: boolean;
 }
 
 const IMAGES: ImageCard[] = [
-  { id: 1, seed: 10, prompt: 'A serene mountain landscape at golden hour with mist', date: 'Nov 6, 2026', liked: false },
-  { id: 2, seed: 22, prompt: 'Cyberpunk city street with neon reflections on wet pavement', date: 'Nov 6, 2026', liked: true },
-  { id: 3, seed: 33, prompt: 'Portrait of a woman in Renaissance oil painting style', date: 'Nov 5, 2026', liked: false },
-  { id: 4, seed: 44, prompt: 'Minimalist Japanese zen garden with raked sand patterns', date: 'Nov 5, 2026', liked: true },
-  { id: 5, seed: 55, prompt: 'Abstract geometric art with bold primary colors', date: 'Nov 4, 2026', liked: false },
-  { id: 6, seed: 66, prompt: 'Underwater coral reef teeming with tropical fish', date: 'Nov 4, 2026', liked: false },
-  { id: 7, seed: 77, prompt: 'Steampunk mechanical owl perched on a brass clock tower', date: 'Nov 3, 2026', liked: true },
-  { id: 8, seed: 88, prompt: 'Northern lights aurora over a frozen lake in Iceland', date: 'Nov 3, 2026', liked: false },
-  { id: 9, seed: 99, prompt: 'Photorealistic macro shot of dewdrops on a spider web', date: 'Nov 2, 2026', liked: false },
-  { id: 10, seed: 111, prompt: 'Fantasy castle floating among clouds at sunset', date: 'Nov 2, 2026', liked: true },
-  { id: 11, seed: 123, prompt: 'Vintage film noir detective in a rainy alley', date: 'Nov 1, 2026', liked: false },
-  { id: 12, seed: 135, prompt: 'Isometric pixel art of a cozy coffee shop interior', date: 'Nov 1, 2026', liked: false },
+  { id: 1, seed: 10, prompt: 'A futuristic city with green energy, at sunset, cinematic, ultra realistic', category: 'Single', model: 'SD-Turbo', date: 'Just now', liked: true },
+  { id: 2, seed: 22, prompt: 'Cyberpunk city street with neon reflections on wet pavement', category: 'Single', model: 'SD-Turbo', date: 'Nov 6, 2026', liked: true },
+  { id: 3, seed: 33, prompt: 'The Little Robot: Scene 1 - Walking through the shimmering sunrise avenues', category: 'Storybook', model: 'Pixar 3D', date: 'Nov 6, 2026', liked: false },
+  { id: 4, seed: 44, prompt: 'The Little Robot: Scene 2 - Discovering the kitten behind the solar recycle post', category: 'Storybook', model: 'Pixar 3D', date: 'Nov 6, 2026', liked: true },
+  { id: 5, seed: 55, prompt: 'Selective Inpaint: Replaced sky with deep violet aurora and shooting stars', category: 'Selective Inpaint', model: 'SD-Turbo Inpaint', date: 'Nov 5, 2026', liked: true },
+  { id: 6, seed: 66, prompt: 'Steampunk mechanical owl perched on a brass clock tower', category: 'Single', model: 'Stable Diffusion 1.5', date: 'Nov 5, 2026', liked: false },
+  { id: 7, seed: 77, prompt: 'Underwater coral palace with bioluminescent sea turtles and rays', category: 'Single', model: 'MobileDiffusion', date: 'Nov 4, 2026', liked: true },
+  { id: 8, seed: 88, prompt: 'Northern lights aurora over a frozen lake with crystal reflection', category: 'Single', model: 'SD-Turbo', date: 'Nov 4, 2026', liked: false },
+  { id: 9, seed: 99, prompt: 'The Little Robot: Scene 3 - Sharing the umbrella under neon rain', category: 'Storybook', model: 'Pixar 3D', date: 'Nov 3, 2026', liked: true },
+  { id: 10, seed: 111, prompt: 'Selective Inpaint: Added glowing golden visor with cyber reflections', category: 'Selective Inpaint', model: 'SD-Turbo Inpaint', date: 'Nov 3, 2026', liked: false },
+  { id: 11, seed: 123, prompt: 'Fantasy castle floating among clouds at golden sunset', category: 'Single', model: 'Stable Diffusion 1.5', date: 'Nov 2, 2026', liked: true },
+  { id: 12, seed: 135, prompt: 'Isometric pixel art of a cozy coffee shop with rain outside', category: 'Single', model: 'SD-Turbo', date: 'Nov 1, 2026', liked: false },
 ];
 
-const TABS = ['All', 'Created', 'Liked', 'Favorites', 'Collections'];
+const TABS = ['All Creations', 'Single Images', 'Storybook Scenes', 'Selective Inpainted', 'Favorites'];
 
 const Gallery: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('All');
+  const [activeTab, setActiveTab] = useState('All Creations');
   const [searchQuery, setSearchQuery] = useState('');
   const [likedImages, setLikedImages] = useState<Set<number>>(
     new Set(IMAGES.filter((img) => img.liked).map((img) => img.id))
   );
-  const [currentPage, setCurrentPage] = useState(1);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [inspectImage, setInspectImage] = useState<ImageCard | null>(null);
+
+  const navigate = useNavigate();
 
   const toggleLike = (id: number) => {
     setLikedImages((prev) => {
@@ -81,8 +91,10 @@ const Gallery: React.FC = () => {
   };
 
   const filteredImages = IMAGES.filter((img) => {
-    if (activeTab === 'Liked' && !likedImages.has(img.id)) return false;
     if (activeTab === 'Favorites' && !likedImages.has(img.id)) return false;
+    if (activeTab === 'Single Images' && img.category !== 'Single') return false;
+    if (activeTab === 'Storybook Scenes' && img.category !== 'Storybook') return false;
+    if (activeTab === 'Selective Inpainted' && img.category !== 'Selective Inpaint') return false;
     if (searchQuery && !img.prompt.toLowerCase().includes(searchQuery.toLowerCase())) return false;
     return true;
   });
@@ -93,22 +105,33 @@ const Gallery: React.FC = () => {
         {/* Header */}
         <Flex align="center" justify="space-between" mb={6}>
           <Box>
-            <Heading size="lg" color="#F4F7F0" fontWeight={700}>
-              Gallery
-            </Heading>
+            <Flex align="center" gap={2.5}>
+              <Heading size="lg" color="#F4F7F0" fontWeight={700}>
+                Gallery & Creations Hub
+              </Heading>
+              <Badge bg="rgba(183, 255, 53, 0.15)" color="#B7FF35" px={2.5} py={0.5} borderRadius="full" fontSize="11px">
+                Central Storage
+              </Badge>
+            </Flex>
             <Text color="#A5B1A7" mt={1} fontSize="sm">
-              Browse, manage, and organize your generated images
+              All generated images, storybook panels, and selective inpaint recreations stored in one place
             </Text>
           </Box>
-          <Flex gap={3}>
-            <Text color="#A5B1A7" fontSize="sm" alignSelf="center">
-              {filteredImages.length} images
-            </Text>
-          </Flex>
+
+          <Button
+            bg="#B7FF35"
+            color="#080B0A"
+            fontWeight="bold"
+            size="sm"
+            onClick={() => navigate('/create')}
+            leftIcon={<Text>🎨</Text>}
+          >
+            Open Generator
+          </Button>
         </Flex>
 
         {/* Tabs */}
-        <Flex gap={2} mb={5} flexWrap="wrap">
+        <Flex gap={2} mb={6} overflowX="auto" pb={1}>
           {TABS.map((tab) => (
             <Button
               key={tab}
@@ -117,66 +140,47 @@ const Gallery: React.FC = () => {
               color={activeTab === tab ? '#080B0A' : '#A5B1A7'}
               border="1px solid"
               borderColor={activeTab === tab ? '#B7FF35' : '#2A3A2C'}
-              borderRadius="full"
+              borderRadius="10px"
               px={5}
-              py={1}
-              size="sm"
+              py={2}
               fontWeight={600}
+              fontSize="sm"
               _hover={{
                 bg: activeTab === tab ? '#8DDB39' : '#1A2A1C',
                 color: activeTab === tab ? '#080B0A' : '#F4F7F0',
               }}
-              transition="all 0.2s ease"
+              transition="all 0.2s"
+              flexShrink={0}
             >
               {tab}
             </Button>
           ))}
         </Flex>
 
-        {/* Search & Filters */}
-        <Flex gap={3} mb={7}>
-          <InputGroup flex={1} maxW="480px">
-            <InputLeftElement pointerEvents="none" h="full" pl={3}>
+        {/* Search Bar */}
+        <Flex gap={3} mb={8}>
+          <InputGroup maxW="450px">
+            <InputLeftElement pointerEvents="none" pt={1}>
               <SearchIcon />
             </InputLeftElement>
             <Input
+              placeholder="Search prompts, categories, or models..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by prompt, style, or keyword..."
               bg="#0F1A11"
               color="#F4F7F0"
               border="1px solid #2A3A2C"
               borderRadius="10px"
               pl={10}
-              _placeholder={{ color: '#A5B1A7' }}
-              _hover={{ borderColor: '#B7FF35' }}
-              _focus={{ borderColor: '#B7FF35', boxShadow: '0 0 0 1px #B7FF35' }}
+              _placeholder={{ color: '#6B7B6D' }}
+              _focus={{ borderColor: '#B7FF35' }}
             />
           </InputGroup>
-          <Button
-            bg="#111713"
-            color="#A5B1A7"
-            border="1px solid #2A3A2C"
-            borderRadius="10px"
-            _hover={{ bg: '#1A2A1C', color: '#F4F7F0' }}
-            leftIcon={<FilterIcon />}
-          >
-            Filters
-          </Button>
-          <Button
-            bg="#111713"
-            color="#A5B1A7"
-            border="1px solid #2A3A2C"
-            borderRadius="10px"
-            _hover={{ bg: '#1A2A1C', color: '#F4F7F0' }}
-          >
-            Sort: Newest
-          </Button>
         </Flex>
 
         {/* Image Grid */}
         {filteredImages.length > 0 ? (
-          <Grid templateColumns="repeat(auto-fill, minmax(260px, 1fr))" gap={5} mb={8}>
+          <Grid templateColumns="repeat(auto-fill, minmax(280px, 1fr))" gap={5} mb={8}>
             {filteredImages.map((img) => (
               <GridItem key={img.id}>
                 <Box
@@ -184,13 +188,14 @@ const Gallery: React.FC = () => {
                   borderRadius="14px"
                   border="1px solid #2A3A2C"
                   overflow="hidden"
-                  transition="all 0.3s ease"
+                  transition="all 0.25s ease"
                   _hover={{
                     borderColor: '#B7FF35',
-                    transform: 'translateY(-4px)',
-                    boxShadow: '0 12px 40px rgba(183,255,53,0.08)',
+                    transform: 'translateY(-3px)',
+                    boxShadow: '0 12px 40px rgba(0,0,0,0.6)',
                   }}
                   cursor="pointer"
+                  onClick={() => setInspectImage(img)}
                   onMouseEnter={() => setHoveredCard(img.id)}
                   onMouseLeave={() => setHoveredCard(null)}
                 >
@@ -198,180 +203,140 @@ const Gallery: React.FC = () => {
                   <Box position="relative" overflow="hidden">
                     <Box
                       as="img"
-                      src={`https://picsum.photos/seed/${img.seed}/400/400`}
+                      src={`https://picsum.photos/seed/${img.seed}/500/350`}
                       alt={img.prompt}
                       w="100%"
-                      h="260px"
+                      h="220px"
                       objectFit="cover"
                       transition="transform 0.4s ease"
-                      sx={hoveredCard === img.id ? { transform: 'scale(1.05)' } : {}}
                     />
 
-                    {/* Hover Overlay */}
-                    <Box
-                      position="absolute"
-                      top={0}
-                      left={0}
-                      right={0}
-                      bottom={0}
-                      bg="rgba(8,11,10,0.65)"
-                      opacity={hoveredCard === img.id ? 1 : 0}
-                      transition="opacity 0.3s ease"
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <Flex gap={3}>
-                        <Box
-                          as="button"
-                          onClick={(e: React.MouseEvent) => { e.stopPropagation(); toggleLike(img.id); }}
-                          w="42px"
-                          h="42px"
-                          borderRadius="10px"
-                          bg="rgba(255,255,255,0.1)"
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                          cursor="pointer"
-                          _hover={{ bg: 'rgba(255,255,255,0.2)' }}
-                          transition="all 0.2s"
-                          backdropFilter="blur(8px)"
-                        >
-                          <HeartIcon filled={likedImages.has(img.id)} />
-                        </Box>
-                        <Box
-                          as="button"
-                          w="42px"
-                          h="42px"
-                          borderRadius="10px"
-                          bg="rgba(255,255,255,0.1)"
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                          cursor="pointer"
-                          _hover={{ bg: 'rgba(255,255,255,0.2)' }}
-                          transition="all 0.2s"
-                          backdropFilter="blur(8px)"
-                        >
-                          <DownloadIcon />
-                        </Box>
-                        <Box
-                          as="button"
-                          w="42px"
-                          h="42px"
-                          borderRadius="10px"
-                          bg="rgba(255,255,255,0.1)"
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                          cursor="pointer"
-                          _hover={{ bg: 'rgba(255,255,255,0.2)' }}
-                          transition="all 0.2s"
-                          backdropFilter="blur(8px)"
-                        >
-                          <EditIcon />
-                        </Box>
-                      </Flex>
+                    {/* Category Tag */}
+                    <Box position="absolute" top={2.5} left={2.5}>
+                      <Badge bg="rgba(8,11,10,0.85)" color={img.category === 'Selective Inpaint' ? '#B7FF35' : '#F4F7F0'} fontSize="10px" px={2} py={0.5} borderRadius="4px">
+                        {img.category}
+                      </Badge>
                     </Box>
 
-                    {/* Liked Badge */}
-                    {likedImages.has(img.id) && hoveredCard !== img.id && (
-                      <Box position="absolute" top={3} right={3}>
-                        <HeartIcon filled />
-                      </Box>
-                    )}
+                    {/* Like button top right */}
+                    <Box
+                      position="absolute"
+                      top={2.5}
+                      right={2.5}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleLike(img.id);
+                      }}
+                      p={1.5}
+                      borderRadius="full"
+                      bg="rgba(0,0,0,0.6)"
+                      _hover={{ bg: 'rgba(0,0,0,0.85)' }}
+                    >
+                      <HeartIcon filled={likedImages.has(img.id)} />
+                    </Box>
                   </Box>
 
-                  {/* Metadata */}
-                  <Box p={3}>
-                    <Text color="#F4F7F0" fontSize="sm" noOfLines={1} fontWeight={500}>
+                  {/* Card Content */}
+                  <Box p={3.5}>
+                    <Text color="#F4F7F0" fontSize="xs" fontWeight="500" noOfLines={2} mb={2}>
                       {img.prompt}
                     </Text>
-                    <Text color="#A5B1A7" fontSize="xs" mt={1}>
-                      {img.date}
-                    </Text>
+                    <Flex justify="space-between" align="center" pt={2} borderTop="1px solid #1A2A1C">
+                      <Text fontSize="10px" color="#6B7B6D">{img.model}</Text>
+                      <Text fontSize="10px" color="#A5B1A7">{img.date}</Text>
+                    </Flex>
                   </Box>
                 </Box>
               </GridItem>
             ))}
           </Grid>
         ) : (
-          <Flex
-            direction="column"
-            align="center"
-            justify="center"
-            minH="300px"
-            bg="#111713"
-            borderRadius="16px"
-            border="1px solid #2A3A2C"
-          >
-            <Text color="#A5B1A7" fontSize="lg" mb={2}>
-              No images found
-            </Text>
-            <Text color="#A5B1A7" fontSize="sm">
-              Try adjusting your search or filters
-            </Text>
-          </Flex>
+          <Box textAlign="center" py={16}>
+            <Text fontSize="36px" mb={2}>🖼️</Text>
+            <Text color="#A5B1A7" fontSize="sm">No creations found matching your filter</Text>
+          </Box>
         )}
 
-        {/* Pagination */}
-        {filteredImages.length > 0 && (
-          <Flex justify="center" align="center" gap={1} mt={4}>
-            <Button
-              size="sm"
-              bg="transparent"
-              color="#A5B1A7"
-              _hover={{ bg: '#1A2A1C', color: '#F4F7F0' }}
-              borderRadius="8px"
-              isDisabled={currentPage === 1}
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            >
-              ← Prev
-            </Button>
-            {[1, 2, 3].map((p) => (
-              <Button
-                key={p}
-                size="sm"
-                w="36px"
-                h="36px"
-                bg={currentPage === p ? '#B7FF35' : 'transparent'}
-                color={currentPage === p ? '#080B0A' : '#A5B1A7'}
-                fontWeight={currentPage === p ? 700 : 500}
-                borderRadius="8px"
-                _hover={{
-                  bg: currentPage === p ? '#8DDB39' : '#1A2A1C',
-                  color: currentPage === p ? '#080B0A' : '#F4F7F0',
-                }}
-                onClick={() => setCurrentPage(p)}
-              >
-                {p}
+        {/* LIGHTBOX / IMAGE DETAIL INSPECTOR MODAL */}
+        <Modal isOpen={!!inspectImage} onClose={() => setInspectImage(null)} isCentered size="xl">
+          <ModalOverlay bg="rgba(0,0,0,0.88)" backdropFilter="blur(8px)" />
+          <ModalContent bg="#111713" border="1px solid #2A3A2C" borderRadius="18px" color="#F4F7F0">
+            <ModalHeader borderBottom="1px solid #1A2A1C" py={3.5}>
+              <Flex align="center" justify="space-between">
+                <Badge bg="rgba(183,255,53,0.15)" color="#B7FF35" fontSize="10px" px={2} py={0.5} borderRadius="4px">
+                  {inspectImage?.category}
+                </Badge>
+                <ModalCloseButton position="static" color="#A5B1A7" />
+              </Flex>
+            </ModalHeader>
+
+            <ModalBody py={4}>
+              {inspectImage && (
+                <>
+                  <Box borderRadius="12px" overflow="hidden" border="1px solid #2A3A2C" mb={4} bg="#080B0A">
+                    <Box
+                      as="img"
+                      src={`https://picsum.photos/seed/${inspectImage.seed}/800/500`}
+                      alt={inspectImage.prompt}
+                      w="100%"
+                      maxH="380px"
+                      objectFit="contain"
+                    />
+                  </Box>
+
+                  <Text fontSize="10px" color="#6B7B6D" textTransform="uppercase" fontWeight="bold" mb={1}>
+                    Generation Prompt
+                  </Text>
+                  <Text fontSize="sm" color="#F4F7F0" mb={3} lineHeight="1.6">
+                    {inspectImage.prompt}
+                  </Text>
+
+                  <Flex justify="space-between" align="center" bg="#0D120E" p={2.5} borderRadius="8px" border="1px solid #1A2A1C">
+                    <Text fontSize="xs" color="#A5B1A7">Model: <span style={{ color: '#F4F7F0' }}>{inspectImage.model}</span></Text>
+                    <Text fontSize="xs" color="#A5B1A7">Created: <span style={{ color: '#F4F7F0' }}>{inspectImage.date}</span></Text>
+                  </Flex>
+                </>
+              )}
+            </ModalBody>
+
+            <ModalFooter borderTop="1px solid #1A2A1C" py={3} justify="space-between">
+              <HStack spacing={2}>
+                <Button
+                  size="sm"
+                  bg="#B7FF35"
+                  color="#080B0A"
+                  fontWeight="bold"
+                  leftIcon={<Text>🎨</Text>}
+                  onClick={() => {
+                    navigate('/create');
+                    setInspectImage(null);
+                  }}
+                >
+                  Remix in Generator
+                </Button>
+                {inspectImage && (
+                  <Button
+                    as="a"
+                    href={`https://picsum.photos/seed/${inspectImage.seed}/800/500`}
+                    download="creation.png"
+                    target="_blank"
+                    size="sm"
+                    variant="outline"
+                    borderColor="#2A3A2C"
+                    color="#F4F7F0"
+                    leftIcon={<DownloadIcon />}
+                  >
+                    Save
+                  </Button>
+                )}
+              </HStack>
+
+              <Button size="sm" variant="ghost" color="#A5B1A7" onClick={() => setInspectImage(null)}>
+                Close
               </Button>
-            ))}
-            <Text color="#A5B1A7" fontSize="sm" px={1}>...</Text>
-            <Button
-              size="sm"
-              w="36px"
-              h="36px"
-              bg="transparent"
-              color="#A5B1A7"
-              borderRadius="8px"
-              _hover={{ bg: '#1A2A1C', color: '#F4F7F0' }}
-              onClick={() => setCurrentPage(10)}
-            >
-              10
-            </Button>
-            <Button
-              size="sm"
-              bg="transparent"
-              color="#A5B1A7"
-              _hover={{ bg: '#1A2A1C', color: '#F4F7F0' }}
-              borderRadius="8px"
-              onClick={() => setCurrentPage((p) => p + 1)}
-            >
-              Next →
-            </Button>
-          </Flex>
-        )}
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </Box>
     </WorkspaceLayout>
   );

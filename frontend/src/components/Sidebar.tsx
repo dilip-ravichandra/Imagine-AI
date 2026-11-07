@@ -4,12 +4,9 @@ import { Link, useLocation } from 'react-router-dom';
 
 const NAV_ITEMS = [
   { label: 'Home', path: '/dashboard', icon: '🏠' },
-  { label: 'Create Studio', path: '/create', icon: '🎨' },
+  { label: 'Image Generator', path: '/create', icon: '🎨' },
   { label: 'Storybook Studio', path: '/storybook', icon: '📖' },
-  { label: 'Learn Studio', path: '/learn', icon: '📚' },
-  { label: 'Image Editor', path: '/edit', icon: '✏️' },
-  { label: 'Imagine Canvas', path: '/canvas', icon: '🖼️' },
-  { label: 'Gallery', path: '/gallery', icon: '🖼️' },
+  { label: 'Gallery & Hub', path: '/gallery', icon: '🖼️' },
 ];
 
 const ADMIN_ITEMS = [
