@@ -1,0 +1,11 @@
+# P3A adaptation (GPU laptop / Colab only). The API and tests do NOT need this file.
+# Install the CUDA build of torch + torchvision FIRST from pytorch.org (RTX 50-series/Blackwell needs CUDA 12.8+), then:
+-r requirements-ml.txt
+# Must equal the vendored trainer's tag (ai_engine/training/third_party). Others are floors: NOT verified together
+# in the build sandbox (no torch there). Pin exact versions after the first successful smoke run.
+diffusers==0.35.1
+peft>=0.14
+datasets>=3.2
+torchvision>=0.22
+tqdm>=4.66
+packaging>=23

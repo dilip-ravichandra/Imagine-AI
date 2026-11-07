@@ -1,0 +1,23 @@
+# A=added M=modified (relative to the P5A ZIP)
+M .env.example
+M .gitignore
+M CHANGELOG_TASK.md
+M HANDOFF_NEXT_CLAUDE.md
+M PHASE_TRACKER.md
+M README.md
+M TEST_RESULTS.md
+M ai_engine/adaptive/__init__.py
+A ai_engine/adaptive/{profiles,policy,resources,controller,executor,profile_build}.py
+M backend/app/config.py
+M backend/app/main.py
+M backend/app/services/errors.py
+M backend/app/services/generation.py
+A backend/app/services/adaptive.py
+M docs/API_CONTRACT_v1.md
+A docs/P6_ADAPTIVE.md
+A evaluation/profiles/.gitkeep
+A evaluation/results/p6/demo_decisions.json
+A evaluation/scripts/{build_adaptive_profile,run_p6_profile_sweep,demo_p6_controller}.py
+A tests/adaptive_helpers.py
+A tests/fixtures/adaptive_profile_synthetic.json
+A tests/test_adaptive_{profiles,policy_resources,controller,executor,service,scripts,api}.py

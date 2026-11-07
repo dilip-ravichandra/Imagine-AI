@@ -1,0 +1,62 @@
+# A=added M=modified (relative to the P5A ZIP)
+M .gitignore
+M CHANGELOG_TASK.md
+M HANDOFF_NEXT_CLAUDE.md
+M PHASE_TRACKER.md
+M README.md
+M README_TASK.md
+M TEST_RESULTS.md
+M requirements.txt
+A ai_engine/evaluation/__init__.py
+A ai_engine/evaluation/cv_pipelines.py
+A ai_engine/evaluation/dryrun.py
+A ai_engine/evaluation/harness.py
+A ai_engine/evaluation/metrics.py
+A ai_engine/evaluation/report.py
+A ai_engine/evaluation/sizes.py
+A ai_engine/evaluation/variants.py
+A docs/P7A_EVAL.md
+A evaluation/results/p7/.gitkeep
+A evaluation/scripts/analyze_p7_results.py
+A evaluation/scripts/run_p7_eval.py
+A tests/p7_helpers.py
+A tests/test_p7_cli.py
+A tests/test_p7_harness.py
+A tests/test_p7_metrics.py
+A tests/test_p7_report.py
+A tests/test_p7_variants_sizes.py
+A ai_engine/evaluation/p7b.py
+A evaluation/scripts/build_p7b_report.py
+A tests/test_p7b.py
+M CHANGELOG_TASK.md
+M HANDOFF_NEXT_CLAUDE.md
+M PHASE_TRACKER.md
+M TEST_RESULTS.md
+
+# Task 08 integration (relative to ImagineAI_Combined_P0-P7B_v0_1)
+A INTEGRATION_REPORT.md
+M README.md
+M README_TASK.md
+M HANDOFF_NEXT_CLAUDE.md
+M TEST_RESULTS.md
+M CHANGELOG_TASK.md
+M FILES_CHANGED.txt
+M PHASE_TRACKER.md
+
+# P9 (relative to P0-P8 v0.2)
+A docs/P9_FINAL/{README,ARCHITECTURE,DESIGN_DOCUMENT,LICENSE_AND_SECRETS_AUDIT,FINAL_CHECKLIST,DEMO_SCRIPT,VIVA_PREP,CLEAN_SETUP_TEST}.md
+A docs/eval_P3_TeamID_DRAFT.md
+M PHASE_TRACKER.md, CHANGELOG_TASK.md, FILES_CHANGED.txt, HANDOFF_NEXT_CLAUDE.md
+
+# Safety audit (relative to v0.3 as received)
+A docs/SAFETY_AND_PHASE_AUDIT.md
+A tests/test_safety.py
+M Dockerfile, .env.example
+M backend/app/config.py, backend/app/main.py
+M ai_engine/optimization/benchmark.py
+M evaluation/scripts/run_p4_benchmarks.py, run_p6_profile_sweep.py, run_p7_eval.py   (pass --allow-unpinned to ClipScorer)
+M ai_engine/evaluation/variants.py, ai_engine/evaluation/p7b.py   (corrected wording)
+M tests/test_p7_report.py, tests/test_p7b.py   (assert corrected wording)
+M docs/API_CONTRACT_v1.md, docs/P4_OPTIMIZATION.md, docs/P6_ADAPTIVE.md, docs/P7A_EVAL.md
+M docs/P9_FINAL/LICENSE_AND_SECRETS_AUDIT.md, docs/P9_FINAL/FINAL_CHECKLIST.md
+M PHASE_TRACKER.md, TEST_RESULTS.md, HANDOFF_NEXT_CLAUDE.md, README_TASK.md, CHANGELOG_TASK.md, FILES_CHANGED.txt

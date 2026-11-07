@@ -1,0 +1,91 @@
+.env.example
+.gitignore
+CHANGELOG_TASK.md
+FILES_CHANGED.txt
+HANDOFF_NEXT_CLAUDE.md
+PHASE_TRACKER.md
+README.md
+README_TASK.md
+TEST_RESULTS.md
+ai_engine/__init__.py
+ai_engine/adaptive/__init__.py
+ai_engine/models/__init__.py
+ai_engine/optimization/__init__.py
+ai_engine/prompt/__init__.py
+ai_engine/prompt/lexicon.py
+ai_engine/prompt/parser.py
+ai_engine/prompt/schema.py
+ai_engine/prompt/suite.py
+ai_engine/training/__init__.py
+android/app/build.gradle.kts
+android/app/src/main/AndroidManifest.xml
+android/app/src/main/java/com/imagineai/app/MainActivity.kt
+android/build.gradle.kts
+android/settings.gradle.kts
+backend/__init__.py
+backend/app/__init__.py
+backend/app/api/__init__.py
+backend/app/config.py
+backend/app/main.py
+backend/app/schemas/__init__.py
+backend/app/schemas/prompt.py
+backend/app/schemas/v1.py
+backend/app/services/__init__.py
+backend/app/services/engine.py
+backend/app/services/errors.py
+backend/app/services/generation.py
+backend/app/services/storage.py
+computer_vision/__init__.py
+computer_vision/artifacts/__init__.py
+computer_vision/edge_aware/__init__.py
+computer_vision/enhancement/__init__.py
+computer_vision/quality/__init__.py
+computer_vision/resize/__init__.py
+docs/API_CONTRACT_v1.md
+docs/BRANCHING_AND_PR_RULES.md
+docs/ENVIRONMENT_REPORT.md
+docs/PROMPT_PARSER.md
+docs/prompt_analysis_schema_v1.json
+evaluation/prompts/prompt_suite_v1.json
+evaluation/results/prompt_suite_v1_holdout_first_run.json
+evaluation/results/prompt_suite_v1_results.json
+evaluation/scripts/run_prompt_suite.py
+pytest.ini
+requirements-ml.txt
+requirements.txt
+tests/__init__.py
+tests/conftest.py
+tests/test_api.py
+tests/test_engine_logic.py
+tests/test_generation_service.py
+tests/test_prompt_integration.py
+tests/test_prompt_parser.py
+tests/test_real_model_smoke.py
+tests/test_repo_structure.py
+tests/test_storage.py
+
+--- P3A additions ---
+ai_engine/training/data.py
+ai_engine/training/build_dataset.py
+ai_engine/training/train_lora.py
+ai_engine/training/compare.py
+ai_engine/training/third_party/train_text_to_image_lora.py   (unmodified diffusers v0.35.1, Apache-2.0)
+ai_engine/training/third_party/README.md
+evaluation/prompts/dataset_prompts.json
+tests/coco_fixture.py
+tests/test_training_data.py
+tests/test_training_launcher.py
+tests/test_training_compare.py
+docs/ADAPTATION.md
+requirements-training.txt
+(edited) README.md, PHASE_TRACKER.md, HANDOFF_NEXT_CLAUDE.md, TEST_RESULTS.md, .gitignore
+
+--- P3B additions ---
+ai_engine/training/adapter.py        (validation + approval gate; shared by train/compare/API)
+ai_engine/training/approve.py        (filled blind review -> approval.json)
+backend/app/schemas/model.py         (additive GET /api/v1/model schemas)
+tests/adapter_fixture.py, tests/test_adapter_gate.py, tests/test_approve_cli.py, tests/test_adapter_engine.py
+docs/ADAPTATION_RESULT.md            (blank template; do not fabricate)
+(edited) backend/app/config.py, backend/app/main.py, backend/app/services/engine.py,
+         ai_engine/training/compare.py (shared validation, writes compare_meta.json), ai_engine/training/train_lora.py (shared constants),
+         docs/ADAPTATION.md, docs/API_CONTRACT_v1.md, .env.example, README.md, PHASE_TRACKER.md, HANDOFF_NEXT_CLAUDE.md, TEST_RESULTS.md

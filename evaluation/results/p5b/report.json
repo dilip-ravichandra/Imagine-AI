@@ -1,0 +1,716 @@
+[
+  {
+    "case": "clean scene",
+    "group": "control",
+    "prompt": "",
+    "suppressed": [],
+    "flags_before": [],
+    "flags_after": [],
+    "changed": false,
+    "steps": [],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.212,
+      "brightness": 0.568,
+      "contrast": 0.083,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.212,
+      "brightness": 0.568,
+      "contrast": 0.083,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "blur sigma 1.5",
+    "group": "degradation",
+    "prompt": "",
+    "suppressed": [],
+    "flags_before": [
+      "blur"
+    ],
+    "flags_after": [
+      "blur"
+    ],
+    "changed": false,
+    "steps": [
+      {
+        "name": "sharpen",
+        "flag": "blur",
+        "accepted": false,
+        "reason": "rejected: target measurement did not improve enough",
+        "before": 0.521,
+        "after": 0.473
+      }
+    ],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.521,
+      "brightness": 0.568,
+      "contrast": 0.078,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.521,
+      "brightness": 0.568,
+      "contrast": 0.078,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "blur sigma 3",
+    "group": "degradation",
+    "prompt": "",
+    "suppressed": [],
+    "flags_before": [
+      "blur"
+    ],
+    "flags_after": [
+      "blur"
+    ],
+    "changed": false,
+    "steps": [
+      {
+        "name": "sharpen",
+        "flag": "blur",
+        "accepted": false,
+        "reason": "rejected: target measurement did not improve enough",
+        "before": 0.69,
+        "after": 0.675
+      }
+    ],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.69,
+      "brightness": 0.568,
+      "contrast": 0.073,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.69,
+      "brightness": 0.568,
+      "contrast": 0.073,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "noise sigma 8",
+    "group": "degradation",
+    "prompt": "",
+    "suppressed": [],
+    "flags_before": [
+      "noise"
+    ],
+    "flags_after": [],
+    "changed": true,
+    "steps": [
+      {
+        "name": "denoise",
+        "flag": "noise",
+        "accepted": true,
+        "reason": "accepted",
+        "before": 8.154,
+        "after": 1.812
+      }
+    ],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 8.154,
+      "blur_ratio": 0.237,
+      "brightness": 0.566,
+      "contrast": 0.086,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 1.812,
+      "blur_ratio": 0.219,
+      "brightness": 0.566,
+      "contrast": 0.084,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.066
+    }
+  },
+  {
+    "case": "noise sigma 15",
+    "group": "degradation",
+    "prompt": "",
+    "suppressed": [],
+    "flags_before": [
+      "noise"
+    ],
+    "flags_after": [],
+    "changed": true,
+    "steps": [
+      {
+        "name": "denoise",
+        "flag": "noise",
+        "accepted": true,
+        "reason": "accepted",
+        "before": 15.073,
+        "after": 4.201
+      }
+    ],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 15.073,
+      "blur_ratio": 0.257,
+      "brightness": 0.566,
+      "contrast": 0.092,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 4.201,
+      "blur_ratio": 0.228,
+      "brightness": 0.566,
+      "contrast": 0.084,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.019
+    }
+  },
+  {
+    "case": "dark x0.3",
+    "group": "degradation",
+    "prompt": "",
+    "suppressed": [],
+    "flags_before": [
+      "dark",
+      "low_contrast"
+    ],
+    "flags_after": [
+      "low_contrast"
+    ],
+    "changed": true,
+    "steps": [
+      {
+        "name": "exposure",
+        "flag": "dark",
+        "accepted": true,
+        "reason": "accepted",
+        "before": 0.031,
+        "after": 0.0
+      },
+      {
+        "name": "contrast",
+        "flag": "low_contrast",
+        "accepted": false,
+        "reason": "rejected: target measurement did not improve enough",
+        "before": 0.033,
+        "after": 0.034
+      }
+    ],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.212,
+      "brightness": 0.169,
+      "contrast": 0.025,
+      "colour_cast": 0.097,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.21,
+      "brightness": 0.296,
+      "contrast": 0.033,
+      "colour_cast": 0.064,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "low contrast",
+    "group": "degradation",
+    "prompt": "",
+    "suppressed": [],
+    "flags_before": [
+      "low_contrast"
+    ],
+    "flags_after": [
+      "low_contrast"
+    ],
+    "changed": false,
+    "steps": [
+      {
+        "name": "contrast",
+        "flag": "low_contrast",
+        "accepted": false,
+        "reason": "rejected: target measurement did not improve enough",
+        "before": 0.021,
+        "after": 0.021
+      }
+    ],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.213,
+      "brightness": 0.517,
+      "contrast": 0.021,
+      "colour_cast": 0.027,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.213,
+      "brightness": 0.517,
+      "contrast": 0.021,
+      "colour_cast": 0.027,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "colour cast",
+    "group": "degradation",
+    "prompt": "",
+    "suppressed": [],
+    "flags_before": [
+      "colour_cast"
+    ],
+    "flags_after": [],
+    "changed": true,
+    "steps": [
+      {
+        "name": "white_balance",
+        "flag": "colour_cast",
+        "accepted": true,
+        "reason": "accepted",
+        "before": 0.267,
+        "after": 0.116
+      }
+    ],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.209,
+      "brightness": 0.528,
+      "contrast": 0.086,
+      "colour_cast": 0.267,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.21,
+      "brightness": 0.548,
+      "contrast": 0.085,
+      "colour_cast": 0.116,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "overexposed x1.8",
+    "group": "degradation",
+    "prompt": "",
+    "suppressed": [],
+    "flags_before": [
+      "bright",
+      "clipped_highlights"
+    ],
+    "flags_after": [
+      "bright",
+      "clipped_highlights"
+    ],
+    "changed": true,
+    "steps": [
+      {
+        "name": "exposure",
+        "flag": "bright",
+        "accepted": true,
+        "reason": "accepted",
+        "before": 0.043,
+        "after": 0.005
+      }
+    ],
+    "notes": [
+      "not correctable by filters, left flagged: clipped_highlights"
+    ],
+    "metrics_before": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.191,
+      "brightness": 0.893,
+      "contrast": 0.132,
+      "colour_cast": 0.045,
+      "clipped_bright": 0.239,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.191,
+      "brightness": 0.855,
+      "contrast": 0.167,
+      "colour_cast": 0.063,
+      "clipped_bright": 0.221,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "oversharpened (halo)",
+    "group": "degradation",
+    "prompt": "",
+    "suppressed": [],
+    "flags_before": [
+      "halo"
+    ],
+    "flags_after": [
+      "halo"
+    ],
+    "changed": false,
+    "steps": [],
+    "notes": [
+      "not correctable by filters, left flagged: halo"
+    ],
+    "metrics_before": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.211,
+      "brightness": 0.567,
+      "contrast": 0.09,
+      "colour_cast": 0.097,
+      "clipped_bright": 0.006,
+      "halo_score": 0.915
+    },
+    "metrics_after": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.211,
+      "brightness": 0.567,
+      "contrast": 0.09,
+      "colour_cast": 0.097,
+      "clipped_bright": 0.006,
+      "halo_score": 0.915
+    }
+  },
+  {
+    "case": "blur 2 + noise 8",
+    "group": "degradation",
+    "prompt": "",
+    "suppressed": [],
+    "flags_before": [
+      "blur",
+      "noise"
+    ],
+    "flags_after": [
+      "blur"
+    ],
+    "changed": true,
+    "steps": [
+      {
+        "name": "denoise",
+        "flag": "noise",
+        "accepted": true,
+        "reason": "accepted",
+        "before": 7.907,
+        "after": 1.977
+      },
+      {
+        "name": "sharpen",
+        "flag": "blur",
+        "accepted": false,
+        "reason": "rejected: target measurement did not improve enough",
+        "before": 0.524,
+        "after": 0.485
+      }
+    ],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 7.907,
+      "blur_ratio": 0.5,
+      "brightness": 0.566,
+      "contrast": 0.079,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 1.977,
+      "blur_ratio": 0.524,
+      "brightness": 0.566,
+      "contrast": 0.076,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "dark + noise 6",
+    "group": "degradation",
+    "prompt": "",
+    "suppressed": [],
+    "flags_before": [
+      "noise",
+      "dark",
+      "low_contrast"
+    ],
+    "flags_after": [
+      "low_contrast"
+    ],
+    "changed": true,
+    "steps": [
+      {
+        "name": "denoise",
+        "flag": "noise",
+        "accepted": true,
+        "reason": "accepted",
+        "before": 5.93,
+        "after": 1.483
+      },
+      {
+        "name": "exposure",
+        "flag": "dark",
+        "accepted": true,
+        "reason": "accepted",
+        "before": 0.033,
+        "after": 0.0
+      },
+      {
+        "name": "contrast",
+        "flag": "low_contrast",
+        "accepted": true,
+        "reason": "accepted",
+        "before": 0.033,
+        "after": 0.037
+      }
+    ],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 5.93,
+      "blur_ratio": 0.263,
+      "brightness": 0.167,
+      "contrast": 0.029,
+      "colour_cast": 0.098,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 2.389,
+      "blur_ratio": 0.239,
+      "brightness": 0.307,
+      "contrast": 0.037,
+      "colour_cast": 0.062,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "night scene, prompt says night",
+    "group": "control: intended look",
+    "prompt": "a lighthouse at night",
+    "suppressed": [
+      "dark",
+      "low_contrast"
+    ],
+    "flags_before": [],
+    "flags_after": [],
+    "changed": false,
+    "steps": [],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.212,
+      "brightness": 0.169,
+      "contrast": 0.025,
+      "colour_cast": 0.097,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.212,
+      "brightness": 0.169,
+      "contrast": 0.025,
+      "colour_cast": 0.097,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "same dark image, prompt silent",
+    "group": "control: intended look",
+    "prompt": "a lighthouse",
+    "suppressed": [],
+    "flags_before": [
+      "dark",
+      "low_contrast"
+    ],
+    "flags_after": [
+      "low_contrast"
+    ],
+    "changed": true,
+    "steps": [
+      {
+        "name": "exposure",
+        "flag": "dark",
+        "accepted": true,
+        "reason": "accepted",
+        "before": 0.031,
+        "after": 0.0
+      },
+      {
+        "name": "contrast",
+        "flag": "low_contrast",
+        "accepted": false,
+        "reason": "rejected: target measurement did not improve enough",
+        "before": 0.033,
+        "after": 0.034
+      }
+    ],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.212,
+      "brightness": 0.169,
+      "contrast": 0.025,
+      "colour_cast": 0.097,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.21,
+      "brightness": 0.296,
+      "contrast": 0.033,
+      "colour_cast": 0.064,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "blue underwater tint, prompt says underwater",
+    "group": "control: intended look",
+    "prompt": "a diver underwater",
+    "suppressed": [
+      "colour_cast"
+    ],
+    "flags_before": [],
+    "flags_after": [],
+    "changed": false,
+    "steps": [],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.208,
+      "brightness": 0.47,
+      "contrast": 0.081,
+      "colour_cast": 0.409,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.208,
+      "brightness": 0.47,
+      "contrast": 0.081,
+      "colour_cast": 0.409,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "same tint, prompt silent",
+    "group": "control: intended look",
+    "prompt": "a diver",
+    "suppressed": [],
+    "flags_before": [
+      "colour_cast"
+    ],
+    "flags_after": [
+      "colour_cast"
+    ],
+    "changed": true,
+    "steps": [
+      {
+        "name": "white_balance",
+        "flag": "colour_cast",
+        "accepted": true,
+        "reason": "accepted",
+        "before": 0.409,
+        "after": 0.249
+      }
+    ],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.208,
+      "brightness": 0.47,
+      "contrast": 0.081,
+      "colour_cast": 0.409,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 0.0,
+      "blur_ratio": 0.209,
+      "brightness": 0.489,
+      "contrast": 0.079,
+      "colour_cast": 0.249,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    }
+  },
+  {
+    "case": "INTENDED fine grain (sigma 8)",
+    "group": "control: detector cannot tell grain from noise",
+    "prompt": "film grain photo",
+    "suppressed": [],
+    "flags_before": [
+      "noise"
+    ],
+    "flags_after": [],
+    "changed": true,
+    "steps": [
+      {
+        "name": "denoise",
+        "flag": "noise",
+        "accepted": true,
+        "reason": "accepted",
+        "before": 8.072,
+        "after": 1.977
+      }
+    ],
+    "notes": [],
+    "metrics_before": {
+      "noise_sigma": 8.072,
+      "blur_ratio": 0.236,
+      "brightness": 0.566,
+      "contrast": 0.086,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.0
+    },
+    "metrics_after": {
+      "noise_sigma": 1.977,
+      "blur_ratio": 0.219,
+      "brightness": 0.566,
+      "contrast": 0.084,
+      "colour_cast": 0.096,
+      "clipped_bright": 0.0,
+      "halo_score": 0.041
+    }
+  }
+]

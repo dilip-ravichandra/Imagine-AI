@@ -1,0 +1,747 @@
+{
+ "suite_version": "1.0",
+ "parser_version": "rules-1.0.0",
+ "split": "all",
+ "date": "2026-11-06",
+ "python": "3.12.3",
+ "summary": {
+  "passed": 79,
+  "total": 87,
+  "by_category": {
+   "simple": "5/5",
+   "multi_object": "8/8",
+   "attributes": "10/10",
+   "relations": "17/17",
+   "scene_lighting": "12/12",
+   "ambiguous": "14/14",
+   "long": "1/1",
+   "unseen": "12/20"
+  }
+ },
+ "cases": [
+  {
+   "id": "simple-01",
+   "category": "simple",
+   "split": "dev",
+   "prompt": "a cat",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "simple-02",
+   "category": "simple",
+   "split": "dev",
+   "prompt": "A lighthouse",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "simple-03",
+   "category": "simple",
+   "split": "dev",
+   "prompt": "dragon",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "simple-04",
+   "category": "simple",
+   "split": "dev",
+   "prompt": "Draw a red balloon",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "simple-05",
+   "category": "simple",
+   "split": "dev",
+   "prompt": "a photo of a mountain lake",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "multi-01",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "a dog and a cat",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "multi-02",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "three dogs, two cats and a parrot",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "multi-03",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "an apple, a banana and an orange",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "multi-04",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "a robot, a dragon, a castle and a unicorn",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "multi-05",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "5 ducks",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "multi-06",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "several birds and a few clouds",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "multi-07",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "a pair of shoes",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "multi-08",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "cats and dogs",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "attr-01",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a fluffy white cat",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "attr-02",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a tall green tree",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "attr-03",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a big wooden boat",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "attr-04",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a dark blue car",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "attr-05",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a red and blue robot",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "attr-06",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a tall, green tree",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "attr-07",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a traffic light",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "attr-08",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a man's hat",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "attr-09",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a small red car and a large blue truck",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "attr-10",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "The Ancient Stone Tower",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-01",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "A red robot beside a blue submarine",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-02",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a cat behind a fence",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-03",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a bird above a house",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-04",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a boat below a bridge",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-05",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a lamp to the left of a sofa",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-06",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a tree on the right of a house",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-07",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a car in front of a house",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-08",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a cat inside a box",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-09",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a dog next to a bicycle",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-10",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a cup on a table",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-11",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a ball under a chair",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-12",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a cat sitting on a sofa beside a lamp",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-13",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a fish in a bowl",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-14",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a bird flying over a lake",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-15",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a robot between two trees",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-16",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a clock on a wall",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "rel-17",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a lamp behind a sofa and a rug in front of the sofa",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "scene-01",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a quiet village at sunset",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "scene-02",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a city street at night with neon lights",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "scene-03",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a foggy forest in the morning",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "scene-04",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a woman reading a book by candlelight",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "scene-05",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a snowy mountain village under moonlight",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "scene-06",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a beach with dramatic lighting",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "scene-07",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a cat on a sofa, studio lighting, photorealistic",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "scene-08",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a lighthouse in the style of Van Gogh at dusk",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "scene-09",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a watercolor painting of a cat",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "scene-10",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a cyberpunk city at night",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "scene-11",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a robot underwater",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "scene-12",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a night sky full of stars",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-01",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "something nice",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-02",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "it",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-03",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a cat or a dog",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-04",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a thing in a place",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-05",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "the cat is sitting on the mat",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-06",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a bowl of fruit",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-07",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a person standing in the background",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-08",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a red car on the left and a blue car on the right",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-09",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a cat and a dog sitting on a sofa",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-10",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "no cats",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-11",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a street without cars",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-12",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a cat in a forest, no birds, and a dog",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-13",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a vintage car",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "amb-14",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a robot by a lake",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "long-01",
+   "category": "long",
+   "split": "dev",
+   "prompt": "A small red fox sitting on a mossy log beside a clear blue stream in a quiet autumn forest, a tall oak tree behind the fox, two white rabbits near the stream, a wooden cabin in the distance, a flock of birds above the trees, soft golden light at sunset, oil painting",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-01",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a wizard holding a glowing lantern beside an old stone well",
+   "passed": false,
+   "failures": [
+    "missing object {'name': 'lantern', 'attributes': {'other': ['glowing']}}; got [('wizard', 1, []), ('lantern', None, []), ('well', 1, ['old', 'stone'])]",
+    "unexpected objects ['lantern']",
+    "missing relations [('wizard', 'beside', 'well')]; got [\"('lantern', 'beside', 'well')\"]",
+    "unexpected relations [\"('lantern', 'beside', 'well')\"]"
+   ]
+  },
+  {
+   "id": "unseen-02",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "two penguins standing on an iceberg under a pink sky",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-03",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a bowl of oranges on a kitchen table",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-04",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a futuristic city with flying cars at dusk",
+   "passed": false,
+   "failures": [
+    "missing relations [('city', 'with', 'car')]; got []"
+   ]
+  },
+  {
+   "id": "unseen-05",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a golden crown on a velvet cushion",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-06",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "an astronaut riding a horse on the moon",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-07",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a pencil sketch of an old man with a long beard",
+   "passed": false,
+   "failures": [
+    "unexpected objects ['pencil']",
+    "missing style ['pencil sketch']; got ['sketch']"
+   ]
+  },
+  {
+   "id": "unseen-08",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "four candles arranged in a row on a dark table",
+   "passed": false,
+   "failures": [
+    "missing object {'name': 'candle', 'count': 4}; got [('arranged', 4, []), ('row', 1, []), ('table', 1, ['dark'])]",
+    "missing relations [('candle', 'on', 'table')]; got [\"('arranged', 'inside', 'row')\", \"('row', 'on', 'table')\"]"
+   ]
+  },
+  {
+   "id": "unseen-09",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a red double-decker bus in front of a clock tower",
+   "passed": false,
+   "failures": [
+    "missing object {'name': 'clock tower'}; got [('bus', 1, ['red']), ('tower', 1, [])]",
+    "unexpected objects ['tower']",
+    "missing relations [('bus', 'in_front_of', 'clock tower')]; got [\"('bus', 'in_front_of', 'tower')\"]",
+    "unexpected relations [\"('bus', 'in_front_of', 'tower')\"]"
+   ]
+  },
+  {
+   "id": "unseen-10",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "three small boats on a calm lake at sunrise",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-11",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a bear catching fish in a river",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-12",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a teapot and two cups on a wooden tray",
+   "passed": false,
+   "failures": [
+    "missing relations [('teapot', 'on', 'tray')]; got [\"('cup', 'on', 'tray')\"]"
+   ]
+  },
+  {
+   "id": "unseen-13",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a girl holding an umbrella in the rain",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-14",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a knight in shining armor",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-15",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a hot air balloon over the ocean",
+   "passed": false,
+   "failures": [
+    "missing object {'name': 'hot air balloon', 'count': 1}; got [('balloon', 1, ['hot'])]",
+    "unexpected objects ['balloon']",
+    "missing relations [('hot air balloon', 'above', 'ocean')]; got [\"('balloon', 'above', 'ocean')\"]",
+    "unexpected relations [\"('balloon', 'above', 'ocean')\"]"
+   ]
+  },
+  {
+   "id": "unseen-16",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a stack of books next to a window",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-17",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a cheerful snowman wearing a red scarf",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-18",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "an empty street at midnight, black and white photo",
+   "passed": false,
+   "failures": [
+    "unexpected objects ['photo']",
+    "missing style ['photo']; got ['black and white']"
+   ]
+  },
+  {
+   "id": "unseen-19",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a vase of sunflowers to the left of a window",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-20",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a herd of elephants crossing a dusty road",
+   "passed": true,
+   "failures": []
+  }
+ ]
+}

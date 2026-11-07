@@ -1,0 +1,12 @@
+fastapi>=0.110
+pydantic>=2.5
+uvicorn>=0.27
+httpx>=0.27
+pytest>=8.0
+pillow>=10.0
+psutil>=5.9
+numpy>=1.26
+# OpenCV: tested with 5.0.0 only; the 4.9 floor is unverified
+opencv-python-headless>=4.9
+# P7A quality-vs-cost plot (imported lazily; tests exercise it)
+matplotlib>=3.8

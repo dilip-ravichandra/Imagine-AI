@@ -1,0 +1,136 @@
+{
+  "source": "synthetic degraded scene",
+  "note": "Synthetic image with deliberate degradation: shows behaviour only, NOT evidence of improvement on real model output.",
+  "measured_input": {
+    "mean_luma": 0.2889,
+    "std_luma": 0.0454,
+    "laplacian_variance": 227.09,
+    "edge_density": 0.0052,
+    "channel_means_rgb": [
+      70.6,
+      71.1,
+      94.6
+    ]
+  },
+  "stages": [
+    {
+      "stage": "resize",
+      "applied": true,
+      "ms": 5.43,
+      "params": {
+        "width": 512,
+        "height": 512,
+        "mode": "pad",
+        "interpolation": "auto",
+        "multiple_of": 1,
+        "allow_upscale": true,
+        "interpolation_used": "lanczos",
+        "output_size": [
+          512,
+          512
+        ]
+      },
+      "notes": [],
+      "measured_after": {
+        "mean_luma": 0.2889,
+        "std_luma": 0.0451,
+        "laplacian_variance": 82.62,
+        "edge_density": 0.0026,
+        "channel_means_rgb": [
+          70.6,
+          71.1,
+          94.6
+        ]
+      }
+    },
+    {
+      "stage": "auto_enhance",
+      "applied": true,
+      "ms": 116.37,
+      "params": {
+        "config": {
+          "white_balance": true,
+          "wb_tolerance": 0.08,
+          "wb_max_gain": 1.25,
+          "wb_strength": 0.6,
+          "exposure": true,
+          "mean_low": 0.3,
+          "mean_high": 0.7,
+          "max_gamma": 1.6,
+          "contrast": true,
+          "std_low": 0.12,
+          "clahe_clip": 1.5,
+          "clahe_strength": 0.5
+        },
+        "measured": {
+          "mean_luma": 0.2889,
+          "std_luma": 0.0451
+        },
+        "steps": [
+          "white_balance",
+          "clahe"
+        ]
+      },
+      "notes": [
+        "exposure skipped: mean luma inside dead band"
+      ],
+      "measured_after": {
+        "mean_luma": 0.3144,
+        "std_luma": 0.0551,
+        "laplacian_variance": 279.46,
+        "edge_density": 0.005,
+        "channel_means_rgb": [
+          79.1,
+          79.1,
+          88.5
+        ]
+      }
+    },
+    {
+      "stage": "bilateral",
+      "applied": true,
+      "ms": 16.79,
+      "params": {
+        "d": 7,
+        "sigma_color": 30.0,
+        "sigma_space": 5.0,
+        "strength": 0.5
+      },
+      "notes": [],
+      "measured_after": {
+        "mean_luma": 0.3144,
+        "std_luma": 0.0523,
+        "laplacian_variance": 104.17,
+        "edge_density": 0.0041,
+        "channel_means_rgb": [
+          79.1,
+          79.1,
+          88.5
+        ]
+      }
+    },
+    {
+      "stage": "sharpen",
+      "applied": true,
+      "ms": 15.76,
+      "params": {
+        "amount": 0.6,
+        "radius": 1.0,
+        "edge_threshold": 0.2,
+        "halo_guard": true
+      },
+      "notes": [],
+      "measured_after": {
+        "mean_luma": 0.3144,
+        "std_luma": 0.0524,
+        "laplacian_variance": 106.72,
+        "edge_density": 0.0045,
+        "channel_means_rgb": [
+          79.1,
+          79.1,
+          88.5
+        ]
+      }
+    }
+  ]
+}

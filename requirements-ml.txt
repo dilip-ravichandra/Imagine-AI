@@ -1,0 +1,8 @@
+# ML dependencies for real image generation (P1A). Floors only; pin after the smoke test passes on the laptop.
+# Install the GPU build of torch FIRST using the selector on pytorch.org (RTX 50-series/Blackwell needs a
+# CUDA 12.8+ build -- not verifiable from the build sandbox, check the selector), then:
+torch>=2.7
+diffusers>=0.30
+transformers>=4.40
+accelerate>=0.30
+safetensors>=0.4

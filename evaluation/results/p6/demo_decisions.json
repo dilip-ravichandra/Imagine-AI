@@ -1,0 +1,3122 @@
+{
+ "synthetic": true,
+ "profile_id": "e87072f9aa6c",
+ "rows": [
+  {
+   "budget_mb": 12000.0,
+   "mode": "quick",
+   "selected": "A-fp16-s1-r512",
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "quick",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 12000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.8,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "selected",
+      "code": "SAFE",
+      "detail": "selected",
+      "notes": []
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     }
+    },
+    "ideal_id": "A-fp16-s1-r512",
+    "guardrail": {
+     "basis": "clip_mean",
+     "tolerance": 0.8,
+     "best": 0.3,
+     "worst": 0.25,
+     "threshold": 0.26,
+     "n_pool": 7,
+     "n_passing": 6,
+     "quality_of_selected": 0.27
+    },
+    "selected": {
+     "id": "A-fp16-s1-r512",
+     "model_id": "synthetic/model-a",
+     "precision": "fp16",
+     "steps": 1,
+     "resolution": 512,
+     "device": "cuda",
+     "location": "local",
+     "attention_slicing": false,
+     "vae_slicing": false,
+     "offload": "none",
+     "expected": {
+      "n_runs": 20,
+      "latency_ms_median": 450,
+      "latency_ms_p95": 500,
+      "peak_gpu_mb_max": 3100,
+      "peak_gpu_mb_median": 3000,
+      "peak_ram_mb": 5500,
+      "clip_mean": 0.27
+     },
+     "source": "SYNTHETIC"
+    },
+    "fallback_used": false,
+    "reason": null,
+    "explanation": "Quick mode -> A-fp16-s1-r512: fp16, 1 step(s), 512x512. Lowest measured median latency (450 ms) among 6 of 7 profiled configuration(s) passing the quality guardrail (clip_mean >= 0.26). [Profile is SYNTHETIC test data, not measurements.]",
+    "outcome": "selected",
+    "input_hash": "97889812911add31"
+   }
+  },
+  {
+   "budget_mb": 12000.0,
+   "mode": "balanced",
+   "selected": "A-fp16-s2-r512",
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "balanced",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 12000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.4,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "selected",
+      "code": "SAFE",
+      "detail": "selected",
+      "notes": []
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     }
+    },
+    "ideal_id": "A-fp16-s2-r512",
+    "guardrail": {
+     "basis": "clip_mean",
+     "tolerance": 0.4,
+     "best": 0.3,
+     "worst": 0.25,
+     "threshold": 0.27999999999999997,
+     "n_pool": 7,
+     "n_passing": 5,
+     "quality_of_selected": 0.294
+    },
+    "selected": {
+     "id": "A-fp16-s2-r512",
+     "model_id": "synthetic/model-a",
+     "precision": "fp16",
+     "steps": 2,
+     "resolution": 512,
+     "device": "cuda",
+     "location": "local",
+     "attention_slicing": false,
+     "vae_slicing": false,
+     "offload": "none",
+     "expected": {
+      "n_runs": 20,
+      "latency_ms_median": 800,
+      "latency_ms_p95": 880,
+      "peak_gpu_mb_max": 3100,
+      "peak_gpu_mb_median": 3000,
+      "peak_ram_mb": 5500,
+      "clip_mean": 0.294
+     },
+     "source": "SYNTHETIC"
+    },
+    "fallback_used": false,
+    "reason": null,
+    "explanation": "Balanced mode -> A-fp16-s2-r512: fp16, 2 step(s), 512x512. Lowest measured median latency (800 ms) among 5 of 7 profiled configuration(s) passing the quality guardrail (clip_mean >= 0.28). [Profile is SYNTHETIC test data, not measurements.]",
+    "outcome": "selected",
+    "input_hash": "a65e653444ea66e0"
+   }
+  },
+  {
+   "budget_mb": 12000.0,
+   "mode": "best",
+   "selected": "A-fp32-s4-r512",
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "best",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 12000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.0,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "selected",
+      "code": "SAFE",
+      "detail": "selected",
+      "notes": []
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     }
+    },
+    "ideal_id": "A-fp32-s4-r512",
+    "guardrail": {
+     "basis": "clip_mean",
+     "tolerance": 0.0,
+     "best": 0.3,
+     "worst": 0.25,
+     "threshold": 0.3,
+     "n_pool": 7,
+     "n_passing": 1,
+     "quality_of_selected": 0.3
+    },
+    "selected": {
+     "id": "A-fp32-s4-r512",
+     "model_id": "synthetic/model-a",
+     "precision": "fp32",
+     "steps": 4,
+     "resolution": 512,
+     "device": "cuda",
+     "location": "local",
+     "attention_slicing": false,
+     "vae_slicing": false,
+     "offload": "none",
+     "expected": {
+      "n_runs": 20,
+      "latency_ms_median": 2400,
+      "latency_ms_p95": 2500,
+      "peak_gpu_mb_max": 5200,
+      "peak_gpu_mb_median": 5100,
+      "peak_ram_mb": 6000,
+      "clip_mean": 0.3
+     },
+     "source": "SYNTHETIC"
+    },
+    "fallback_used": false,
+    "reason": null,
+    "explanation": "Best mode -> A-fp32-s4-r512: fp32, 4 step(s), 512x512. Best clip_mean among 7 profiled configuration(s) at 512px. [Profile is SYNTHETIC test data, not measurements.]",
+    "outcome": "selected",
+    "input_hash": "3001b64969da0d99"
+   }
+  },
+  {
+   "budget_mb": 4000.0,
+   "mode": "quick",
+   "selected": "A-fp16-s1-r512",
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "quick",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 4000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.8,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 4000 MB available"
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 4000 MB available"
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "selected",
+      "code": "SAFE",
+      "detail": "selected",
+      "notes": []
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     }
+    },
+    "ideal_id": "A-fp16-s1-r512",
+    "guardrail": {
+     "basis": "clip_mean",
+     "tolerance": 0.8,
+     "best": 0.3,
+     "worst": 0.25,
+     "threshold": 0.26,
+     "n_pool": 7,
+     "n_passing": 6,
+     "quality_of_selected": 0.27
+    },
+    "selected": {
+     "id": "A-fp16-s1-r512",
+     "model_id": "synthetic/model-a",
+     "precision": "fp16",
+     "steps": 1,
+     "resolution": 512,
+     "device": "cuda",
+     "location": "local",
+     "attention_slicing": false,
+     "vae_slicing": false,
+     "offload": "none",
+     "expected": {
+      "n_runs": 20,
+      "latency_ms_median": 450,
+      "latency_ms_p95": 500,
+      "peak_gpu_mb_max": 3100,
+      "peak_gpu_mb_median": 3000,
+      "peak_ram_mb": 5500,
+      "clip_mean": 0.27
+     },
+     "source": "SYNTHETIC"
+    },
+    "fallback_used": false,
+    "reason": null,
+    "explanation": "Quick mode -> A-fp16-s1-r512: fp16, 1 step(s), 512x512. Lowest measured median latency (450 ms) among 6 of 7 profiled configuration(s) passing the quality guardrail (clip_mean >= 0.26). [Profile is SYNTHETIC test data, not measurements.]",
+    "outcome": "selected",
+    "input_hash": "e1d75ec65b116b7e"
+   }
+  },
+  {
+   "budget_mb": 4000.0,
+   "mode": "balanced",
+   "selected": "A-fp16-s2-r512",
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "balanced",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 4000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.4,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 4000 MB available"
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 4000 MB available"
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "selected",
+      "code": "SAFE",
+      "detail": "selected",
+      "notes": []
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     }
+    },
+    "ideal_id": "A-fp16-s2-r512",
+    "guardrail": {
+     "basis": "clip_mean",
+     "tolerance": 0.4,
+     "best": 0.3,
+     "worst": 0.25,
+     "threshold": 0.27999999999999997,
+     "n_pool": 7,
+     "n_passing": 5,
+     "quality_of_selected": 0.294
+    },
+    "selected": {
+     "id": "A-fp16-s2-r512",
+     "model_id": "synthetic/model-a",
+     "precision": "fp16",
+     "steps": 2,
+     "resolution": 512,
+     "device": "cuda",
+     "location": "local",
+     "attention_slicing": false,
+     "vae_slicing": false,
+     "offload": "none",
+     "expected": {
+      "n_runs": 20,
+      "latency_ms_median": 800,
+      "latency_ms_p95": 880,
+      "peak_gpu_mb_max": 3100,
+      "peak_gpu_mb_median": 3000,
+      "peak_ram_mb": 5500,
+      "clip_mean": 0.294
+     },
+     "source": "SYNTHETIC"
+    },
+    "fallback_used": false,
+    "reason": null,
+    "explanation": "Balanced mode -> A-fp16-s2-r512: fp16, 2 step(s), 512x512. Lowest measured median latency (800 ms) among 5 of 7 profiled configuration(s) passing the quality guardrail (clip_mean >= 0.28). [Profile is SYNTHETIC test data, not measurements.]",
+    "outcome": "selected",
+    "input_hash": "34a8779916e8ae47"
+   }
+  },
+  {
+   "budget_mb": 4000.0,
+   "mode": "best",
+   "selected": "A-fp16-s4-r512",
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "best",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 4000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.0,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 4000 MB available"
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 4000 MB available"
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.294 is below the guardrail 0.3"
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.27 is below the guardrail 0.3"
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.294 is below the guardrail 0.3"
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.281 is below the guardrail 0.3"
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.255 is below the guardrail 0.3"
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.262 is below the guardrail 0.3"
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.24 is below the guardrail 0.3"
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.25 is below the guardrail 0.3"
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "selected",
+      "code": "SAFE",
+      "detail": "selected",
+      "notes": []
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     }
+    },
+    "ideal_id": "A-fp32-s4-r512",
+    "guardrail": {
+     "basis": "clip_mean",
+     "tolerance": 0.0,
+     "best": 0.3,
+     "worst": 0.25,
+     "threshold": 0.3,
+     "n_pool": 7,
+     "n_passing": 1,
+     "quality_of_selected": 0.3
+    },
+    "selected": {
+     "id": "A-fp16-s4-r512",
+     "model_id": "synthetic/model-a",
+     "precision": "fp16",
+     "steps": 4,
+     "resolution": 512,
+     "device": "cuda",
+     "location": "local",
+     "attention_slicing": false,
+     "vae_slicing": false,
+     "offload": "none",
+     "expected": {
+      "n_runs": 20,
+      "latency_ms_median": 1500,
+      "latency_ms_p95": 1600,
+      "peak_gpu_mb_max": 3100,
+      "peak_gpu_mb_median": 3000,
+      "peak_ram_mb": 5500,
+      "clip_mean": 0.299
+     },
+     "source": "SYNTHETIC"
+    },
+    "fallback_used": true,
+    "reason": "PRECISION_CHANGED_FOR_RESOURCES",
+    "explanation": "Best mode -> A-fp32-s4-r512: fp32, 4 step(s), 512x512. Best clip_mean among 7 profiled configuration(s) at 512px. Fallback: preferred A-fp32-s4-r512 is not safe (needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 4000 MB available); using A-fp16-s4-r512 (different precision/memory option: precision fp32 -> fp16). [Profile is SYNTHETIC test data, not measurements.]",
+    "outcome": "selected",
+    "input_hash": "c24a5675f3cf51bc"
+   }
+  },
+  {
+   "budget_mb": 3000.0,
+   "mode": "quick",
+   "selected": "A-fp16-s1-r384",
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "quick",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 3000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.8,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "rejected",
+      "code": "HEAVIER_THAN_PREFERRED",
+      "detail": "a fallback never raises resolution or local steps"
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "rejected",
+      "code": "HEAVIER_THAN_PREFERRED",
+      "detail": "a fallback never raises resolution or local steps"
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "rejected",
+      "code": "HEAVIER_THAN_PREFERRED",
+      "detail": "a fallback never raises resolution or local steps"
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "rejected",
+      "code": "HEAVIER_THAN_PREFERRED",
+      "detail": "a fallback never raises resolution or local steps"
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "selected",
+      "code": "SAFE",
+      "detail": "selected",
+      "notes": []
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     }
+    },
+    "ideal_id": "A-fp16-s1-r512",
+    "guardrail": {
+     "basis": "clip_mean",
+     "tolerance": 0.8,
+     "best": 0.3,
+     "worst": 0.25,
+     "threshold": 0.26,
+     "n_pool": 7,
+     "n_passing": 6,
+     "quality_of_selected": 0.27
+    },
+    "selected": {
+     "id": "A-fp16-s1-r384",
+     "model_id": "synthetic/model-a",
+     "precision": "fp16",
+     "steps": 1,
+     "resolution": 384,
+     "device": "cuda",
+     "location": "local",
+     "attention_slicing": false,
+     "vae_slicing": false,
+     "offload": "none",
+     "expected": {
+      "n_runs": 20,
+      "latency_ms_median": 300,
+      "latency_ms_p95": 330,
+      "peak_gpu_mb_max": 2400,
+      "peak_gpu_mb_median": 2300,
+      "peak_ram_mb": 5400,
+      "clip_mean": 0.255
+     },
+     "source": "SYNTHETIC"
+    },
+    "fallback_used": true,
+    "reason": "RESOLUTION_REDUCED_FOR_RESOURCES",
+    "explanation": "Quick mode -> A-fp16-s1-r512: fp16, 1 step(s), 512x512. Lowest measured median latency (450 ms) among 6 of 7 profiled configuration(s) passing the quality guardrail (clip_mean >= 0.26). Fallback: preferred A-fp16-s1-r512 is not safe (needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 3000 MB available); using A-fp16-s1-r384 (lower resolution: resolution 512 -> 384). [Profile is SYNTHETIC test data, not measurements.]",
+    "outcome": "selected",
+    "input_hash": "101a746ee3628eea"
+   }
+  },
+  {
+   "budget_mb": 3000.0,
+   "mode": "balanced",
+   "selected": "A-fp16-s2-r384",
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "balanced",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 3000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.4,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "rejected",
+      "code": "HEAVIER_THAN_PREFERRED",
+      "detail": "a fallback never raises resolution or local steps"
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.255 is below the guardrail 0.2724"
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.24 is below the guardrail 0.2724"
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.25 is below the guardrail 0.2724"
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "selected",
+      "code": "SAFE",
+      "detail": "selected",
+      "notes": []
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     }
+    },
+    "ideal_id": "A-fp16-s2-r512",
+    "guardrail": {
+     "basis": "clip_mean",
+     "tolerance": 0.4,
+     "best": 0.3,
+     "worst": 0.25,
+     "threshold": 0.27999999999999997,
+     "n_pool": 7,
+     "n_passing": 5,
+     "quality_of_selected": 0.294
+    },
+    "selected": {
+     "id": "A-fp16-s2-r384",
+     "model_id": "synthetic/model-a",
+     "precision": "fp16",
+     "steps": 2,
+     "resolution": 384,
+     "device": "cuda",
+     "location": "local",
+     "attention_slicing": false,
+     "vae_slicing": false,
+     "offload": "none",
+     "expected": {
+      "n_runs": 20,
+      "latency_ms_median": 500,
+      "latency_ms_p95": 550,
+      "peak_gpu_mb_max": 2400,
+      "peak_gpu_mb_median": 2300,
+      "peak_ram_mb": 5400,
+      "clip_mean": 0.281
+     },
+     "source": "SYNTHETIC"
+    },
+    "fallback_used": true,
+    "reason": "RESOLUTION_REDUCED_FOR_RESOURCES",
+    "explanation": "Balanced mode -> A-fp16-s2-r512: fp16, 2 step(s), 512x512. Lowest measured median latency (800 ms) among 5 of 7 profiled configuration(s) passing the quality guardrail (clip_mean >= 0.28). Fallback: preferred A-fp16-s2-r512 is not safe (needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 3000 MB available); using A-fp16-s2-r384 (lower resolution: resolution 512 -> 384). [Profile is SYNTHETIC test data, not measurements.]",
+    "outcome": "selected",
+    "input_hash": "60b96d4ae716c00d"
+   }
+  },
+  {
+   "budget_mb": 3000.0,
+   "mode": "best",
+   "selected": "A-fp16-s4-r384",
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "best",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 3000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.0,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 3000 MB available"
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.294 is below the guardrail 0.3"
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.281 is below the guardrail 0.3"
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.255 is below the guardrail 0.3"
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.262 is below the guardrail 0.3"
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.24 is below the guardrail 0.3"
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.25 is below the guardrail 0.3"
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "selected",
+      "code": "SAFE",
+      "detail": "selected",
+      "notes": []
+     }
+    },
+    "ideal_id": "A-fp32-s4-r512",
+    "guardrail": {
+     "basis": "clip_mean",
+     "tolerance": 0.0,
+     "best": 0.3,
+     "worst": 0.25,
+     "threshold": 0.3,
+     "n_pool": 7,
+     "n_passing": 1,
+     "quality_of_selected": 0.3
+    },
+    "selected": {
+     "id": "A-fp16-s4-r384",
+     "model_id": "synthetic/model-a",
+     "precision": "fp16",
+     "steps": 4,
+     "resolution": 384,
+     "device": "cuda",
+     "location": "local",
+     "attention_slicing": false,
+     "vae_slicing": false,
+     "offload": "none",
+     "expected": {
+      "n_runs": 20,
+      "latency_ms_median": 900,
+      "latency_ms_p95": 980,
+      "peak_gpu_mb_max": 2400,
+      "peak_gpu_mb_median": 2300,
+      "peak_ram_mb": 5400,
+      "clip_mean": 0.285
+     },
+     "source": "SYNTHETIC"
+    },
+    "fallback_used": true,
+    "reason": "PRECISION_CHANGED_FOR_RESOURCES",
+    "explanation": "Best mode -> A-fp32-s4-r512: fp32, 4 step(s), 512x512. Best clip_mean among 7 profiled configuration(s) at 512px. Fallback: preferred A-fp32-s4-r512 is not safe (needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 3000 MB available); using A-fp16-s4-r384 (different precision/memory option: resolution 512 -> 384, precision fp32 -> fp16). [Profile is SYNTHETIC test data, not measurements.]",
+    "outcome": "selected",
+    "input_hash": "1a9c091b3251986c"
+   }
+  },
+  {
+   "budget_mb": 2000.0,
+   "mode": "quick",
+   "selected": "A-fp16-s1-r256",
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "quick",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 2000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.8,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "rejected",
+      "code": "HEAVIER_THAN_PREFERRED",
+      "detail": "a fallback never raises resolution or local steps"
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "rejected",
+      "code": "HEAVIER_THAN_PREFERRED",
+      "detail": "a fallback never raises resolution or local steps"
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "selected",
+      "code": "SAFE",
+      "detail": "selected",
+      "notes": []
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     }
+    },
+    "ideal_id": "A-fp16-s1-r512",
+    "guardrail": {
+     "basis": "clip_mean",
+     "tolerance": 0.8,
+     "best": 0.3,
+     "worst": 0.25,
+     "threshold": 0.26,
+     "n_pool": 7,
+     "n_passing": 6,
+     "quality_of_selected": 0.27
+    },
+    "selected": {
+     "id": "A-fp16-s1-r256",
+     "model_id": "synthetic/model-a",
+     "precision": "fp16",
+     "steps": 1,
+     "resolution": 256,
+     "device": "cuda",
+     "location": "local",
+     "attention_slicing": false,
+     "vae_slicing": false,
+     "offload": "none",
+     "expected": {
+      "n_runs": 20,
+      "latency_ms_median": 150,
+      "latency_ms_p95": 170,
+      "peak_gpu_mb_max": 1800,
+      "peak_gpu_mb_median": 1750,
+      "peak_ram_mb": 5300,
+      "clip_mean": 0.24
+     },
+     "source": "SYNTHETIC"
+    },
+    "fallback_used": true,
+    "reason": "RESOLUTION_REDUCED_FOR_RESOURCES",
+    "explanation": "Quick mode -> A-fp16-s1-r512: fp16, 1 step(s), 512x512. Lowest measured median latency (450 ms) among 6 of 7 profiled configuration(s) passing the quality guardrail (clip_mean >= 0.26). Fallback: preferred A-fp16-s1-r512 is not safe (needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 2000 MB available); using A-fp16-s1-r256 (lower resolution: resolution 512 -> 256). [Profile is SYNTHETIC test data, not measurements.]",
+    "outcome": "selected",
+    "input_hash": "75df0b7668d78772"
+   }
+  },
+  {
+   "budget_mb": 2000.0,
+   "mode": "balanced",
+   "selected": "A-fp16-s2-r256",
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "balanced",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 2000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.4,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.24 is below the guardrail 0.2724"
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.25 is below the guardrail 0.2724"
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "accepted",
+      "code": "SAFE",
+      "detail": "fits the resource budget",
+      "notes": []
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "selected",
+      "code": "SAFE",
+      "detail": "selected",
+      "notes": []
+     }
+    },
+    "ideal_id": "A-fp16-s2-r512",
+    "guardrail": {
+     "basis": "clip_mean",
+     "tolerance": 0.4,
+     "best": 0.3,
+     "worst": 0.25,
+     "threshold": 0.27999999999999997,
+     "n_pool": 7,
+     "n_passing": 5,
+     "quality_of_selected": 0.294
+    },
+    "selected": {
+     "id": "A-fp16-s2-r256",
+     "model_id": "synthetic/model-a",
+     "precision": "fp16",
+     "steps": 2,
+     "resolution": 256,
+     "device": "cuda",
+     "location": "local",
+     "attention_slicing": false,
+     "vae_slicing": false,
+     "offload": "none",
+     "expected": {
+      "n_runs": 20,
+      "latency_ms_median": 250,
+      "latency_ms_p95": 280,
+      "peak_gpu_mb_max": 1800,
+      "peak_gpu_mb_median": 1750,
+      "peak_ram_mb": 5300,
+      "clip_mean": 0.262
+     },
+     "source": "SYNTHETIC"
+    },
+    "fallback_used": true,
+    "reason": "RESOLUTION_REDUCED_FOR_RESOURCES",
+    "explanation": "Balanced mode -> A-fp16-s2-r512: fp16, 2 step(s), 512x512. Lowest measured median latency (800 ms) among 5 of 7 profiled configuration(s) passing the quality guardrail (clip_mean >= 0.28). Fallback: preferred A-fp16-s2-r512 is not safe (needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 2000 MB available); using A-fp16-s2-r256 (lower resolution: resolution 512 -> 256). [Profile is SYNTHETIC test data, not measurements.]",
+    "outcome": "selected",
+    "input_hash": "496aa5b719204cbc"
+   }
+  },
+  {
+   "budget_mb": 2000.0,
+   "mode": "best",
+   "selected": null,
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "best",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 2000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.0,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 2000 MB available"
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.294 is below the guardrail 0.3"
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.262 is below the guardrail 0.3"
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.24 is below the guardrail 0.3"
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+      "detail": "clip_mean 0.25 is below the guardrail 0.3"
+     }
+    },
+    "ideal_id": "A-fp32-s4-r512",
+    "outcome": "no_safe_configuration",
+    "input_hash": "0c0df1f9b3bb2f00"
+   }
+  },
+  {
+   "budget_mb": 1000.0,
+   "mode": "quick",
+   "selected": null,
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "quick",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 1000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.8,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 1650 MB (measured max peak 1500 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 1980 MB (measured max peak 1800 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 1980 MB (measured max peak 1800 MB + 10% headroom) but only 1000 MB available"
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 1980 MB (measured max peak 1800 MB + 10% headroom) but only 1000 MB available"
+     }
+    },
+    "outcome": "no_safe_configuration",
+    "input_hash": "71c55472fa63e2e8"
+   }
+  },
+  {
+   "budget_mb": 1000.0,
+   "mode": "balanced",
+   "selected": null,
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "balanced",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 1000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.4,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 1650 MB (measured max peak 1500 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 1980 MB (measured max peak 1800 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 1980 MB (measured max peak 1800 MB + 10% headroom) but only 1000 MB available"
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 1980 MB (measured max peak 1800 MB + 10% headroom) but only 1000 MB available"
+     }
+    },
+    "outcome": "no_safe_configuration",
+    "input_hash": "470e0ab6ba1be9d6"
+   }
+  },
+  {
+   "budget_mb": 1000.0,
+   "mode": "best",
+   "selected": null,
+   "log": {
+    "schema": "adaptive_decision/1",
+    "kind": "initial",
+    "inputs": {
+     "request": {
+      "quality_mode": "best",
+      "resolution": 512,
+      "complexity_level": null,
+      "locked_runtime": null,
+      "allow_remote": false
+     },
+     "snapshot": {
+      "device": "cuda",
+      "gpu_name": "SYNTHETIC GPU",
+      "gpu_total_mb": 8000,
+      "gpu_budget_mb": 1000.0,
+      "ram_available_mb": null,
+      "source": "simulated"
+     },
+     "profile": {
+      "id": "e87072f9aa6c",
+      "synthetic": true,
+      "hardware": {
+       "gpu_name": "SYNTHETIC GPU",
+       "gpu_total_vram_mb": 8000
+      },
+      "model_revision": null
+     },
+     "policy": {
+      "headroom_fraction": 0.1,
+      "memory_statistic": "max",
+      "quality_tolerance": {
+       "quick": 0.8,
+       "balanced": 0.4,
+       "best": 0.0
+      },
+      "complexity_tolerance_scale": {
+       "simple": 1.0,
+       "moderate": 1.0,
+       "complex": 1.0
+      },
+      "unknown_memory": "reject",
+      "require_ram_check": false,
+      "fallback_on": [
+       "oom"
+      ],
+      "fallback_order": [
+       "resolution",
+       "precision",
+       "steps",
+       "model",
+       "remote"
+      ],
+      "max_fallback_attempts": 3,
+      "calibrated": false
+     },
+     "effective_tolerance": 0.0,
+     "attempted": [],
+     "failure": null
+    },
+    "evaluations": {
+     "A-fp32-s4-r768": {
+      "verdict": "rejected",
+      "code": "BENCHMARK_FAILED",
+      "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+     },
+     "R-remote-s2-r512": {
+      "verdict": "rejected",
+      "code": "REMOTE_NOT_ALLOWED",
+      "detail": "remote processing needs explicit user disclosure and consent"
+     },
+     "A-fp32-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp32-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 5720 MB (measured max peak 5200 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s4-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s2-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 3410 MB (measured max peak 3100 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s2-r512-offload": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 1650 MB (measured max peak 1500 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s4-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s2-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s1-r384": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 2640 MB (measured max peak 2400 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s2-r256": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 1980 MB (measured max peak 1800 MB + 10% headroom) but only 1000 MB available"
+     },
+     "A-fp16-s1-r256": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 1980 MB (measured max peak 1800 MB + 10% headroom) but only 1000 MB available"
+     },
+     "B-fp16-s1-r512": {
+      "verdict": "rejected",
+      "code": "EXCEEDS_GPU_BUDGET",
+      "detail": "needs 1980 MB (measured max peak 1800 MB + 10% headroom) but only 1000 MB available"
+     }
+    },
+    "outcome": "no_safe_configuration",
+    "input_hash": "dae929b8ecfd5640"
+   }
+  },
+  {
+   "simulated_oom": true,
+   "failures": [
+    {
+     "entry": "A-fp16-s2-r512",
+     "cause": "oom"
+    },
+    {
+     "entry": "A-fp16-s2-r384",
+     "cause": "oom"
+    }
+   ],
+   "final": "A-fp16-s2-r256",
+   "logs": [
+    {
+     "schema": "adaptive_decision/1",
+     "kind": "initial",
+     "inputs": {
+      "request": {
+       "quality_mode": "balanced",
+       "resolution": 512,
+       "complexity_level": null,
+       "locked_runtime": null,
+       "allow_remote": false
+      },
+      "snapshot": {
+       "device": "cuda",
+       "gpu_name": null,
+       "gpu_total_mb": null,
+       "gpu_budget_mb": 12000,
+       "ram_available_mb": null,
+       "source": "simulated(simulated)"
+      },
+      "profile": {
+       "id": "e87072f9aa6c",
+       "synthetic": true,
+       "hardware": {
+        "gpu_name": "SYNTHETIC GPU",
+        "gpu_total_vram_mb": 8000
+       },
+       "model_revision": null
+      },
+      "policy": {
+       "headroom_fraction": 0.1,
+       "memory_statistic": "max",
+       "quality_tolerance": {
+        "quick": 0.8,
+        "balanced": 0.4,
+        "best": 0.0
+       },
+       "complexity_tolerance_scale": {
+        "simple": 1.0,
+        "moderate": 1.0,
+        "complex": 1.0
+       },
+       "unknown_memory": "reject",
+       "require_ram_check": false,
+       "fallback_on": [
+        "oom"
+       ],
+       "fallback_order": [
+        "resolution",
+        "precision",
+        "steps",
+        "model",
+        "remote"
+       ],
+       "max_fallback_attempts": 3,
+       "calibrated": false
+      },
+      "effective_tolerance": 0.4,
+      "attempted": [],
+      "failure": null
+     },
+     "evaluations": {
+      "A-fp32-s4-r768": {
+       "verdict": "rejected",
+       "code": "BENCHMARK_FAILED",
+       "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+      },
+      "R-remote-s2-r512": {
+       "verdict": "rejected",
+       "code": "REMOTE_NOT_ALLOWED",
+       "detail": "remote processing needs explicit user disclosure and consent"
+      },
+      "A-fp32-s4-r512": {
+       "verdict": "accepted",
+       "code": "SAFE",
+       "detail": "fits the resource budget",
+       "notes": []
+      },
+      "A-fp32-s2-r512": {
+       "verdict": "accepted",
+       "code": "SAFE",
+       "detail": "fits the resource budget",
+       "notes": []
+      },
+      "A-fp16-s4-r512": {
+       "verdict": "accepted",
+       "code": "SAFE",
+       "detail": "fits the resource budget",
+       "notes": []
+      },
+      "A-fp16-s2-r512": {
+       "verdict": "selected",
+       "code": "SAFE",
+       "detail": "selected",
+       "notes": []
+      },
+      "A-fp16-s1-r512": {
+       "verdict": "accepted",
+       "code": "SAFE",
+       "detail": "fits the resource budget",
+       "notes": []
+      },
+      "A-fp16-s2-r512-offload": {
+       "verdict": "accepted",
+       "code": "SAFE",
+       "detail": "fits the resource budget",
+       "notes": []
+      },
+      "A-fp16-s4-r384": {
+       "verdict": "accepted",
+       "code": "SAFE",
+       "detail": "fits the resource budget",
+       "notes": []
+      },
+      "A-fp16-s2-r384": {
+       "verdict": "accepted",
+       "code": "SAFE",
+       "detail": "fits the resource budget",
+       "notes": []
+      },
+      "A-fp16-s1-r384": {
+       "verdict": "accepted",
+       "code": "SAFE",
+       "detail": "fits the resource budget",
+       "notes": []
+      },
+      "A-fp16-s2-r256": {
+       "verdict": "accepted",
+       "code": "SAFE",
+       "detail": "fits the resource budget",
+       "notes": []
+      },
+      "A-fp16-s1-r256": {
+       "verdict": "accepted",
+       "code": "SAFE",
+       "detail": "fits the resource budget",
+       "notes": []
+      },
+      "B-fp16-s1-r512": {
+       "verdict": "accepted",
+       "code": "SAFE",
+       "detail": "fits the resource budget",
+       "notes": []
+      }
+     },
+     "ideal_id": "A-fp16-s2-r512",
+     "guardrail": {
+      "basis": "clip_mean",
+      "tolerance": 0.4,
+      "best": 0.3,
+      "worst": 0.25,
+      "threshold": 0.27999999999999997,
+      "n_pool": 7,
+      "n_passing": 5,
+      "quality_of_selected": 0.294
+     },
+     "selected": {
+      "id": "A-fp16-s2-r512",
+      "model_id": "synthetic/model-a",
+      "precision": "fp16",
+      "steps": 2,
+      "resolution": 512,
+      "device": "cuda",
+      "location": "local",
+      "attention_slicing": false,
+      "vae_slicing": false,
+      "offload": "none",
+      "expected": {
+       "n_runs": 20,
+       "latency_ms_median": 800,
+       "latency_ms_p95": 880,
+       "peak_gpu_mb_max": 3100,
+       "peak_gpu_mb_median": 3000,
+       "peak_ram_mb": 5500,
+       "clip_mean": 0.294
+      },
+      "source": "SYNTHETIC"
+     },
+     "fallback_used": false,
+     "reason": null,
+     "explanation": "Balanced mode -> A-fp16-s2-r512: fp16, 2 step(s), 512x512. Lowest measured median latency (800 ms) among 5 of 7 profiled configuration(s) passing the quality guardrail (clip_mean >= 0.28). [Profile is SYNTHETIC test data, not measurements.]",
+     "outcome": "selected",
+     "input_hash": "04d7059de180886b"
+    },
+    {
+     "schema": "adaptive_decision/1",
+     "kind": "fallback",
+     "inputs": {
+      "request": {
+       "quality_mode": "balanced",
+       "resolution": 512,
+       "complexity_level": null,
+       "locked_runtime": null,
+       "allow_remote": false
+      },
+      "snapshot": {
+       "device": "cuda",
+       "gpu_name": null,
+       "gpu_total_mb": null,
+       "gpu_budget_mb": 12000,
+       "ram_available_mb": null,
+       "source": "simulated(simulated)"
+      },
+      "profile": {
+       "id": "e87072f9aa6c",
+       "synthetic": true,
+       "hardware": {
+        "gpu_name": "SYNTHETIC GPU",
+        "gpu_total_vram_mb": 8000
+       },
+       "model_revision": null
+      },
+      "policy": {
+       "headroom_fraction": 0.1,
+       "memory_statistic": "max",
+       "quality_tolerance": {
+        "quick": 0.8,
+        "balanced": 0.4,
+        "best": 0.0
+       },
+       "complexity_tolerance_scale": {
+        "simple": 1.0,
+        "moderate": 1.0,
+        "complex": 1.0
+       },
+       "unknown_memory": "reject",
+       "require_ram_check": false,
+       "fallback_on": [
+        "oom"
+       ],
+       "fallback_order": [
+        "resolution",
+        "precision",
+        "steps",
+        "model",
+        "remote"
+       ],
+       "max_fallback_attempts": 3,
+       "calibrated": false
+      },
+      "effective_tolerance": 0.4,
+      "attempted": [
+       "A-fp16-s2-r512"
+      ],
+      "failure": {
+       "entry": "A-fp16-s2-r512",
+       "cause": "oom"
+      }
+     },
+     "evaluations": {
+      "A-fp16-s2-r512": {
+       "verdict": "rejected",
+       "code": "ALREADY_ATTEMPTED",
+       "detail": "failed earlier in this request"
+      },
+      "A-fp32-s4-r768": {
+       "verdict": "rejected",
+       "code": "BENCHMARK_FAILED",
+       "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+      },
+      "R-remote-s2-r512": {
+       "verdict": "rejected",
+       "code": "REMOTE_NOT_ALLOWED",
+       "detail": "remote processing needs explicit user disclosure and consent"
+      },
+      "A-fp32-s4-r512": {
+       "verdict": "rejected",
+       "code": "HEAVIER_THAN_PREFERRED",
+       "detail": "a fallback never raises resolution or local steps"
+      },
+      "A-fp32-s2-r512": {
+       "verdict": "rejected",
+       "code": "NO_IMPROVEMENT",
+       "detail": "does not reduce memory relative to the failed configuration (or the metric is missing)"
+      },
+      "A-fp16-s4-r512": {
+       "verdict": "rejected",
+       "code": "HEAVIER_THAN_PREFERRED",
+       "detail": "a fallback never raises resolution or local steps"
+      },
+      "A-fp16-s1-r512": {
+       "verdict": "rejected",
+       "code": "NO_IMPROVEMENT",
+       "detail": "does not reduce memory relative to the failed configuration (or the metric is missing)"
+      },
+      "A-fp16-s4-r384": {
+       "verdict": "rejected",
+       "code": "HEAVIER_THAN_PREFERRED",
+       "detail": "a fallback never raises resolution or local steps"
+      },
+      "A-fp16-s1-r384": {
+       "verdict": "rejected",
+       "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+       "detail": "clip_mean 0.255 is below the guardrail 0.2724"
+      },
+      "A-fp16-s1-r256": {
+       "verdict": "rejected",
+       "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+       "detail": "clip_mean 0.24 is below the guardrail 0.2724"
+      },
+      "B-fp16-s1-r512": {
+       "verdict": "rejected",
+       "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+       "detail": "clip_mean 0.25 is below the guardrail 0.2724"
+      },
+      "A-fp16-s2-r512-offload": {
+       "verdict": "accepted",
+       "code": "SAFE_FALLBACK_CANDIDATE",
+       "detail": "proven and safe"
+      },
+      "A-fp16-s2-r384": {
+       "verdict": "selected",
+       "code": "SAFE_FALLBACK_CANDIDATE",
+       "detail": "selected"
+      },
+      "A-fp16-s2-r256": {
+       "verdict": "accepted",
+       "code": "SAFE_FALLBACK_CANDIDATE",
+       "detail": "proven and safe"
+      }
+     },
+     "ideal_id": "A-fp16-s2-r512",
+     "guardrail": {
+      "basis": "clip_mean",
+      "tolerance": 0.4,
+      "threshold": 0.2724
+     },
+     "selected": {
+      "id": "A-fp16-s2-r384",
+      "model_id": "synthetic/model-a",
+      "precision": "fp16",
+      "steps": 2,
+      "resolution": 384,
+      "device": "cuda",
+      "location": "local",
+      "attention_slicing": false,
+      "vae_slicing": false,
+      "offload": "none",
+      "expected": {
+       "n_runs": 20,
+       "latency_ms_median": 500,
+       "latency_ms_p95": 550,
+       "peak_gpu_mb_max": 2400,
+       "peak_gpu_mb_median": 2300,
+       "peak_ram_mb": 5400,
+       "clip_mean": 0.281
+      },
+      "source": "SYNTHETIC"
+     },
+     "fallback_used": true,
+     "reason": "OOM_DURING_GENERATION",
+     "explanation": "A-fp16-s2-r512 failed (out of memory); switched to A-fp16-s2-r384 (lower resolution: resolution 512 -> 384). [Profile is SYNTHETIC test data, not measurements.]",
+     "outcome": "selected",
+     "changed_from_failed": [
+      "resolution"
+     ],
+     "ladder_stage": "resolution",
+     "input_hash": "fd492e2d929b1c9d"
+    },
+    {
+     "schema": "adaptive_decision/1",
+     "kind": "fallback",
+     "inputs": {
+      "request": {
+       "quality_mode": "balanced",
+       "resolution": 512,
+       "complexity_level": null,
+       "locked_runtime": null,
+       "allow_remote": false
+      },
+      "snapshot": {
+       "device": "cuda",
+       "gpu_name": null,
+       "gpu_total_mb": null,
+       "gpu_budget_mb": 12000,
+       "ram_available_mb": null,
+       "source": "simulated(simulated)"
+      },
+      "profile": {
+       "id": "e87072f9aa6c",
+       "synthetic": true,
+       "hardware": {
+        "gpu_name": "SYNTHETIC GPU",
+        "gpu_total_vram_mb": 8000
+       },
+       "model_revision": null
+      },
+      "policy": {
+       "headroom_fraction": 0.1,
+       "memory_statistic": "max",
+       "quality_tolerance": {
+        "quick": 0.8,
+        "balanced": 0.4,
+        "best": 0.0
+       },
+       "complexity_tolerance_scale": {
+        "simple": 1.0,
+        "moderate": 1.0,
+        "complex": 1.0
+       },
+       "unknown_memory": "reject",
+       "require_ram_check": false,
+       "fallback_on": [
+        "oom"
+       ],
+       "fallback_order": [
+        "resolution",
+        "precision",
+        "steps",
+        "model",
+        "remote"
+       ],
+       "max_fallback_attempts": 3,
+       "calibrated": false
+      },
+      "effective_tolerance": 0.4,
+      "attempted": [
+       "A-fp16-s2-r512",
+       "A-fp16-s2-r384"
+      ],
+      "failure": {
+       "entry": "A-fp16-s2-r384",
+       "cause": "oom"
+      }
+     },
+     "evaluations": {
+      "A-fp16-s2-r512": {
+       "verdict": "rejected",
+       "code": "ALREADY_ATTEMPTED",
+       "detail": "failed earlier in this request"
+      },
+      "A-fp16-s2-r384": {
+       "verdict": "rejected",
+       "code": "ALREADY_ATTEMPTED",
+       "detail": "failed earlier in this request"
+      },
+      "A-fp32-s4-r768": {
+       "verdict": "rejected",
+       "code": "BENCHMARK_FAILED",
+       "detail": "benchmark status was 'oom': known not to work on the profiled machine"
+      },
+      "R-remote-s2-r512": {
+       "verdict": "rejected",
+       "code": "REMOTE_NOT_ALLOWED",
+       "detail": "remote processing needs explicit user disclosure and consent"
+      },
+      "A-fp32-s4-r512": {
+       "verdict": "rejected",
+       "code": "HEAVIER_THAN_PREFERRED",
+       "detail": "a fallback never raises resolution or local steps"
+      },
+      "A-fp32-s2-r512": {
+       "verdict": "rejected",
+       "code": "HEAVIER_THAN_PREFERRED",
+       "detail": "a fallback never raises resolution or local steps"
+      },
+      "A-fp16-s4-r512": {
+       "verdict": "rejected",
+       "code": "HEAVIER_THAN_PREFERRED",
+       "detail": "a fallback never raises resolution or local steps"
+      },
+      "A-fp16-s1-r512": {
+       "verdict": "rejected",
+       "code": "HEAVIER_THAN_PREFERRED",
+       "detail": "a fallback never raises resolution or local steps"
+      },
+      "A-fp16-s2-r512-offload": {
+       "verdict": "rejected",
+       "code": "HEAVIER_THAN_PREFERRED",
+       "detail": "a fallback never raises resolution or local steps"
+      },
+      "A-fp16-s4-r384": {
+       "verdict": "rejected",
+       "code": "HEAVIER_THAN_PREFERRED",
+       "detail": "a fallback never raises resolution or local steps"
+      },
+      "A-fp16-s1-r384": {
+       "verdict": "rejected",
+       "code": "NO_IMPROVEMENT",
+       "detail": "does not reduce memory relative to the failed configuration (or the metric is missing)"
+      },
+      "B-fp16-s1-r512": {
+       "verdict": "rejected",
+       "code": "HEAVIER_THAN_PREFERRED",
+       "detail": "a fallback never raises resolution or local steps"
+      },
+      "A-fp16-s1-r256": {
+       "verdict": "rejected",
+       "code": "GUARDRAIL_BLOCKS_STEP_REDUCTION",
+       "detail": "clip_mean 0.24 is below the guardrail 0.2646"
+      },
+      "A-fp16-s2-r256": {
+       "verdict": "selected",
+       "code": "SAFE_FALLBACK_CANDIDATE",
+       "detail": "selected"
+      }
+     },
+     "ideal_id": "A-fp16-s2-r512",
+     "guardrail": {
+      "basis": "clip_mean",
+      "tolerance": 0.4,
+      "threshold": 0.2646
+     },
+     "selected": {
+      "id": "A-fp16-s2-r256",
+      "model_id": "synthetic/model-a",
+      "precision": "fp16",
+      "steps": 2,
+      "resolution": 256,
+      "device": "cuda",
+      "location": "local",
+      "attention_slicing": false,
+      "vae_slicing": false,
+      "offload": "none",
+      "expected": {
+       "n_runs": 20,
+       "latency_ms_median": 250,
+       "latency_ms_p95": 280,
+       "peak_gpu_mb_max": 1800,
+       "peak_gpu_mb_median": 1750,
+       "peak_ram_mb": 5300,
+       "clip_mean": 0.262
+      },
+      "source": "SYNTHETIC"
+     },
+     "fallback_used": true,
+     "reason": "OOM_DURING_GENERATION",
+     "explanation": "A-fp16-s2-r384 failed (out of memory); switched to A-fp16-s2-r256 (lower resolution: resolution 384 -> 256). [Profile is SYNTHETIC test data, not measurements.]",
+     "outcome": "selected",
+     "changed_from_failed": [
+      "resolution"
+     ],
+     "ladder_stage": "resolution",
+     "input_hash": "b9557be065f229b4"
+    }
+   ]
+  }
+ ]
+}

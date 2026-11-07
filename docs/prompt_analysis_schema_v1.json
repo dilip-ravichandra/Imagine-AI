@@ -1,0 +1,506 @@
+{
+ "$defs": {
+  "Ambiguity": {
+   "properties": {
+    "code": {
+     "title": "Code",
+     "type": "string"
+    },
+    "detail": {
+     "title": "Detail",
+     "type": "string"
+    },
+    "span": {
+     "anyOf": [
+      {
+       "items": {
+        "type": "integer"
+       },
+       "type": "array"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Span"
+    }
+   },
+   "required": [
+    "code",
+    "detail"
+   ],
+   "title": "Ambiguity",
+   "type": "object"
+  },
+  "Attribute": {
+   "properties": {
+    "type": {
+     "enum": [
+      "color",
+      "size",
+      "material",
+      "other"
+     ],
+     "title": "Type",
+     "type": "string"
+    },
+    "value": {
+     "title": "Value",
+     "type": "string"
+    },
+    "evidence": {
+     "title": "Evidence",
+     "type": "string"
+    },
+    "span": {
+     "items": {
+      "type": "integer"
+     },
+     "title": "Span",
+     "type": "array"
+    }
+   },
+   "required": [
+    "type",
+    "value",
+    "evidence",
+    "span"
+   ],
+   "title": "Attribute",
+   "type": "object"
+  },
+  "Complexity": {
+   "description": "Heuristic about the PROMPT's structure (for later resource decisions). Not a quality or difficulty measure.",
+   "properties": {
+    "object_count": {
+     "title": "Object Count",
+     "type": "integer"
+    },
+    "relation_count": {
+     "title": "Relation Count",
+     "type": "integer"
+    },
+    "attribute_count": {
+     "title": "Attribute Count",
+     "type": "integer"
+    },
+    "level": {
+     "enum": [
+      "simple",
+      "moderate",
+      "complex"
+     ],
+     "title": "Level",
+     "type": "string"
+    }
+   },
+   "required": [
+    "object_count",
+    "relation_count",
+    "attribute_count",
+    "level"
+   ],
+   "title": "Complexity",
+   "type": "object"
+  },
+  "EnvironmentItem": {
+   "properties": {
+    "id": {
+     "title": "Id",
+     "type": "string"
+    },
+    "name": {
+     "title": "Name",
+     "type": "string"
+    },
+    "category": {
+     "enum": [
+      "place",
+      "weather",
+      "setting"
+     ],
+     "title": "Category",
+     "type": "string"
+    },
+    "attributes": {
+     "items": {
+      "$ref": "#/$defs/Attribute"
+     },
+     "title": "Attributes",
+     "type": "array"
+    },
+    "evidence": {
+     "title": "Evidence",
+     "type": "string"
+    },
+    "span": {
+     "items": {
+      "type": "integer"
+     },
+     "title": "Span",
+     "type": "array"
+    }
+   },
+   "required": [
+    "id",
+    "name",
+    "category",
+    "evidence",
+    "span"
+   ],
+   "title": "EnvironmentItem",
+   "type": "object"
+  },
+  "Negation": {
+   "properties": {
+    "text": {
+     "title": "Text",
+     "type": "string"
+    },
+    "evidence": {
+     "title": "Evidence",
+     "type": "string"
+    },
+    "span": {
+     "items": {
+      "type": "integer"
+     },
+     "title": "Span",
+     "type": "array"
+    }
+   },
+   "required": [
+    "text",
+    "evidence",
+    "span"
+   ],
+   "title": "Negation",
+   "type": "object"
+  },
+  "Relation": {
+   "properties": {
+    "subject": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Subject"
+    },
+    "relation": {
+     "title": "Relation",
+     "type": "string"
+    },
+    "object": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Object"
+    },
+    "spatial": {
+     "default": true,
+     "title": "Spatial",
+     "type": "boolean"
+    },
+    "evidence": {
+     "title": "Evidence",
+     "type": "string"
+    },
+    "span": {
+     "items": {
+      "type": "integer"
+     },
+     "title": "Span",
+     "type": "array"
+    }
+   },
+   "required": [
+    "relation",
+    "evidence",
+    "span"
+   ],
+   "title": "Relation",
+   "type": "object"
+  },
+  "SceneObject": {
+   "properties": {
+    "id": {
+     "title": "Id",
+     "type": "string"
+    },
+    "name": {
+     "title": "Name",
+     "type": "string"
+    },
+    "surface": {
+     "title": "Surface",
+     "type": "string"
+    },
+    "count": {
+     "anyOf": [
+      {
+       "type": "integer"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Count"
+    },
+    "count_kind": {
+     "default": "unspecified",
+     "enum": [
+      "exact",
+      "approximate",
+      "plural_unspecified",
+      "unspecified"
+     ],
+     "title": "Count Kind",
+     "type": "string"
+    },
+    "quantifier": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Quantifier"
+    },
+    "attributes": {
+     "items": {
+      "$ref": "#/$defs/Attribute"
+     },
+     "title": "Attributes",
+     "type": "array"
+    },
+    "other_modifiers": {
+     "items": {
+      "type": "string"
+     },
+     "title": "Other Modifiers",
+     "type": "array"
+    },
+    "actions": {
+     "items": {
+      "type": "string"
+     },
+     "title": "Actions",
+     "type": "array"
+    },
+    "frame_position": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Frame Position"
+    },
+    "lexicon_match": {
+     "default": false,
+     "title": "Lexicon Match",
+     "type": "boolean"
+    },
+    "evidence": {
+     "title": "Evidence",
+     "type": "string"
+    },
+    "span": {
+     "items": {
+      "type": "integer"
+     },
+     "title": "Span",
+     "type": "array"
+    }
+   },
+   "required": [
+    "id",
+    "name",
+    "surface",
+    "evidence",
+    "span"
+   ],
+   "title": "SceneObject",
+   "type": "object"
+  },
+  "Tagged": {
+   "properties": {
+    "value": {
+     "title": "Value",
+     "type": "string"
+    },
+    "kind": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Kind"
+    },
+    "evidence": {
+     "title": "Evidence",
+     "type": "string"
+    },
+    "span": {
+     "items": {
+      "type": "integer"
+     },
+     "title": "Span",
+     "type": "array"
+    }
+   },
+   "required": [
+    "value",
+    "evidence",
+    "span"
+   ],
+   "title": "Tagged",
+   "type": "object"
+  },
+  "Validation": {
+   "properties": {
+    "valid": {
+     "default": true,
+     "title": "Valid",
+     "type": "boolean"
+    },
+    "code": {
+     "anyOf": [
+      {
+       "enum": [
+        "EMPTY_PROMPT",
+        "TOO_LONG"
+       ],
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Code"
+    },
+    "message": {
+     "anyOf": [
+      {
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "default": null,
+     "title": "Message"
+    }
+   },
+   "title": "Validation",
+   "type": "object"
+  }
+ },
+ "properties": {
+  "schema_version": {
+   "default": "1.0",
+   "title": "Schema Version",
+   "type": "string"
+  },
+  "parser_version": {
+   "default": "rules-1.0.0",
+   "title": "Parser Version",
+   "type": "string"
+  },
+  "raw_prompt": {
+   "title": "Raw Prompt",
+   "type": "string"
+  },
+  "validation": {
+   "$ref": "#/$defs/Validation"
+  },
+  "objects": {
+   "items": {
+    "$ref": "#/$defs/SceneObject"
+   },
+   "title": "Objects",
+   "type": "array"
+  },
+  "environment": {
+   "items": {
+    "$ref": "#/$defs/EnvironmentItem"
+   },
+   "title": "Environment",
+   "type": "array"
+  },
+  "relations": {
+   "items": {
+    "$ref": "#/$defs/Relation"
+   },
+   "title": "Relations",
+   "type": "array"
+  },
+  "lighting": {
+   "items": {
+    "$ref": "#/$defs/Tagged"
+   },
+   "title": "Lighting",
+   "type": "array"
+  },
+  "style": {
+   "items": {
+    "$ref": "#/$defs/Tagged"
+   },
+   "title": "Style",
+   "type": "array"
+  },
+  "negations": {
+   "items": {
+    "$ref": "#/$defs/Negation"
+   },
+   "title": "Negations",
+   "type": "array"
+  },
+  "ambiguities": {
+   "items": {
+    "$ref": "#/$defs/Ambiguity"
+   },
+   "title": "Ambiguities",
+   "type": "array"
+  },
+  "complexity": {
+   "$ref": "#/$defs/Complexity"
+  },
+  "notice": {
+   "default": "Rule-based, English-only analysis of the prompt TEXT. It does not verify what the generated image contains. Counts and relations are what the prompt says, not what the image shows. CLIP-style alignment scores do not prove count or spatial-relation correctness.",
+   "title": "Notice",
+   "type": "string"
+  }
+ },
+ "required": [
+  "raw_prompt",
+  "validation",
+  "complexity"
+ ],
+ "title": "PromptAnalysis",
+ "type": "object"
+}

@@ -1,0 +1,1905 @@
+{
+ "suite_version": "1.0",
+ "parser_target": "rules-1.0.0",
+ "description": "Prompt-analysis test suite. Gold annotations are author-written. 'dev' cases were used while building the parser. 'holdout' cases (category 'unseen') had their gold written before the parser was run on them; their FIRST-RUN score is recorded in docs/PROMPT_PARSER.md and the cases are frozen (do not tune the parser against them and then quote them as unseen; add NEW unseen prompts instead).",
+ "match_rules": "objects/relations exact unless exact_objects/exact_relations=false; environment/lighting/style/negations/ambiguities are subset checks; relation triples use object/environment names.",
+ "cases": [
+  {
+   "id": "simple-01",
+   "category": "simple",
+   "split": "dev",
+   "prompt": "a cat",
+   "expect": {
+    "objects": [
+     {
+      "name": "cat",
+      "count": 1
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "simple-02",
+   "category": "simple",
+   "split": "dev",
+   "prompt": "A lighthouse",
+   "expect": {
+    "objects": [
+     {
+      "name": "lighthouse",
+      "count": 1
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "simple-03",
+   "category": "simple",
+   "split": "dev",
+   "prompt": "dragon",
+   "expect": {
+    "objects": [
+     {
+      "name": "dragon",
+      "count": null,
+      "count_kind": "unspecified"
+     }
+    ]
+   }
+  },
+  {
+   "id": "simple-04",
+   "category": "simple",
+   "split": "dev",
+   "prompt": "Draw a red balloon",
+   "expect": {
+    "objects": [
+     {
+      "name": "balloon",
+      "count": 1,
+      "attributes": {
+       "color": [
+        "red"
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "simple-05",
+   "category": "simple",
+   "split": "dev",
+   "prompt": "a photo of a mountain lake",
+   "expect": {
+    "objects": [],
+    "environment": [
+     "lake"
+    ],
+    "style": [
+     "photo"
+    ]
+   }
+  },
+  {
+   "id": "multi-01",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "a dog and a cat",
+   "expect": {
+    "objects": [
+     {
+      "name": "dog",
+      "count": 1
+     },
+     {
+      "name": "cat",
+      "count": 1
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "multi-02",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "three dogs, two cats and a parrot",
+   "expect": {
+    "objects": [
+     {
+      "name": "dog",
+      "count": 3
+     },
+     {
+      "name": "cat",
+      "count": 2
+     },
+     {
+      "name": "parrot",
+      "count": 1
+     }
+    ]
+   }
+  },
+  {
+   "id": "multi-03",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "an apple, a banana and an orange",
+   "expect": {
+    "objects": [
+     {
+      "name": "apple",
+      "count": 1
+     },
+     {
+      "name": "banana",
+      "count": 1
+     },
+     {
+      "name": "orange",
+      "count": 1
+     }
+    ]
+   }
+  },
+  {
+   "id": "multi-04",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "a robot, a dragon, a castle and a unicorn",
+   "expect": {
+    "objects": [
+     {
+      "name": "robot"
+     },
+     {
+      "name": "dragon"
+     },
+     {
+      "name": "castle"
+     },
+     {
+      "name": "unicorn"
+     }
+    ]
+   }
+  },
+  {
+   "id": "multi-05",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "5 ducks",
+   "expect": {
+    "objects": [
+     {
+      "name": "duck",
+      "count": 5,
+      "count_kind": "exact"
+     }
+    ]
+   }
+  },
+  {
+   "id": "multi-06",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "several birds and a few clouds",
+   "expect": {
+    "objects": [
+     {
+      "name": "bird",
+      "count": null,
+      "count_kind": "approximate"
+     },
+     {
+      "name": "cloud",
+      "count": null,
+      "count_kind": "approximate"
+     }
+    ]
+   }
+  },
+  {
+   "id": "multi-07",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "a pair of shoes",
+   "expect": {
+    "objects": [
+     {
+      "name": "shoe",
+      "count": 2,
+      "count_kind": "exact"
+     }
+    ]
+   }
+  },
+  {
+   "id": "multi-08",
+   "category": "multi_object",
+   "split": "dev",
+   "prompt": "cats and dogs",
+   "expect": {
+    "objects": [
+     {
+      "name": "cat",
+      "count_kind": "plural_unspecified"
+     },
+     {
+      "name": "dog",
+      "count_kind": "plural_unspecified"
+     }
+    ]
+   }
+  },
+  {
+   "id": "attr-01",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a fluffy white cat",
+   "expect": {
+    "objects": [
+     {
+      "name": "cat",
+      "attributes": {
+       "color": [
+        "white"
+       ],
+       "other": [
+        "fluffy"
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "attr-02",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a tall green tree",
+   "expect": {
+    "objects": [
+     {
+      "name": "tree",
+      "attributes": {
+       "size": [
+        "tall"
+       ],
+       "color": [
+        "green"
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "attr-03",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a big wooden boat",
+   "expect": {
+    "objects": [
+     {
+      "name": "boat",
+      "attributes": {
+       "size": [
+        "big"
+       ],
+       "material": [
+        "wooden"
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "attr-04",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a dark blue car",
+   "expect": {
+    "objects": [
+     {
+      "name": "car",
+      "attributes": {
+       "color": [
+        "dark blue"
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "attr-05",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a red and blue robot",
+   "expect": {
+    "objects": [
+     {
+      "name": "robot",
+      "attributes": {
+       "color": [
+        "red",
+        "blue"
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "attr-06",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a tall, green tree",
+   "expect": {
+    "objects": [
+     {
+      "name": "tree",
+      "attributes": {
+       "size": [
+        "tall"
+       ],
+       "color": [
+        "green"
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "attr-07",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a traffic light",
+   "expect": {
+    "objects": [
+     {
+      "name": "traffic light",
+      "count": 1
+     }
+    ]
+   }
+  },
+  {
+   "id": "attr-08",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a man's hat",
+   "expect": {
+    "objects": [
+     {
+      "name": "hat",
+      "other_modifiers": [
+       "man's"
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "attr-09",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "a small red car and a large blue truck",
+   "expect": {
+    "objects": [
+     {
+      "name": "car",
+      "attributes": {
+       "size": [
+        "small"
+       ],
+       "color": [
+        "red"
+       ]
+      }
+     },
+     {
+      "name": "truck",
+      "attributes": {
+       "size": [
+        "large"
+       ],
+       "color": [
+        "blue"
+       ]
+      }
+     }
+    ]
+   }
+  },
+  {
+   "id": "attr-10",
+   "category": "attributes",
+   "split": "dev",
+   "prompt": "The Ancient Stone Tower",
+   "expect": {
+    "objects": [
+     {
+      "name": "tower",
+      "count": 1,
+      "attributes": {
+       "other": [
+        "ancient"
+       ],
+       "material": [
+        "stone"
+       ]
+      }
+     }
+    ]
+   },
+   "note": "capitalised input"
+  },
+  {
+   "id": "rel-01",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "A red robot beside a blue submarine",
+   "expect": {
+    "objects": [
+     {
+      "name": "robot",
+      "attributes": {
+       "color": [
+        "red"
+       ]
+      }
+     },
+     {
+      "name": "submarine",
+      "attributes": {
+       "color": [
+        "blue"
+       ]
+      }
+     }
+    ],
+    "relations": [
+     [
+      "robot",
+      "beside",
+      "submarine"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-02",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a cat behind a fence",
+   "expect": {
+    "relations": [
+     [
+      "cat",
+      "behind",
+      "fence"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-03",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a bird above a house",
+   "expect": {
+    "relations": [
+     [
+      "bird",
+      "above",
+      "house"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-04",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a boat below a bridge",
+   "expect": {
+    "relations": [
+     [
+      "boat",
+      "below",
+      "bridge"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-05",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a lamp to the left of a sofa",
+   "expect": {
+    "relations": [
+     [
+      "lamp",
+      "left_of",
+      "sofa"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-06",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a tree on the right of a house",
+   "expect": {
+    "relations": [
+     [
+      "tree",
+      "right_of",
+      "house"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-07",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a car in front of a house",
+   "expect": {
+    "relations": [
+     [
+      "car",
+      "in_front_of",
+      "house"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-08",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a cat inside a box",
+   "expect": {
+    "relations": [
+     [
+      "cat",
+      "inside",
+      "box"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-09",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a dog next to a bicycle",
+   "expect": {
+    "relations": [
+     [
+      "dog",
+      "beside",
+      "bicycle"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-10",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a cup on a table",
+   "expect": {
+    "relations": [
+     [
+      "cup",
+      "on",
+      "table"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-11",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a ball under a chair",
+   "expect": {
+    "relations": [
+     [
+      "ball",
+      "below",
+      "chair"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-12",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a cat sitting on a sofa beside a lamp",
+   "expect": {
+    "objects": [
+     {
+      "name": "cat",
+      "actions": [
+       "sitting"
+      ]
+     },
+     {
+      "name": "sofa"
+     },
+     {
+      "name": "lamp"
+     }
+    ],
+    "relations": [
+     [
+      "cat",
+      "on",
+      "sofa"
+     ],
+     [
+      "sofa",
+      "beside",
+      "lamp"
+     ]
+    ],
+    "ambiguities": [
+     "RELATION_ATTACHMENT"
+    ]
+   }
+  },
+  {
+   "id": "rel-13",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a fish in a bowl",
+   "expect": {
+    "relations": [
+     [
+      "fish",
+      "inside",
+      "bowl"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-14",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a bird flying over a lake",
+   "expect": {
+    "objects": [
+     {
+      "name": "bird",
+      "actions": [
+       "flying"
+      ]
+     }
+    ],
+    "environment": [
+     "lake"
+    ],
+    "relations": [
+     [
+      "bird",
+      "above",
+      "lake"
+     ]
+    ],
+    "ambiguities": [
+     "OVER_AMBIGUOUS"
+    ]
+   }
+  },
+  {
+   "id": "rel-15",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a robot between two trees",
+   "expect": {
+    "objects": [
+     {
+      "name": "robot"
+     },
+     {
+      "name": "tree",
+      "count": 2
+     }
+    ],
+    "relations": [],
+    "ambiguities": [
+     "UNSUPPORTED_RELATION"
+    ]
+   }
+  },
+  {
+   "id": "rel-16",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a clock on a wall",
+   "expect": {
+    "relations": [
+     [
+      "clock",
+      "on",
+      "wall"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rel-17",
+   "category": "relations",
+   "split": "dev",
+   "prompt": "a lamp behind a sofa and a rug in front of the sofa",
+   "expect": {
+    "relations": [
+     [
+      "lamp",
+      "behind",
+      "sofa"
+     ],
+     [
+      "rug",
+      "in_front_of",
+      "sofa"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "scene-01",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a quiet village at sunset",
+   "expect": {
+    "objects": [],
+    "environment": [
+     "village"
+    ],
+    "lighting": [
+     "sunset"
+    ]
+   }
+  },
+  {
+   "id": "scene-02",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a city street at night with neon lights",
+   "expect": {
+    "objects": [],
+    "environment": [
+     "street"
+    ],
+    "lighting": [
+     "night",
+     "neon lights"
+    ]
+   }
+  },
+  {
+   "id": "scene-03",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a foggy forest in the morning",
+   "expect": {
+    "objects": [],
+    "environment": [
+     "forest",
+     "foggy"
+    ],
+    "lighting": [
+     "morning"
+    ]
+   }
+  },
+  {
+   "id": "scene-04",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a woman reading a book by candlelight",
+   "expect": {
+    "objects": [
+     {
+      "name": "woman",
+      "actions": [
+       "reading"
+      ]
+     },
+     {
+      "name": "book"
+     }
+    ],
+    "lighting": [
+     "candlelight"
+    ]
+   }
+  },
+  {
+   "id": "scene-05",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a snowy mountain village under moonlight",
+   "expect": {
+    "objects": [],
+    "environment": [
+     "village",
+     "snowy"
+    ],
+    "lighting": [
+     "moonlight"
+    ]
+   }
+  },
+  {
+   "id": "scene-06",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a beach with dramatic lighting",
+   "expect": {
+    "objects": [],
+    "environment": [
+     "beach"
+    ],
+    "lighting": [
+     "dramatic lighting"
+    ]
+   }
+  },
+  {
+   "id": "scene-07",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a cat on a sofa, studio lighting, photorealistic",
+   "expect": {
+    "objects": [
+     {
+      "name": "cat"
+     },
+     {
+      "name": "sofa"
+     }
+    ],
+    "relations": [
+     [
+      "cat",
+      "on",
+      "sofa"
+     ]
+    ],
+    "lighting": [
+     "studio lighting"
+    ],
+    "style": [
+     "photorealistic"
+    ]
+   }
+  },
+  {
+   "id": "scene-08",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a lighthouse in the style of Van Gogh at dusk",
+   "expect": {
+    "objects": [
+     {
+      "name": "lighthouse"
+     }
+    ],
+    "style": [
+     "van gogh"
+    ],
+    "lighting": [
+     "dusk"
+    ]
+   }
+  },
+  {
+   "id": "scene-09",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a watercolor painting of a cat",
+   "expect": {
+    "objects": [
+     {
+      "name": "cat"
+     }
+    ],
+    "style": [
+     "watercolor",
+     "painting"
+    ]
+   }
+  },
+  {
+   "id": "scene-10",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a cyberpunk city at night",
+   "expect": {
+    "objects": [],
+    "environment": [
+     "city"
+    ],
+    "style": [
+     "cyberpunk"
+    ],
+    "lighting": [
+     "night"
+    ]
+   }
+  },
+  {
+   "id": "scene-11",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a robot underwater",
+   "expect": {
+    "objects": [
+     {
+      "name": "robot"
+     }
+    ],
+    "environment": [
+     "underwater"
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "scene-12",
+   "category": "scene_lighting",
+   "split": "dev",
+   "prompt": "a night sky full of stars",
+   "expect": {
+    "environment": [
+     "sky"
+    ],
+    "lighting": []
+   },
+   "note": "'night' without a preposition is not claimed as lighting"
+  },
+  {
+   "id": "amb-01",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "something nice",
+   "expect": {
+    "ambiguities": [
+     "VAGUE_NOUN"
+    ]
+   }
+  },
+  {
+   "id": "amb-02",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "it",
+   "expect": {
+    "objects": [],
+    "ambiguities": [
+     "PRONOUN",
+     "NO_OBJECTS_FOUND"
+    ]
+   }
+  },
+  {
+   "id": "amb-03",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a cat or a dog",
+   "expect": {
+    "objects": [
+     {
+      "name": "cat"
+     },
+     {
+      "name": "dog"
+     }
+    ],
+    "ambiguities": [
+     "ALTERNATIVES"
+    ]
+   }
+  },
+  {
+   "id": "amb-04",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a thing in a place",
+   "expect": {
+    "ambiguities": [
+     "VAGUE_NOUN"
+    ],
+    "exact_objects": false,
+    "exact_relations": false
+   }
+  },
+  {
+   "id": "amb-05",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "the cat is sitting on the mat",
+   "expect": {
+    "objects": [
+     {
+      "name": "cat",
+      "actions": [
+       "sitting"
+      ]
+     },
+     {
+      "name": "mat"
+     }
+    ],
+    "relations": [
+     [
+      "cat",
+      "on",
+      "mat"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "amb-06",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a bowl of fruit",
+   "expect": {
+    "objects": [
+     {
+      "name": "bowl of fruit",
+      "count": 1
+     }
+    ]
+   }
+  },
+  {
+   "id": "amb-07",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a person standing in the background",
+   "expect": {
+    "objects": [
+     {
+      "name": "person",
+      "actions": [
+       "standing"
+      ],
+      "frame_position": "background"
+     }
+    ]
+   }
+  },
+  {
+   "id": "amb-08",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a red car on the left and a blue car on the right",
+   "expect": {
+    "objects": [
+     {
+      "name": "car",
+      "attributes": {
+       "color": [
+        "red"
+       ]
+      },
+      "frame_position": "left"
+     },
+     {
+      "name": "car",
+      "attributes": {
+       "color": [
+        "blue"
+       ]
+      },
+      "frame_position": "right"
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "amb-09",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a cat and a dog sitting on a sofa",
+   "expect": {
+    "objects": [
+     {
+      "name": "cat"
+     },
+     {
+      "name": "dog",
+      "actions": [
+       "sitting"
+      ]
+     },
+     {
+      "name": "sofa"
+     }
+    ],
+    "relations": [
+     [
+      "dog",
+      "on",
+      "sofa"
+     ]
+    ],
+    "ambiguities": [
+     "RELATION_SCOPE"
+    ]
+   }
+  },
+  {
+   "id": "amb-10",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "no cats",
+   "expect": {
+    "objects": [],
+    "negations": [
+     "cat"
+    ],
+    "ambiguities": [
+     "NO_OBJECTS_FOUND"
+    ]
+   }
+  },
+  {
+   "id": "amb-11",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a street without cars",
+   "expect": {
+    "objects": [],
+    "environment": [
+     "street"
+    ],
+    "negations": [
+     "car"
+    ],
+    "forbidden_objects": [
+     "car"
+    ]
+   }
+  },
+  {
+   "id": "amb-12",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a cat in a forest, no birds, and a dog",
+   "expect": {
+    "objects": [
+     {
+      "name": "cat"
+     },
+     {
+      "name": "dog"
+     }
+    ],
+    "negations": [
+     "bird"
+    ],
+    "forbidden_objects": [
+     "bird"
+    ]
+   }
+  },
+  {
+   "id": "amb-13",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a vintage car",
+   "expect": {
+    "objects": [
+     {
+      "name": "car"
+     }
+    ],
+    "ambiguities": [
+     "STYLE_OR_ATTRIBUTE"
+    ],
+    "style": [
+     "vintage"
+    ]
+   }
+  },
+  {
+   "id": "amb-14",
+   "category": "ambiguous",
+   "split": "dev",
+   "prompt": "a robot by a lake",
+   "expect": {
+    "relations": [
+     [
+      "robot",
+      "near",
+      "lake"
+     ]
+    ],
+    "ambiguities": [
+     "BY_AMBIGUOUS"
+    ]
+   }
+  },
+  {
+   "id": "long-01",
+   "category": "long",
+   "split": "dev",
+   "prompt": "A small red fox sitting on a mossy log beside a clear blue stream in a quiet autumn forest, a tall oak tree behind the fox, two white rabbits near the stream, a wooden cabin in the distance, a flock of birds above the trees, soft golden light at sunset, oil painting",
+   "expect": {
+    "objects": [
+     {
+      "name": "fox",
+      "count": 1,
+      "attributes": {
+       "size": [
+        "small"
+       ],
+       "color": [
+        "red"
+       ]
+      },
+      "actions": [
+       "sitting"
+      ]
+     },
+     {
+      "name": "log",
+      "count": 1
+     },
+     {
+      "name": "stream",
+      "count": 1,
+      "attributes": {
+       "color": [
+        "blue"
+       ]
+      }
+     },
+     {
+      "name": "tree",
+      "count": 1,
+      "attributes": {
+       "size": [
+        "tall"
+       ]
+      }
+     },
+     {
+      "name": "rabbit",
+      "count": 2,
+      "attributes": {
+       "color": [
+        "white"
+       ]
+      }
+     },
+     {
+      "name": "cabin",
+      "count": 1,
+      "attributes": {
+       "material": [
+        "wooden"
+       ]
+      },
+      "frame_position": "background"
+     },
+     {
+      "name": "bird",
+      "count_kind": "approximate"
+     },
+     {
+      "name": "tree",
+      "count_kind": "plural_unspecified"
+     }
+    ],
+    "environment": [
+     "forest"
+    ],
+    "lighting": [
+     "sunset"
+    ],
+    "style": [
+     "oil painting"
+    ],
+    "relations": [
+     [
+      "fox",
+      "on",
+      "log"
+     ],
+     [
+      "log",
+      "beside",
+      "stream"
+     ],
+     [
+      "tree",
+      "behind",
+      "fox"
+     ],
+     [
+      "rabbit",
+      "near",
+      "stream"
+     ],
+     [
+      "bird",
+      "above",
+      "tree"
+     ]
+    ],
+    "exact_relations": false
+   }
+  },
+  {
+   "id": "unseen-01",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a wizard holding a glowing lantern beside an old stone well",
+   "expect": {
+    "objects": [
+     {
+      "name": "wizard",
+      "actions": [
+       "holding"
+      ]
+     },
+     {
+      "name": "lantern",
+      "attributes": {
+       "other": [
+        "glowing"
+       ]
+      }
+     },
+     {
+      "name": "well",
+      "attributes": {
+       "other": [
+        "old"
+       ],
+       "material": [
+        "stone"
+       ]
+      }
+     }
+    ],
+    "relations": [
+     [
+      "wizard",
+      "beside",
+      "well"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "unseen-02",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "two penguins standing on an iceberg under a pink sky",
+   "expect": {
+    "objects": [
+     {
+      "name": "penguin",
+      "count": 2,
+      "actions": [
+       "standing"
+      ]
+     },
+     {
+      "name": "iceberg"
+     }
+    ],
+    "environment": [
+     "sky"
+    ],
+    "relations": [
+     [
+      "penguin",
+      "on",
+      "iceberg"
+     ]
+    ],
+    "exact_relations": false
+   }
+  },
+  {
+   "id": "unseen-03",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a bowl of oranges on a kitchen table",
+   "expect": {
+    "objects": [
+     {
+      "name": "bowl of oranges",
+      "count": 1
+     },
+     {
+      "name": "table",
+      "count": 1
+     }
+    ],
+    "relations": [
+     [
+      "bowl of oranges",
+      "on",
+      "table"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "unseen-04",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a futuristic city with flying cars at dusk",
+   "expect": {
+    "objects": [
+     {
+      "name": "car",
+      "count_kind": "plural_unspecified",
+      "actions": [
+       "flying"
+      ]
+     }
+    ],
+    "environment": [
+     "city"
+    ],
+    "lighting": [
+     "dusk"
+    ],
+    "relations": [
+     [
+      "city",
+      "with",
+      "car"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "unseen-05",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a golden crown on a velvet cushion",
+   "expect": {
+    "objects": [
+     {
+      "name": "crown",
+      "attributes": {
+       "color": [
+        "golden"
+       ]
+      }
+     },
+     {
+      "name": "cushion",
+      "attributes": {
+       "material": [
+        "velvet"
+       ]
+      }
+     }
+    ],
+    "relations": [
+     [
+      "crown",
+      "on",
+      "cushion"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "unseen-06",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "an astronaut riding a horse on the moon",
+   "expect": {
+    "objects": [
+     {
+      "name": "astronaut",
+      "actions": [
+       "riding"
+      ]
+     },
+     {
+      "name": "horse"
+     },
+     {
+      "name": "moon"
+     }
+    ],
+    "relations": [
+     [
+      "horse",
+      "on",
+      "moon"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "unseen-07",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a pencil sketch of an old man with a long beard",
+   "expect": {
+    "objects": [
+     {
+      "name": "man",
+      "attributes": {
+       "other": [
+        "old"
+       ]
+      }
+     },
+     {
+      "name": "beard",
+      "attributes": {
+       "size": [
+        "long"
+       ]
+      }
+     }
+    ],
+    "style": [
+     "pencil sketch"
+    ],
+    "relations": [
+     [
+      "man",
+      "with",
+      "beard"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "unseen-08",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "four candles arranged in a row on a dark table",
+   "expect": {
+    "objects": [
+     {
+      "name": "candle",
+      "count": 4
+     },
+     {
+      "name": "table",
+      "attributes": {
+       "other": [
+        "dark"
+       ]
+      }
+     }
+    ],
+    "relations": [
+     [
+      "candle",
+      "on",
+      "table"
+     ]
+    ],
+    "exact_objects": false,
+    "exact_relations": false
+   }
+  },
+  {
+   "id": "unseen-09",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a red double-decker bus in front of a clock tower",
+   "expect": {
+    "objects": [
+     {
+      "name": "bus",
+      "attributes": {
+       "color": [
+        "red"
+       ]
+      }
+     },
+     {
+      "name": "clock tower"
+     }
+    ],
+    "relations": [
+     [
+      "bus",
+      "in_front_of",
+      "clock tower"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "unseen-10",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "three small boats on a calm lake at sunrise",
+   "expect": {
+    "objects": [
+     {
+      "name": "boat",
+      "count": 3,
+      "attributes": {
+       "size": [
+        "small"
+       ]
+      }
+     }
+    ],
+    "environment": [
+     "lake"
+    ],
+    "lighting": [
+     "sunrise"
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "unseen-11",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a bear catching fish in a river",
+   "expect": {
+    "objects": [
+     {
+      "name": "bear",
+      "actions": [
+       "catching"
+      ]
+     },
+     {
+      "name": "fish"
+     }
+    ],
+    "environment": [
+     "river"
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "unseen-12",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a teapot and two cups on a wooden tray",
+   "expect": {
+    "objects": [
+     {
+      "name": "teapot",
+      "count": 1
+     },
+     {
+      "name": "cup",
+      "count": 2
+     },
+     {
+      "name": "tray",
+      "attributes": {
+       "material": [
+        "wooden"
+       ]
+      }
+     }
+    ],
+    "relations": [
+     [
+      "cup",
+      "on",
+      "tray"
+     ],
+     [
+      "teapot",
+      "on",
+      "tray"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "unseen-13",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a girl holding an umbrella in the rain",
+   "expect": {
+    "objects": [
+     {
+      "name": "girl",
+      "actions": [
+       "holding"
+      ]
+     },
+     {
+      "name": "umbrella"
+     }
+    ],
+    "environment": [
+     "rain"
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "unseen-14",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a knight in shining armor",
+   "expect": {
+    "objects": [
+     {
+      "name": "knight"
+     },
+     {
+      "name": "armor"
+     }
+    ],
+    "relations": [],
+    "exact_relations": false
+   }
+  },
+  {
+   "id": "unseen-15",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a hot air balloon over the ocean",
+   "expect": {
+    "objects": [
+     {
+      "name": "hot air balloon",
+      "count": 1
+     }
+    ],
+    "environment": [
+     "ocean"
+    ],
+    "relations": [
+     [
+      "hot air balloon",
+      "above",
+      "ocean"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "unseen-16",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a stack of books next to a window",
+   "expect": {
+    "objects": [
+     {
+      "name": "book",
+      "count_kind": "approximate"
+     },
+     {
+      "name": "window",
+      "count": 1
+     }
+    ],
+    "relations": [
+     [
+      "book",
+      "beside",
+      "window"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "unseen-17",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a cheerful snowman wearing a red scarf",
+   "expect": {
+    "objects": [
+     {
+      "name": "snowman"
+     },
+     {
+      "name": "scarf",
+      "attributes": {
+       "color": [
+        "red"
+       ]
+      }
+     }
+    ],
+    "relations": []
+   }
+  },
+  {
+   "id": "unseen-18",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "an empty street at midnight, black and white photo",
+   "expect": {
+    "objects": [],
+    "environment": [
+     "street"
+    ],
+    "lighting": [
+     "midnight"
+    ],
+    "style": [
+     "black and white",
+     "photo"
+    ]
+   }
+  },
+  {
+   "id": "unseen-19",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a vase of sunflowers to the left of a window",
+   "expect": {
+    "objects": [
+     {
+      "name": "vase of sunflowers",
+      "count": 1
+     },
+     {
+      "name": "window"
+     }
+    ],
+    "relations": [
+     [
+      "vase of sunflowers",
+      "left_of",
+      "window"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "unseen-20",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a herd of elephants crossing a dusty road",
+   "expect": {
+    "objects": [
+     {
+      "name": "elephant",
+      "count_kind": "approximate",
+      "actions": [
+       "crossing"
+      ]
+     },
+     {
+      "name": "road"
+     }
+    ],
+    "environment": [],
+    "relations": []
+   }
+  }
+ ]
+}

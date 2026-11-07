@@ -1,0 +1,199 @@
+{
+ "note": "FROZEN first-run record of the hold-out split, taken before any parser change that could be informed by it. Do not edit; if the parser is improved, add NEW unseen prompts instead of re-quoting these.",
+ "parser_version": "rules-1.0.0",
+ "suite_version": "1.0",
+ "recorded": "2026-11-06",
+ "passed": 12,
+ "total": 20,
+ "python": "3.12.3",
+ "cases": [
+  {
+   "id": "unseen-01",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a wizard holding a glowing lantern beside an old stone well",
+   "passed": false,
+   "failures": [
+    "missing object {'name': 'lantern', 'attributes': {'other': ['glowing']}}; got [('wizard', 1, []), ('lantern', None, []), ('well', 1, ['old', 'stone'])]",
+    "unexpected objects ['lantern']",
+    "missing relations [('wizard', 'beside', 'well')]; got [\"('lantern', 'beside', 'well')\"]",
+    "unexpected relations [\"('lantern', 'beside', 'well')\"]"
+   ]
+  },
+  {
+   "id": "unseen-02",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "two penguins standing on an iceberg under a pink sky",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-03",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a bowl of oranges on a kitchen table",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-04",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a futuristic city with flying cars at dusk",
+   "passed": false,
+   "failures": [
+    "missing relations [('city', 'with', 'car')]; got []"
+   ]
+  },
+  {
+   "id": "unseen-05",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a golden crown on a velvet cushion",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-06",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "an astronaut riding a horse on the moon",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-07",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a pencil sketch of an old man with a long beard",
+   "passed": false,
+   "failures": [
+    "unexpected objects ['pencil']",
+    "missing style ['pencil sketch']; got ['sketch']"
+   ]
+  },
+  {
+   "id": "unseen-08",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "four candles arranged in a row on a dark table",
+   "passed": false,
+   "failures": [
+    "missing object {'name': 'candle', 'count': 4}; got [('arranged', 4, []), ('row', 1, []), ('table', 1, ['dark'])]",
+    "missing relations [('candle', 'on', 'table')]; got [\"('arranged', 'inside', 'row')\", \"('row', 'on', 'table')\"]"
+   ]
+  },
+  {
+   "id": "unseen-09",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a red double-decker bus in front of a clock tower",
+   "passed": false,
+   "failures": [
+    "missing object {'name': 'clock tower'}; got [('bus', 1, ['red']), ('tower', 1, [])]",
+    "unexpected objects ['tower']",
+    "missing relations [('bus', 'in_front_of', 'clock tower')]; got [\"('bus', 'in_front_of', 'tower')\"]",
+    "unexpected relations [\"('bus', 'in_front_of', 'tower')\"]"
+   ]
+  },
+  {
+   "id": "unseen-10",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "three small boats on a calm lake at sunrise",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-11",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a bear catching fish in a river",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-12",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a teapot and two cups on a wooden tray",
+   "passed": false,
+   "failures": [
+    "missing relations [('teapot', 'on', 'tray')]; got [\"('cup', 'on', 'tray')\"]"
+   ]
+  },
+  {
+   "id": "unseen-13",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a girl holding an umbrella in the rain",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-14",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a knight in shining armor",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-15",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a hot air balloon over the ocean",
+   "passed": false,
+   "failures": [
+    "missing object {'name': 'hot air balloon', 'count': 1}; got [('balloon', 1, ['hot'])]",
+    "unexpected objects ['balloon']",
+    "missing relations [('hot air balloon', 'above', 'ocean')]; got [\"('balloon', 'above', 'ocean')\"]",
+    "unexpected relations [\"('balloon', 'above', 'ocean')\"]"
+   ]
+  },
+  {
+   "id": "unseen-16",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a stack of books next to a window",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-17",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a cheerful snowman wearing a red scarf",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-18",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "an empty street at midnight, black and white photo",
+   "passed": false,
+   "failures": [
+    "unexpected objects ['photo']",
+    "missing style ['photo']; got ['black and white']"
+   ]
+  },
+  {
+   "id": "unseen-19",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a vase of sunflowers to the left of a window",
+   "passed": true,
+   "failures": []
+  },
+  {
+   "id": "unseen-20",
+   "category": "unseen",
+   "split": "holdout",
+   "prompt": "a herd of elephants crossing a dusty road",
+   "passed": true,
+   "failures": []
+  }
+ ]
+}
