@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { Box, Flex, Input, InputGroup, InputLeftElement, InputRightElement, Text, IconButton } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Input,
+  Text,
+  IconButton,
+  Tooltip,
+} from '@chakra-ui/react';
+import { FiMessageSquare, FiX, FiSend, FiMic } from 'react-icons/fi';
 
 interface ChatBotProps {
   isOpen?: boolean;
@@ -8,237 +16,220 @@ interface ChatBotProps {
 const ChatBot: React.FC<ChatBotProps> = ({ isOpen: initialOpen = false }) => {
   const [isOpen, setIsOpen] = useState(initialOpen);
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<{ role: 'user' | 'assistant'; text: string }[]>([
-    { role: 'assistant', text: 'Hi! I\'m the Imagine AI Assistant powered by Groq. How can I help you today? I can assist with creating images, learning topics, editing, and more.' },
+  const [messages, setMessages] = useState<{ role: 'user' | 'assistant'; text: string; time: string }[]>([
+    {
+      role: 'assistant',
+      text: "Hi! I'm your Imagine AI Assistant powered by Groq. Ask me anything about creating prompts, learning science, storytelling, or editing images!",
+      time: 'Just now',
+    },
   ]);
 
   const sendMessage = () => {
     if (!message.trim()) return;
-    setMessages((prev) => [...prev, { role: 'user', text: message }]);
-    // Simulate assistant response
+    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const userText = message.trim();
+    setMessages((prev) => [...prev, { role: 'user', text: userText, time }]);
+    setMessage('');
+
+    // Simulate Groq assistant response
     setTimeout(() => {
+      let reply = `That's a great question! For "${userText.slice(0, 40)}...", I recommend trying the Create Studio with SD-Turbo or Storybook Studio to generate sequential scenes. You can also use voice input or upload an image for selective inpainting!`;
+      if (userText.toLowerCase().includes('prompt') || userText.toLowerCase().includes('help')) {
+        reply = `Here is an enhanced prompt recommendation: "${userText}, cinematic lighting, volumetric atmospheric fog, octane 8k render, hyper-detailed, masterpiece." Try pasting this into Create Studio!`;
+      }
       setMessages((prev) => [
         ...prev,
         {
           role: 'assistant',
-          text: `Great question! I can help you with that. Let me think about "${message.slice(0, 50)}..." — try navigating to the Create Studio or Learn Studio for the best experience.`,
+          text: reply,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         },
       ]);
-    }, 800);
-    setMessage('');
-  };
-
-  const handleLauncherSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!message.trim()) {
-      setIsOpen(true);
-      return;
-    }
-    setIsOpen(true);
-    sendMessage();
+    }, 700);
   };
 
   return (
     <>
-      {/* Floating Launcher Bar */}
+      {/* FLOATING CORNER CIRCLE LAUNCHER (Non-intrusive) */}
       {!isOpen && (
         <Box
           position="fixed"
-          bottom="20px"
-          left="50%"
-          transform="translateX(-50%)"
+          bottom="24px"
+          right="24px"
           zIndex={1000}
-          w="calc(100% - 40px)"
-          maxW="860px"
         >
-          <Box
-            as="form"
-            onSubmit={handleLauncherSubmit}
-            bg="#0D120E"
-            border="1px solid #3A4A3C"
-            borderRadius="full"
-            px={5}
-            py={2.5}
-            boxShadow="0 10px 40px rgba(0,0,0,0.7), 0 0 25px rgba(183,255,53,0.15)"
-            _hover={{ borderColor: '#B7FF35' }}
-            transition="all 0.25s ease"
-          >
-            <Flex align="center" gap={3}>
-              {/* Green Logo Icon */}
-              <Flex
-                align="center"
-                gap={2}
-                cursor="pointer"
-                onClick={() => setIsOpen(true)}
-                flexShrink={0}
-              >
-                <Box
-                  w="34px"
-                  h="34px"
-                  borderRadius="full"
-                  bg="#B7FF35"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  fontSize="16px"
-                  fontWeight="bold"
-                  color="#080B0A"
-                  boxShadow="0 0 12px rgba(183,255,53,0.4)"
-                >
-                  ✦
-                </Box>
-                <Box display={{ base: 'none', md: 'block' }}>
-                  <Text fontSize="13px" fontWeight="700" color="#F4F7F0" lineHeight="1.2">
-                    Imagine Assistant
-                  </Text>
-                  <Text fontSize="10px" color="#8DDB39" fontWeight="600">
-                    Powered by Groq
-                  </Text>
-                </Box>
-              </Flex>
+          <Tooltip label="Imagine Assistant (Powered by Groq)" placement="left" hasArrow bg="#111713" color="#F4F7F0" border="1px solid #2A3A2C">
+            <Box
+              position="relative"
+              w="58px"
+              h="58px"
+              borderRadius="full"
+              bg="#111713"
+              border="2px solid #B7FF35"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              cursor="pointer"
+              boxShadow="0 8px 32px rgba(0,0,0,0.8), 0 0 24px rgba(183,255,53,0.35)"
+              transition="all 0.25s ease"
+              _hover={{
+                transform: 'scale(1.1) translateY(-2px)',
+                boxShadow: '0 12px 36px rgba(0,0,0,0.9), 0 0 35px rgba(183,255,53,0.5)',
+                bg: '#182019',
+              }}
+              onClick={() => setIsOpen(true)}
+            >
+              {/* Center Glowing Icon */}
+              <Text fontSize="22px" lineHeight="1">
+                ✦
+              </Text>
 
-              <Box w="1px" h="24px" bg="#2A3A2C" mx={1} display={{ base: 'none', md: 'block' }} />
-
-              {/* Direct interactive input */}
-              <Input
-                placeholder="Ask me anything about creating, learning, editing, or using ImagineAI..."
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                variant="unstyled"
-                color="#F4F7F0"
-                fontSize="14px"
-                _placeholder={{ color: '#6B7B6D' }}
-                flex={1}
-                px={2}
-              />
-
-              {/* Voice icon */}
-              <IconButton
-                aria-label="Voice input"
-                icon={<Text fontSize="16px">🎤</Text>}
-                size="sm"
-                variant="ghost"
-                color="#A5B1A7"
-                _hover={{ color: '#B7FF35', bg: '#182019' }}
+              {/* Online indicator green dot */}
+              <Box
+                position="absolute"
+                top="2px"
+                right="2px"
+                w="12px"
+                h="12px"
                 borderRadius="full"
-                onClick={() => setIsOpen(true)}
-              />
-
-              {/* Send button */}
-              <IconButton
-                aria-label="Send message"
-                type="submit"
-                icon={<Text fontSize="14px" fontWeight="bold">➤</Text>}
-                size="sm"
                 bg="#B7FF35"
-                color="#080B0A"
-                borderRadius="full"
-                _hover={{ bg: '#8DDB39', transform: 'scale(1.05)' }}
-                transition="all 0.2s"
+                border="2px solid #080B0A"
+                boxShadow="0 0 8px #B7FF35"
               />
-            </Flex>
-          </Box>
+            </Box>
+          </Tooltip>
         </Box>
       )}
 
-      {/* Chat Panel */}
+      {/* COMPACT FLOATING CHAT PANEL IN CORNER */}
       {isOpen && (
         <Box
           position="fixed"
           bottom="24px"
           right="24px"
-          w="420px"
-          h="500px"
+          w={{ base: 'calc(100% - 32px)', sm: '380px' }}
+          h="520px"
           bg="#111713"
-          border="1px solid #2A3A2C"
-          borderRadius="16px"
+          border="1px solid #3A4A3C"
+          borderRadius="20px"
           zIndex={1001}
           display="flex"
           flexDirection="column"
-          boxShadow="0 16px 64px rgba(0,0,0,0.6)"
+          boxShadow="0 24px 64px rgba(0,0,0,0.9), 0 0 30px rgba(183,255,53,0.2)"
           overflow="hidden"
+          animation="fadeIn 0.2s ease"
         >
           {/* Header */}
           <Flex
             bg="#0D120E"
             px={4}
-            py={3}
+            py={3.5}
             align="center"
             justify="space-between"
             borderBottom="1px solid #2A3A2C"
           >
-            <Flex align="center" gap={2}>
-              <Box w="24px" h="24px" borderRadius="full" bg="#B7FF35" display="flex" alignItems="center" justifyContent="center" fontSize="12px" fontWeight="bold" color="#080B0A">
+            <Flex align="center" gap={2.5}>
+              <Box
+                w="28px"
+                h="28px"
+                borderRadius="full"
+                bg="#B7FF35"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                fontSize="14px"
+                fontWeight="bold"
+                color="#080B0A"
+              >
                 ✦
               </Box>
-              <Text fontWeight="600" color="#F4F7F0" fontSize="14px">Imagine Assistant</Text>
-              <Text fontSize="10px" color="#6B7B6D" bg="#182019" px={2} py={0.5} borderRadius="full">Groq</Text>
+              <Box>
+                <Text fontWeight="700" color="#F4F7F0" fontSize="13px" lineHeight="1.2">
+                  Imagine Assistant
+                </Text>
+                <Flex align="center" gap={1.5}>
+                  <Box w="6px" h="6px" borderRadius="full" bg="#B7FF35" />
+                  <Text fontSize="10px" color="#8DDB39" fontWeight="600">
+                    Groq Fast Inference
+                  </Text>
+                </Flex>
+              </Box>
             </Flex>
-            <Text
-              cursor="pointer"
+
+            <IconButton
+              aria-label="Close assistant"
+              icon={<FiX size={16} />}
+              size="xs"
+              variant="ghost"
+              color="#A5B1A7"
+              _hover={{ color: '#F4F7F0', bg: '#182019' }}
+              borderRadius="full"
               onClick={() => setIsOpen(false)}
-              color="#6B7B6D"
-              _hover={{ color: '#F4F7F0' }}
-              fontSize="18px"
-            >
-              ✕
-            </Text>
+            />
           </Flex>
 
-          {/* Messages */}
-          <Box flex={1} overflowY="auto" p={4}>
+          {/* Messages Feed */}
+          <Box flex={1} overflowY="auto" p={3.5} bg="#080B0A">
             {messages.map((msg, i) => (
               <Flex key={i} justify={msg.role === 'user' ? 'flex-end' : 'flex-start'} mb={3}>
                 <Box
-                  maxW="85%"
-                  px={4}
+                  maxW="86%"
+                  px={3.5}
                   py={2.5}
-                  borderRadius={msg.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px'}
-                  bg={msg.role === 'user' ? '#B7FF35' : '#182019'}
+                  borderRadius={msg.role === 'user' ? '14px 14px 2px 14px' : '14px 14px 14px 2px'}
+                  bg={msg.role === 'user' ? '#B7FF35' : '#111713'}
                   color={msg.role === 'user' ? '#080B0A' : '#F4F7F0'}
-                  fontSize="13px"
+                  border="1px solid"
+                  borderColor={msg.role === 'user' ? '#B7FF35' : '#2A3A2C'}
+                  fontSize="12.5px"
                   lineHeight="1.5"
+                  boxShadow="0 2px 8px rgba(0,0,0,0.3)"
                 >
-                  {msg.text}
+                  <Text>{msg.text}</Text>
+                  <Text
+                    fontSize="9px"
+                    color={msg.role === 'user' ? 'rgba(0,0,0,0.6)' : '#6B7B6D'}
+                    textAlign="right"
+                    mt={1}
+                  >
+                    {msg.time}
+                  </Text>
                 </Box>
               </Flex>
             ))}
           </Box>
 
-          {/* Input */}
-          <Flex p={3} borderTop="1px solid #2A3A2C" gap={2}>
-            <Input
-              placeholder="Ask me anything..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-              bg="#0F1A11"
-              border="1px solid #2A3A2C"
-              borderRadius="12px"
-              color="#F4F7F0"
-              _placeholder={{ color: '#6B7B6D' }}
-              _focus={{ borderColor: '#B7FF35' }}
-              size="sm"
-            />
-            <Box
-              as="button"
-              w="36px"
-              h="36px"
-              borderRadius="10px"
-              bg="#B7FF35"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              fontSize="14px"
-              color="#080B0A"
-              cursor="pointer"
-              flexShrink={0}
-              onClick={sendMessage}
-              _hover={{ bg: '#8DDB39' }}
-            >
-              ➤
-            </Box>
-          </Flex>
+          {/* Input Bar */}
+          <Box p={3} bg="#0D120E" borderTop="1px solid #2A3A2C">
+            <Flex gap={2} align="center">
+              <Input
+                placeholder="Ask about prompts, models, stories..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+                bg="#0F1A11"
+                border="1px solid #2A3A2C"
+                borderRadius="12px"
+                color="#F4F7F0"
+                fontSize="13px"
+                _placeholder={{ color: '#6B7B6D' }}
+                _focus={{ borderColor: '#B7FF35' }}
+                size="sm"
+                h="38px"
+              />
+              <IconButton
+                aria-label="Send message"
+                icon={<FiSend size={14} />}
+                size="sm"
+                bg="#B7FF35"
+                color="#080B0A"
+                borderRadius="10px"
+                _hover={{ bg: '#8DDB39' }}
+                onClick={sendMessage}
+                flexShrink={0}
+              />
+            </Flex>
+          </Box>
         </Box>
       )}
     </>

@@ -670,8 +670,8 @@ const CreateStudio: React.FC = () => {
         <Box
           position="fixed"
           bottom="20px"
-          left="240px"
-          right="24px"
+          left={{ base: '20px', md: '240px' }}
+          right="96px"
           zIndex={90}
           bg="#0D120E"
           border="1px solid #3A4A3C"
