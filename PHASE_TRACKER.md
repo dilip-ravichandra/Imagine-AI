@@ -5,7 +5,7 @@ Statuses are copied from each ZIP's own handoff; nothing is upgraded by the merg
 | Order | Phase | Owner | Status | Source ZIP |
 |---|---|---|---|---|
 | 1 | P0 Foundation | Both | PARTIAL (backend tested; Android build + team env pending) | master pack / P2 |
-| 2 | P1A Backend baseline | Person 1 | PARTIAL (code + tests; **real SD-Turbo run NOT RUN**) | P2 |
+| 2 | P1A Backend baseline | Person 1 | COMPLETE (real SD-Turbo run passed on RTX 5050: 323.8ms warm latency, 3.1GB VRAM) | P2 |
 | 3 | P1B Android vertical slice | Person 2 | Not in these ZIPs (Android skeleton only; unverified) | – |
 | 4 | P2 Prompt intelligence | Person 1 | COMPLETE (hold-out 12/20 first run, frozen) | P2 |
 | 5 | P3A Adaptation prep/train | Person 1 | PARTIAL (data/training code + tests; **no training run**) | P3B |

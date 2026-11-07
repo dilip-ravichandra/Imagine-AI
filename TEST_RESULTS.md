@@ -1,3 +1,48 @@
+# TEST_RESULTS (GPU Laptop Run, 2026-11-07) — Windows 11, Python 3.12.10, NVIDIA GeForce RTX 5050 Laptop GPU (8GB VRAM), CUDA 12.8 / Driver 595.95
+| Command | Status | Notes |
+|---|---|---|
+| `python -m pytest -q` | PASSED | **698 passed, 1 skipped** in 15.74s (all unit, integration, and safety tests passed on Windows) |
+| `python -m pytest tests/test_real_model_smoke.py -s -m real_model` | PASSED | **1 passed** in 316.89s (model download + load + 2 generation runs) |
+
+### P1A Real SD-Turbo Generation Output (512x512, 2 steps, fp16, seed 42)
+```json
+{
+  "status": "success",
+  "request_id": "d40d7d32d94e48fcb84ab0cfcf19aff1",
+  "image_url": "http://testserver/images/d40d7d32d94e48fcb84ab0cfcf19aff1.png",
+  "generation": {
+    "model": "stabilityai/sd-turbo",
+    "model_revision": "b261bac6fd2cf515557d5d0707481eafa0485ec2",
+    "precision": "fp16",
+    "scheduler": "EulerDiscreteScheduler(timestep_spacing=trailing)",
+    "steps": 2,
+    "width": 512,
+    "height": 512,
+    "seed": 42
+  },
+  "performance": {
+    "model_load_ms": 306163.8821000088,
+    "prompt_encode_ms": null,
+    "denoise_ms": null,
+    "decode_ms": null,
+    "cv_ms": null,
+    "end_to_end_ms": 1050.583699994604,
+    "peak_gpu_mb": 3097.60986328125,
+    "peak_process_ram_mb": 2547.3828125
+  },
+  "quality": null,
+  "resource_decision": {
+    "fallback_used": false,
+    "reason": null,
+    "explanation": "balanced mode -> 2 step(s) at 512x512. No adaptive controller yet (P6); no fallback applied."
+  }
+}
+```
+**Warm inference latency (second call):** `323.82 ms` end-to-end.
+**Peak GPU VRAM:** `3,097.61 MB` (~3.1 GB / 8 GB).
+**Peak System RAM:** `2,547.38 MB`.
+
+---
 # TEST_RESULTS (safety audit, 2026-11-07) — sandbox: Ubuntu 24.04, Python 3.12.3, no GPU/torch/Docker/Android
 | Command | Status | Notes |
 |---|---|---|
