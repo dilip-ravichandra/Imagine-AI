@@ -1,3 +1,16 @@
+# HANDOFF UPDATE (P1A Real GPU Run, 2026-11-07)
+P1A real SD-Turbo generation is **VERIFIED AND COMPLETE** on the RTX 5050 Laptop GPU (Windows 11, Python 3.12.10, PyTorch 2.11.0+cu128).
+Smoke test passed: 512x512 image generated in 323.82 ms warm end-to-end latency (2 steps, fp16). Peak GPU VRAM 3,097.6 MB.
+Full pytest suite: **698 passed, 1 skipped** in 15.74s.
+Pinned revisions:
+- `MODEL_REVISION`: `b261bac6fd2cf515557d5d0707481eafa0485ec2`
+- `CLIP_REVISION`: `3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268`
+Highest-value next tasks:
+1. P4 optimization benchmarks (`evaluation/scripts/run_p4_benchmarks.py`) and P6 profile sweep (`run_p6_profile_sweep.py`).
+2. P7A hold-out evaluation (`run_p7_eval.py`) + P5B CV report (`report_cv_p5b.py`).
+3. Android client implementation (`ai_handoff/07_CLAUDE_ANDROID_TASK.md`).
+
+---
 # HANDOFF UPDATE (safety audit, 2026-11-07)
 Read `docs/SAFETY_AND_PHASE_AUDIT.md` first. Test suite re-run: **698 passed, 1 skipped** (the "tests not re-run" blocker is cleared). No phase status changed.
 Changes: (F1) CLIP downloads must be pinned: set `CLIP_REVISION` (or `--allow-unpinned`) when using `--clip`. (F2) Optional `API_KEY` env: when set, clients **must send `X-API-Key`** on `/api/v1/*` — **Person 2: add this header in the Retrofit client (read it from build config, never commit it)**. Default is off. (F3) Dockerfile now non-root (unbuilt). (F4) P7/P7B wording corrected: controller, P5B and the gated adapter loader exist; only measured evidence is missing.

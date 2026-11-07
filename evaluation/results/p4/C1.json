@@ -1,0 +1,488 @@
+{
+ "schema": "p4_experiment_result/1",
+ "experiment": {
+  "id": "C1",
+  "title": "COMBINED: fp16 + 2 steps",
+  "hypothesis": "Likely practical default; effects may not add up.",
+  "combined": true,
+  "changed_fields": [
+   "precision",
+   "steps"
+  ],
+  "config": {
+   "precision": "fp16",
+   "steps": 2,
+   "resolution": 512,
+   "attention_slicing": false,
+   "vae_slicing": false,
+   "offload": "none"
+  }
+ },
+ "environment": {
+  "python": "3.12.10",
+  "os": "Windows-11-10.0.26300-SP0",
+  "torch": "2.11.0+cu128",
+  "diffusers": "0.42.1",
+  "transformers": "5.22.2",
+  "cuda_runtime": "12.8",
+  "gpu_name": "NVIDIA GeForce RTX 5050 Laptop GPU",
+  "gpu_total_vram_mb": 8150.5625,
+  "model_id": "stabilityai/sd-turbo",
+  "model_revision": "b261bac6fd2cf515557d5d0707481eafa0485ec2"
+ },
+ "protocol": {
+  "prompt_ids": [
+   "simple-01",
+   "simple-02",
+   "multi-01",
+   "multi-02",
+   "attr-01",
+   "attr-02",
+   "rel-01",
+   "rel-02",
+   "scene-01",
+   "scene-02",
+   "long-01"
+  ],
+  "seeds": [
+   1234,
+   5678
+  ],
+  "repeats": 2,
+  "warmup": 2,
+  "resolution": 512,
+  "steps": 2,
+  "latency_definition": "wall time of engine.generate() incl. text encode, denoise, VAE decode, CUDA sync; excludes PNG save, model load, CLIP scoring",
+  "memory_definition": "torch.cuda peak allocated/reserved since reset after warm-up; process RAM = peak working set since process start"
+ },
+ "status": "ok",
+ "error": null,
+ "model_load_ms": 3254.669300004025,
+ "load_info": {
+  "device": "cuda",
+  "precision": "fp16",
+  "weights_variant": "fp16",
+  "optimizations": [
+   "precision=fp16"
+  ]
+ },
+ "generation_seen": {
+  "model": "stabilityai/sd-turbo",
+  "model_revision": "b261bac6fd2cf515557d5d0707481eafa0485ec2",
+  "precision": "fp16",
+  "scheduler": "EulerDiscreteScheduler(timestep_spacing=trailing)",
+  "steps": 2,
+  "width": 512,
+  "height": 512
+ },
+ "gpu_after_load": 3058.2568359375,
+ "runs": [
+  {
+   "prompt_id": "simple-01",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 286.74019999743905,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.27489903569221497
+  },
+  {
+   "prompt_id": "simple-01",
+   "seed": 1234,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 286.3610000058543,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "simple-01",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 283.4246999991592,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.2777194380760193
+  },
+  {
+   "prompt_id": "simple-01",
+   "seed": 5678,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 285.88500000478234,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "simple-02",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 286.0694999981206,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.30202218890190125
+  },
+  {
+   "prompt_id": "simple-02",
+   "seed": 1234,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 282.5008999934653,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "simple-02",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 288.16350000852253,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.2901639938354492
+  },
+  {
+   "prompt_id": "simple-02",
+   "seed": 5678,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 286.2128999986453,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "multi-01",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 287.6722999935737,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.3031289279460907
+  },
+  {
+   "prompt_id": "multi-01",
+   "seed": 1234,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 287.9276000021491,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "multi-01",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 288.633000003756,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.29250332713127136
+  },
+  {
+   "prompt_id": "multi-01",
+   "seed": 5678,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 288.42869999061804,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "multi-02",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 285.4654999973718,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.320429265499115
+  },
+  {
+   "prompt_id": "multi-02",
+   "seed": 1234,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 285.1856999914162,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "multi-02",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 287.4649000004865,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.3184188902378082
+  },
+  {
+   "prompt_id": "multi-02",
+   "seed": 5678,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 289.249599998584,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "attr-01",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 289.9496000027284,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.314005970954895
+  },
+  {
+   "prompt_id": "attr-01",
+   "seed": 1234,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 286.1823999992339,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "attr-01",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 296.3562000077218,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.29720377922058105
+  },
+  {
+   "prompt_id": "attr-01",
+   "seed": 5678,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 288.8734000007389,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "attr-02",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 288.4226999885868,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.2702663540840149
+  },
+  {
+   "prompt_id": "attr-02",
+   "seed": 1234,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 287.1011999959592,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "attr-02",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 287.24519998650067,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.2843233644962311
+  },
+  {
+   "prompt_id": "attr-02",
+   "seed": 5678,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 286.4499999996042,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "rel-01",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 289.1297000023769,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.33980250358581543
+  },
+  {
+   "prompt_id": "rel-01",
+   "seed": 1234,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 285.57930000533815,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "rel-01",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 286.9741000031354,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.3395598232746124
+  },
+  {
+   "prompt_id": "rel-01",
+   "seed": 5678,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 288.37969999585766,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "rel-02",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 289.7415000043111,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.31893470883369446
+  },
+  {
+   "prompt_id": "rel-02",
+   "seed": 1234,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 287.4089999968419,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "rel-02",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 289.93300000729505,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.3254314064979553
+  },
+  {
+   "prompt_id": "rel-02",
+   "seed": 5678,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 290.48699999111705,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "scene-01",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 289.91529998893384,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.3379889130592346
+  },
+  {
+   "prompt_id": "scene-01",
+   "seed": 1234,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 286.4236999885179,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "scene-01",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 287.5445999961812,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.3483634293079376
+  },
+  {
+   "prompt_id": "scene-01",
+   "seed": 5678,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 286.7444000003161,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "scene-02",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 291.01829999126494,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.2954653203487396
+  },
+  {
+   "prompt_id": "scene-02",
+   "seed": 1234,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 287.1344000013778,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "scene-02",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 287.24740000325255,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.30813971161842346
+  },
+  {
+   "prompt_id": "scene-02",
+   "seed": 5678,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 289.57740000623744,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "long-01",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 290.0167000043439,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.358384370803833
+  },
+  {
+   "prompt_id": "long-01",
+   "seed": 1234,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 294.87860000517685,
+   "peak_gpu_mb": 3677.68896484375
+  },
+  {
+   "prompt_id": "long-01",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 287.6825999992434,
+   "peak_gpu_mb": 3677.68896484375,
+   "clip_score": 0.33102715015411377
+  },
+  {
+   "prompt_id": "long-01",
+   "seed": 5678,
+   "repeat": 1,
+   "status": "ok",
+   "total_ms": 290.65239999908954,
+   "peak_gpu_mb": 3677.68896484375
+  }
+ ],
+ "summary": {
+  "n_ok": 44,
+  "n_failed": 0,
+  "latency_ms": {
+   "n": 44,
+   "mean": 288.0098818171642,
+   "median": 287.60844999487745,
+   "stdev": 2.489091933245048,
+   "min": 282.5008999934653,
+   "max": 296.3562000077218,
+   "p95": 291.01829999126494
+  },
+  "peak_allocated_mb": {
+   "n": 44,
+   "mean": 3677.68896484375,
+   "median": 3677.68896484375,
+   "stdev": 0.0,
+   "min": 3677.68896484375,
+   "max": 3677.68896484375,
+   "p95": 3677.68896484375
+  },
+  "peak_reserved_mb_experiment": 4228.0,
+  "peak_process_ram_mb": 2467.62890625,
+  "clip_score": {
+   "n": 22,
+   "mean": 0.3112809942527251,
+   "median": 0.31107284128665924,
+   "stdev": 0.02486049417045458,
+   "min": 0.2702663540840149,
+   "max": 0.358384370803833,
+   "p95": 0.3483634293079376
+  }
+ }
+}

@@ -87,7 +87,12 @@ def main() -> None:
     pad = [np.zeros_like(tiles[0])] * (-len(tiles) % cols)
     grid = np.concatenate([np.concatenate((tiles + pad)[i:i + cols], axis=1) for i in range(0, len(tiles + pad), cols)], axis=0)
     to_pil(grid).save(a.out / "cases.png")
-    (a.out / "report.json").write_text(json.dumps(rows, indent=2))
+    if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8")
+        except Exception:
+            pass
+    (a.out / "report.json").write_text(json.dumps(rows, indent=2), encoding="utf-8")
     md = ["# P5B before/after report (SYNTHETIC images)\n",
           "> Thresholds were set while looking at images like these. A flag on its own degradation is a sanity check, not a detection rate. "
           "This says nothing about real SD-Turbo output. `cases.png` shows before (left) / after (right) per case.\n",
@@ -98,8 +103,8 @@ def main() -> None:
                         if r["metrics_before"][k] != r["metrics_after"][k]) or "unchanged"
         sup = f" (suppressed: {', '.join(r['suppressed'])})" if r["suppressed"] else ""
         md.append(f"| {r['case']} | {', '.join(r['flags_before']) or '-'}{sup} | {steps} | {', '.join(r['flags_after']) or '-'} | {key} |")
-    (a.out / "report.md").write_text("\n".join(md) + "\n")
-    print((a.out / "report.md").read_text())
+    (a.out / "report.md").write_text("\n".join(md) + "\n", encoding="utf-8")
+    print((a.out / "report.md").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

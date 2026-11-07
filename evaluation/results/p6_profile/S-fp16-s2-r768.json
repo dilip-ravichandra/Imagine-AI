@@ -1,0 +1,198 @@
+{
+ "schema": "p4_experiment_result/1",
+ "experiment": {
+  "id": "S-fp16-s2-r768",
+  "title": "Sweep: fp16, 2 step(s), 768px",
+  "hypothesis": "Profile point for the adaptive controller (measurement only).",
+  "combined": true,
+  "changed_fields": [
+   "precision",
+   "steps",
+   "resolution"
+  ],
+  "config": {
+   "precision": "fp16",
+   "steps": 2,
+   "resolution": 768,
+   "attention_slicing": false,
+   "vae_slicing": false,
+   "offload": "none"
+  }
+ },
+ "environment": {
+  "python": "3.12.10",
+  "os": "Windows-11-10.0.26300-SP0",
+  "torch": "2.11.0+cu128",
+  "diffusers": "0.42.1",
+  "transformers": "5.22.2",
+  "cuda_runtime": "12.8",
+  "gpu_name": "NVIDIA GeForce RTX 5050 Laptop GPU",
+  "gpu_total_vram_mb": 8150.5625,
+  "model_id": "stabilityai/sd-turbo",
+  "model_revision": "b261bac6fd2cf515557d5d0707481eafa0485ec2"
+ },
+ "protocol": {
+  "prompt_ids": [
+   "simple-01",
+   "multi-01",
+   "attr-01",
+   "rel-01",
+   "scene-01",
+   "long-01"
+  ],
+  "seeds": [
+   1234,
+   5678
+  ],
+  "repeats": 1,
+  "warmup": 1,
+  "resolution": 768,
+  "steps": 2,
+  "latency_definition": "wall time of engine.generate() incl. text encode, denoise, VAE decode, CUDA sync; excludes PNG save, model load, CLIP scoring",
+  "memory_definition": "torch.cuda peak allocated/reserved since reset after warm-up; process RAM = peak working set since process start"
+ },
+ "status": "ok",
+ "error": null,
+ "model_load_ms": 2924.085799997556,
+ "load_info": {
+  "device": "cuda",
+  "precision": "fp16",
+  "weights_variant": "fp16",
+  "optimizations": [
+   "precision=fp16"
+  ]
+ },
+ "generation_seen": {
+  "model": "stabilityai/sd-turbo",
+  "model_revision": "b261bac6fd2cf515557d5d0707481eafa0485ec2",
+  "precision": "fp16",
+  "scheduler": "EulerDiscreteScheduler(timestep_spacing=trailing)",
+  "steps": 2,
+  "width": 768,
+  "height": 768
+ },
+ "gpu_after_load": 2478.177734375,
+ "runs": [
+  {
+   "prompt_id": "simple-01",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 659.4809000089299,
+   "peak_gpu_mb": 3857.80517578125
+  },
+  {
+   "prompt_id": "simple-01",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 648.2138999999734,
+   "peak_gpu_mb": 3857.80517578125
+  },
+  {
+   "prompt_id": "multi-01",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 638.431599989417,
+   "peak_gpu_mb": 3857.80517578125
+  },
+  {
+   "prompt_id": "multi-01",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 639.8480999923777,
+   "peak_gpu_mb": 3857.80517578125
+  },
+  {
+   "prompt_id": "attr-01",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 636.8693999975221,
+   "peak_gpu_mb": 3857.80517578125
+  },
+  {
+   "prompt_id": "attr-01",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 639.269500010414,
+   "peak_gpu_mb": 3857.80517578125
+  },
+  {
+   "prompt_id": "rel-01",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 643.4651000017766,
+   "peak_gpu_mb": 3857.80517578125
+  },
+  {
+   "prompt_id": "rel-01",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 644.3646999978228,
+   "peak_gpu_mb": 3857.80517578125
+  },
+  {
+   "prompt_id": "scene-01",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 652.4868000124115,
+   "peak_gpu_mb": 3857.80517578125
+  },
+  {
+   "prompt_id": "scene-01",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 651.6659000044456,
+   "peak_gpu_mb": 3857.80517578125
+  },
+  {
+   "prompt_id": "long-01",
+   "seed": 1234,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 644.5354000024963,
+   "peak_gpu_mb": 3857.80517578125
+  },
+  {
+   "prompt_id": "long-01",
+   "seed": 5678,
+   "repeat": 0,
+   "status": "ok",
+   "total_ms": 643.5467000119388,
+   "peak_gpu_mb": 3857.80517578125
+  }
+ ],
+ "summary": {
+  "n_ok": 12,
+  "n_failed": 0,
+  "latency_ms": {
+   "n": 12,
+   "mean": 645.1815000024604,
+   "median": 643.9557000048808,
+   "stdev": 6.700308036281513,
+   "min": 636.8693999975221,
+   "max": 659.4809000089299,
+   "p95": 659.4809000089299
+  },
+  "peak_allocated_mb": {
+   "n": 12,
+   "mean": 3857.80517578125,
+   "median": 3857.80517578125,
+   "stdev": 0.0,
+   "min": 3857.80517578125,
+   "max": 3857.80517578125,
+   "p95": 3857.80517578125
+  },
+  "peak_reserved_mb_experiment": 5110.0,
+  "peak_process_ram_mb": 2446.359375,
+  "clip_score": null
+ }
+}
