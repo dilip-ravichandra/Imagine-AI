@@ -22,6 +22,11 @@ from ai_engine.prompt.suite import load_suite  # noqa: E402
 
 
 def main(argv=None) -> int:
+    if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8")
+        except Exception:
+            pass
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default=str(ROOT / "evaluation" / "results" / "p7"))
     ap.add_argument("--out-dir", default=str(ROOT / "evaluation" / "reports"))

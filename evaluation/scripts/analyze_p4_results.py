@@ -15,6 +15,11 @@ from ai_engine.optimization.report import build_report, render_markdown  # noqa:
 
 
 def main(argv=None) -> int:
+    if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8")
+        except Exception:
+            pass
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default=str(ROOT / "evaluation" / "results" / "p4"))
     ap.add_argument("--out-dir", default=str(ROOT / "evaluation" / "reports"))

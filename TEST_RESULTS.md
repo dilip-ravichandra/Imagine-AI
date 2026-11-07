@@ -2,7 +2,15 @@
 | Command | Status | Notes |
 |---|---|---|
 | `python -m pytest -q` | PASSED | **698 passed, 1 skipped** in 15.74s (all unit, integration, and safety tests passed on Windows) |
-| `python -m pytest tests/test_real_model_smoke.py -s -m real_model` | PASSED | **1 passed** in 316.89s (model download + load + 2 generation runs) |
+| `python -m pytest tests/test_real_model_smoke.py -s -m real_model` | PASSED | **1 passed** in 316.89s (model download + load + 2 generation runs; warm latency **323.8 ms**) |
+| `python evaluation/scripts/run_p4_benchmarks.py --all --clip` | PASSED | **8/8 experiments measured**; B0 (866 ms) -> C1 (288 ms, 3.01x speedup, -2.8 GB VRAM); **P4 gate MET** |
+| `python evaluation/scripts/analyze_p4_results.py` | PASSED | Generated `p4_quality_cost_table.md` and `.json` |
+| `python evaluation/scripts/run_p6_profile_sweep.py --all` | PASSED | **30/30 configurations measured** across resolutions (256-768px), precisions (fp16/fp32), steps (1-4s) |
+| `python evaluation/scripts/build_adaptive_profile.py` | PASSED | Built `profile_NVIDIA_GeForce_RTX_5050_Laptop_GPU.json` with **38 real measured entries** |
+| `python evaluation/scripts/report_cv_p5b.py` | PASSED | Evaluated classical CV filters & artifact corrections; generated `report.md`, `report.json`, `cases.png` |
+| `python evaluation/scripts/run_p7_eval.py --all --clip` | PASSED | **6/6 runnable variants measured** on 20 hold-out prompts x 3 seeds (120 gens/variant); **P7 gate MET** |
+| `python evaluation/scripts/analyze_p7_results.py` | PASSED | Generated `p7_report.md`, `p7_report.json`, `p7_runs.csv`, `p7_human_review.csv`, `p7_quality_cost.png` |
+| Live `uvicorn` backend startup & REST probe | PASSED | Probed `/health`, `/api/v1/capabilities`, `/api/v1/model` with real adaptive profile |
 
 ### P1A Real SD-Turbo Generation Output (512x512, 2 steps, fp16, seed 42)
 ```json
