@@ -13,12 +13,21 @@ from PIL import Image
 log = logging.getLogger("imagineai.multimodel")
 
 _PIPELINES = {}
+_CURRENT_MODEL_ON_GPU = None
 
 def get_pipeline(model_choice: str):
+    global _CURRENT_MODEL_ON_GPU
     import torch
     from diffusers import StableDiffusionPipeline, LCMScheduler, AutoPipelineForText2Image
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
+
+    if device == "cuda" and _CURRENT_MODEL_ON_GPU and _CURRENT_MODEL_ON_GPU != model_choice:
+        if _CURRENT_MODEL_ON_GPU in _PIPELINES:
+            log.info("Offloading previous model '%s' to CPU to free VRAM...", _CURRENT_MODEL_ON_GPU)
+            _PIPELINES[_CURRENT_MODEL_ON_GPU].to("cpu")
+            torch.cuda.empty_cache()
+            _CURRENT_MODEL_ON_GPU = None
 
     if model_choice == "sd_turbo":
         if "sd_turbo" not in _PIPELINES:
@@ -29,9 +38,11 @@ def get_pipeline(model_choice: str):
                 variant="fp16",
                 local_files_only=True,
                 safety_checker=None
-            ).to(device)
+            )
             _PIPELINES["sd_turbo"] = pipe
-        return _PIPELINES["sd_turbo"], device, "fp16", 2, 0.0
+        pipe = _PIPELINES["sd_turbo"].to(device)
+        _CURRENT_MODEL_ON_GPU = "sd_turbo"
+        return pipe, device, "fp16", 2, 0.0
 
     elif model_choice == "sd15_optimized":
         if "sd15_optimized" not in _PIPELINES:
@@ -41,11 +52,13 @@ def get_pipeline(model_choice: str):
                 torch_dtype=torch.float16,
                 local_files_only=True,
                 safety_checker=None
-            ).to(device)
+            )
             pipe.load_lora_weights("latent-consistency/lcm-lora-sdv1-5")
             pipe.scheduler = LCMScheduler.from_config(pipe.scheduler.config)
             _PIPELINES["sd15_optimized"] = pipe
-        return _PIPELINES["sd15_optimized"], device, "fp16", 8, 1.5
+        pipe = _PIPELINES["sd15_optimized"].to(device)
+        _CURRENT_MODEL_ON_GPU = "sd15_optimized"
+        return pipe, device, "fp16", 8, 1.5
 
     elif model_choice == "sd15_adapted":
         if "sd15_adapted" not in _PIPELINES:
@@ -55,10 +68,12 @@ def get_pipeline(model_choice: str):
                 torch_dtype=torch.float32,
                 local_files_only=True,
                 safety_checker=None
-            ).to(device)
+            )
             pipe.load_lora_weights("latent-consistency/lcm-lora-sdv1-5")
             _PIPELINES["sd15_adapted"] = pipe
-        return _PIPELINES["sd15_adapted"], device, "fp32", 30, 7.5
+        pipe = _PIPELINES["sd15_adapted"].to(device)
+        _CURRENT_MODEL_ON_GPU = "sd15_adapted"
+        return pipe, device, "fp32", 30, 7.5
 
     else:  # sd15_baseline
         if "sd15_baseline" not in _PIPELINES:
@@ -68,9 +83,11 @@ def get_pipeline(model_choice: str):
                 torch_dtype=torch.float32,
                 local_files_only=True,
                 safety_checker=None
-            ).to(device)
+            )
             _PIPELINES["sd15_baseline"] = pipe
-        return _PIPELINES["sd15_baseline"], device, "fp32", 30, 7.5
+        pipe = _PIPELINES["sd15_baseline"].to(device)
+        _CURRENT_MODEL_ON_GPU = "sd15_baseline"
+        return pipe, device, "fp32", 30, 7.5
 
 
 def generate_with_model(

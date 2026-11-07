@@ -405,6 +405,7 @@ function initStressLab() {
   function update() {
     const latBudget = parseInt(latSlider.value, 10);
     const vramBudget = parseInt(vramSlider.value, 10);
+    const modelChoice = modelSelect ? modelSelect.value : 'sd_turbo';
 
     latVal.textContent = `${latBudget} ms`;
     vramVal.textContent = `${vramBudget} MB`;
@@ -419,33 +420,70 @@ function initStressLab() {
     let predVram = 3678;
     let activeLadderIdx = 0;
 
-    if (latBudget < 120 || vramBudget < 2000) {
-      // Step 4: Classical Downsampling (128px + Bicubic Upscale)
-      chosenRes = 128;
-      chosenSteps = 1;
-      predLat = 65;
-      predVram = 1450;
-      activeLadderIdx = 3;
-    } else if (latBudget < 200 || vramBudget < 2800) {
-      // Step 3: Spatial Rescaling (256px, 1 step)
-      chosenRes = 256;
-      chosenSteps = 1;
-      predLat = 120;
-      predVram = 2100;
-      activeLadderIdx = 2;
-    } else if (latBudget < 300 || vramBudget < 3800) {
-      // Step 2: Step Throttling (512px, 1 step)
+    if (modelChoice === 'sd_turbo') {
+      if (latBudget < 120 || vramBudget < 2000) {
+        // Step 4: Classical Downsampling (128px + Bicubic Upscale)
+        chosenRes = 128;
+        chosenSteps = 1;
+        predLat = 65;
+        predVram = 1450;
+        activeLadderIdx = 3;
+      } else if (latBudget < 200 || vramBudget < 2800) {
+        // Step 3: Spatial Rescaling (256px, 1 step)
+        chosenRes = 256;
+        chosenSteps = 1;
+        predLat = 120;
+        predVram = 2100;
+        activeLadderIdx = 2;
+      } else if (latBudget < 300 || vramBudget < 3800) {
+        // Step 2: Step Throttling (512px, 1 step)
+        chosenRes = 512;
+        chosenSteps = 1;
+        predLat = 180;
+        predVram = 3678;
+        activeLadderIdx = 1;
+      } else {
+        // Step 1: Optimal Combined Default (512px, 2-4 steps)
+        chosenRes = 512;
+        chosenSteps = (latBudget >= 1000 && vramBudget >= 5000) ? 4 : 2;
+        predLat = chosenSteps === 4 ? 485 : 288;
+        predVram = 3678;
+        activeLadderIdx = 0;
+      }
+    } else if (modelChoice === 'sd15_optimized') {
+      chosenPrec = 'fp16';
+      if (latBudget < 500 || vramBudget < 2500) {
+        chosenRes = 256;
+        chosenSteps = 4;
+        predLat = 450;
+        predVram = 2200;
+        activeLadderIdx = 2;
+      } else if (latBudget < 1200 || vramBudget < 3400) {
+        chosenRes = 512;
+        chosenSteps = 4;
+        predLat = 850;
+        predVram = 3408;
+        activeLadderIdx = 1;
+      } else {
+        chosenRes = 512;
+        chosenSteps = 8;
+        predLat = 1647;
+        predVram = 3408;
+        activeLadderIdx = 0;
+      }
+    } else if (modelChoice === 'sd15_adapted') {
+      chosenPrec = 'fp32';
       chosenRes = 512;
-      chosenSteps = 1;
-      predLat = 180;
-      predVram = 3678;
-      activeLadderIdx = 1;
-    } else {
-      // Step 1: Optimal Combined Default (512px, 2 steps)
+      chosenSteps = 30;
+      predLat = 11858;
+      predVram = 5906;
+      activeLadderIdx = 0;
+    } else { // sd15_baseline
+      chosenPrec = 'fp32';
       chosenRes = 512;
-      chosenSteps = 2;
-      predLat = 288;
-      predVram = 3678;
+      chosenSteps = 30;
+      predLat = 12430;
+      predVram = 5645;
       activeLadderIdx = 0;
     }
 
@@ -480,6 +518,7 @@ function initStressLab() {
 
   latSlider.addEventListener('input', update);
   vramSlider.addEventListener('input', update);
+  if (modelSelect) modelSelect.addEventListener('change', update);
   update();
 
   if (stressBtn) {
