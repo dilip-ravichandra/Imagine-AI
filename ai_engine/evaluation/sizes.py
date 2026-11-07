@@ -37,7 +37,7 @@ def size_report(model_dir: Optional[Path] = None, adapter_path: Optional[Path] =
     if model_dir is not None and Path(model_dir).exists():
         d = Path(model_dir)
         rep["base_total_dir_bytes"] = path_size_bytes(d)
-        rep["base_weight_files"] = {str(f.relative_to(d)): f.stat().st_size
+        rep["base_weight_files"] = {f.relative_to(d).as_posix(): f.stat().st_size
                                     for f in sorted(d.rglob("*")) if f.is_file() and f.suffix in WEIGHT_SUFFIXES}
     if adapter_path is not None and Path(adapter_path).exists():
         rep["adapter_bytes"] = path_size_bytes(Path(adapter_path))
