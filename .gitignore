@@ -24,6 +24,7 @@ android/local.properties
 evaluation/results/p4/images/
 evaluation/results/p6_profile/images/
 evaluation/results/p7/images/
+scratch_*.py
 
 # P3A adaptation (images are third-party data; adapters are large and licence-bound)
 training_data/

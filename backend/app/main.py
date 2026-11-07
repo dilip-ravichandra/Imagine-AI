@@ -183,6 +183,100 @@ def create_app(engine: Optional[DiffusionEngine] = None, settings: Optional[Sett
             "peak_gpu_mb": res["peak_vram_mb"]
         }
 
+    class StressGenerateRequest(BaseModel):
+        prompt: str = Field(min_length=1, max_length=500)
+        latency_budget_ms: int = Field(default=300, ge=50, le=20000)
+        vram_budget_mb: int = Field(default=4096, ge=1024, le=16384)
+        model_choice: Optional[str] = Field(default="sd_turbo")
+        seed: Optional[int] = None
+
+    @app.post("/api/v1/adaptive/stress-generate")
+    def stress_generate(req: StressGenerateRequest, request: Request):
+        """Simulates real-time hardware budget stress and runs adaptive generation."""
+        model_choice = req.model_choice or "sd_turbo"
+        upscale_bicubic = False
+
+        if model_choice == "sd_turbo":
+            # Dynamic fallback ladder logic based on empirical profile constraints
+            if req.latency_budget_ms < 120 or req.vram_budget_mb < 2000:
+                chosen_res = 128
+                chosen_steps = 1
+                ladder_step = 4
+                ladder_name = "Classical Rescaling (128px, 1 step + Bicubic Upscale)"
+                expl = f"Ultra-strict constraint ({req.latency_budget_ms} ms budget, {req.vram_budget_mb} MB VRAM): Controller fell back to Ladder Step 4 (128px generation + bicubic upscale) to guarantee sub-100ms response under extreme hardware starvation."
+                upscale_bicubic = True
+            elif req.latency_budget_ms < 200 or req.vram_budget_mb < 2800:
+                chosen_res = 256
+                chosen_steps = 1
+                ladder_step = 3
+                ladder_name = "Spatial Rescaling (256px, 1 step)"
+                expl = f"Strict constraint ({req.latency_budget_ms} ms budget, {req.vram_budget_mb} MB VRAM): Controller stepped down resolution to 256x256 at 1 step (Ladder Step 3) to prevent timeout and avoid OOM."
+            elif req.latency_budget_ms < 300 or req.vram_budget_mb < 3800:
+                chosen_res = 512
+                chosen_steps = 1
+                ladder_step = 2
+                ladder_name = "Step Throttling (512px, 1 step)"
+                expl = f"Moderate latency constraint ({req.latency_budget_ms} ms budget): Controller reduced denoising steps to 1 step at 512x512 (Ladder Step 2) achieving sub-200ms latency."
+            elif req.latency_budget_ms >= 600 and req.vram_budget_mb >= 5000:
+                chosen_res = 512
+                chosen_steps = 4
+                ladder_step = 1
+                ladder_name = "Quality Mode (512px, 4 steps)"
+                expl = f"Relaxed budget ({req.latency_budget_ms} ms budget, {req.vram_budget_mb} MB VRAM): Controller expanded denoising to 4 steps for optimal structural quality."
+            else:
+                chosen_res = 512
+                chosen_steps = 2
+                ladder_step = 1
+                ladder_name = "Standard Combined (512px, 2 steps)"
+                expl = f"Balanced budget ({req.latency_budget_ms} ms budget, {req.vram_budget_mb} MB VRAM): Controller selected optimal 512x512 with 2 steps (Ladder Step 1). No fallback required."
+        else:
+            if req.latency_budget_ms < 1000 or req.vram_budget_mb < 2500:
+                chosen_res = 256
+                chosen_steps = 4 if "sd15" in model_choice else 1
+                ladder_step = 3
+                ladder_name = "Spatial Fallback (256px)"
+                expl = f"Constrained budget ({req.latency_budget_ms} ms, {req.vram_budget_mb} MB VRAM): Controller downscaled resolution to 256x256 to fit memory envelope."
+            elif req.latency_budget_ms < 2500 or req.vram_budget_mb < 4000:
+                chosen_res = 512
+                chosen_steps = 8 if model_choice == "sd15_optimized" else 15
+                ladder_step = 2
+                ladder_name = "Step Throttling"
+                expl = f"Moderate latency budget ({req.latency_budget_ms} ms): Throttled denoising steps to fit execution threshold."
+            else:
+                chosen_res = 512
+                chosen_steps = 8 if model_choice == "sd15_optimized" else 30
+                ladder_step = 1
+                ladder_name = "Full Quality Mode"
+                expl = f"Adequate budget ({req.latency_budget_ms} ms, {req.vram_budget_mb} MB VRAM): Full quality pipeline configuration selected."
+
+        rid = uuid.uuid4().hex
+        res = generate_with_model(req.prompt, model_choice, req.seed, chosen_res, chosen_steps)
+        img = res["image"]
+        if upscale_bicubic:
+            from PIL import Image
+            img = img.resize((512, 512), Image.BICUBIC)
+
+        image_name = store.save(img, rid)
+        base = str(request.base_url).rstrip("/")
+
+        return {
+            "status": "success",
+            "request_id": rid,
+            "image_url": f"{base}/images/{image_name}",
+            "executed_latency_ms": round(res["latency_ms"], 1),
+            "latency_budget_ms": req.latency_budget_ms,
+            "budget_met": bool(res["latency_ms"] <= req.latency_budget_ms),
+            "peak_vram_mb": round(res["peak_vram_mb"], 1),
+            "vram_budget_mb": req.vram_budget_mb,
+            "chosen_resolution": chosen_res,
+            "chosen_steps": chosen_steps,
+            "chosen_precision": res["precision"],
+            "ladder_step": ladder_step,
+            "ladder_name": ladder_name,
+            "explanation": expl,
+            "model_choice": model_choice
+        }
+
     return app
 
 

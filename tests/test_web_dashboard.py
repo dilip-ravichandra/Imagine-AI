@@ -42,3 +42,46 @@ def test_sd15_comparison(client):
     assert data["baseline"]["steps"] == 30
     assert data["optimized"]["steps"] == 8
     assert data["optimized"]["precision"] == "fp16"
+
+
+def test_stress_generate_adaptive_ladder(client):
+    from unittest.mock import patch
+    from PIL import Image
+
+    dummy_img = Image.new("RGB", (128, 128), color="red")
+    with patch("backend.app.main.generate_with_model") as mock_gen:
+        mock_gen.return_value = {
+            "image": dummy_img,
+            "latency_ms": 95.0,
+            "peak_vram_mb": 1400.0,
+            "precision": "fp16"
+        }
+
+        # Test tight constraints triggering ladder step 4
+        tight_payload = {
+            "prompt": "neon cyber drone",
+            "latency_budget_ms": 100,
+            "vram_budget_mb": 1800,
+            "model_choice": "sd_turbo"
+        }
+        r = client.post("/api/v1/adaptive/stress-generate", json=tight_payload)
+        assert r.status_code == 200
+        d = r.json()
+        assert d["ladder_step"] == 4
+        assert d["budget_met"] is True  # 95 <= 100
+        assert "Classical Rescaling" in d["ladder_name"]
+        assert "image_url" in d
+
+        # Test standard budget triggering ladder step 1
+        standard_payload = {
+            "prompt": "mountain landscape at sunrise",
+            "latency_budget_ms": 400,
+            "vram_budget_mb": 4096,
+            "model_choice": "sd_turbo"
+        }
+        r2 = client.post("/api/v1/adaptive/stress-generate", json=standard_payload)
+        assert r2.status_code == 200
+        d2 = r2.json()
+        assert d2["ladder_step"] == 1
+        assert d2["chosen_steps"] == 2
+        assert d2["chosen_resolution"] == 512

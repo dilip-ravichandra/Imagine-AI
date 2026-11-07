@@ -388,6 +388,20 @@ function initStressLab() {
   const vramStat = document.getElementById('vram-budget-stat');
   const ladderItems = document.querySelectorAll('.ladder-step');
 
+  const stressBtn = document.getElementById('stress-generate-btn');
+  const promptInput = document.getElementById('stress-prompt-input');
+  const modelSelect = document.getElementById('stress-model-select');
+  const placeholder = document.getElementById('stress-placeholder');
+  const loader = document.getElementById('stress-loader');
+  const resultImg = document.getElementById('stress-result-img');
+  const timerSpan = document.getElementById('stress-timer');
+  const execDetails = document.getElementById('stress-execution-details');
+  const execLat = document.getElementById('stress-exec-latency');
+  const execBudgetStatus = document.getElementById('stress-exec-budget-status');
+  const execVram = document.getElementById('stress-exec-vram');
+  const execDecision = document.getElementById('stress-exec-decision');
+  const statusTag = document.getElementById('stress-status-tag');
+
   function update() {
     const latBudget = parseInt(latSlider.value, 10);
     const vramBudget = parseInt(vramSlider.value, 10);
@@ -405,22 +419,29 @@ function initStressLab() {
     let predVram = 3678;
     let activeLadderIdx = 0;
 
-    if (latBudget < 150 || vramBudget < 2500) {
-      // Spatial Rescaling to 256px
+    if (latBudget < 120 || vramBudget < 2000) {
+      // Step 4: Classical Downsampling (128px + Bicubic Upscale)
+      chosenRes = 128;
+      chosenSteps = 1;
+      predLat = 65;
+      predVram = 1450;
+      activeLadderIdx = 3;
+    } else if (latBudget < 200 || vramBudget < 2800) {
+      // Step 3: Spatial Rescaling (256px, 1 step)
       chosenRes = 256;
       chosenSteps = 1;
-      predLat = 86;
+      predLat = 120;
       predVram = 2100;
       activeLadderIdx = 2;
-    } else if (latBudget < 250 || vramBudget < 3600) {
-      // Step Throttling (1 step)
+    } else if (latBudget < 300 || vramBudget < 3800) {
+      // Step 2: Step Throttling (512px, 1 step)
       chosenRes = 512;
       chosenSteps = 1;
       predLat = 180;
       predVram = 3678;
       activeLadderIdx = 1;
     } else {
-      // Optimal Combined Default
+      // Step 1: Optimal Combined Default (512px, 2 steps)
       chosenRes = 512;
       chosenSteps = 2;
       predLat = 288;
@@ -428,7 +449,9 @@ function initStressLab() {
       activeLadderIdx = 0;
     }
 
-    ladderItems[activeLadderIdx].classList.add('active');
+    if (ladderItems[activeLadderIdx]) {
+      ladderItems[activeLadderIdx].classList.add('active');
+    }
 
     stratRes.textContent = `${chosenRes} × ${chosenRes}`;
     stratSteps.textContent = `${chosenSteps} steps`;
@@ -458,6 +481,113 @@ function initStressLab() {
   latSlider.addEventListener('input', update);
   vramSlider.addEventListener('input', update);
   update();
+
+  if (stressBtn) {
+    stressBtn.addEventListener('click', async () => {
+      const prompt = (promptInput && promptInput.value ? promptInput.value : '').trim();
+      if (!prompt) {
+        alert('Please enter a prompt to stress test.');
+        return;
+      }
+
+      const latBudget = parseInt(latSlider.value, 10);
+      const vramBudget = parseInt(vramSlider.value, 10);
+      const modelChoice = modelSelect ? modelSelect.value : 'sd_turbo';
+
+      // UI Loading State
+      stressBtn.disabled = true;
+      stressBtn.innerHTML = '<span>⚡ Running Adaptive Test...</span>';
+      if (placeholder) placeholder.classList.add('hidden');
+      if (resultImg) resultImg.classList.add('hidden');
+      if (execDetails) execDetails.classList.add('hidden');
+      if (loader) loader.classList.remove('hidden');
+      if (statusTag) {
+        statusTag.textContent = 'Generating...';
+        statusTag.className = 'badge badge-hybrid';
+      }
+
+      const start = Date.now();
+      const interval = setInterval(() => {
+        const elapsed = ((Date.now() - start) / 1000).toFixed(2);
+        if (timerSpan) timerSpan.textContent = `${elapsed} s`;
+      }, 50);
+
+      try {
+        const res = await fetch('/api/v1/adaptive/stress-generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: prompt,
+            latency_budget_ms: latBudget,
+            vram_budget_mb: vramBudget,
+            model_choice: modelChoice
+          })
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.detail || `Server error HTTP ${res.status}`);
+        }
+
+        const data = await res.json();
+        clearInterval(interval);
+        if (loader) loader.classList.add('hidden');
+
+        // Render Image
+        if (resultImg) {
+          resultImg.src = data.image_url;
+          resultImg.classList.remove('hidden');
+        }
+
+        // Telemetry details
+        if (execLat) execLat.textContent = `${data.executed_latency_ms} ms (Budget: ${data.latency_budget_ms} ms)`;
+        if (execBudgetStatus) {
+          if (data.budget_met) {
+            execBudgetStatus.innerHTML = `<span class="text-success">✔ Within Budget (${data.executed_latency_ms} ms ≤ ${data.latency_budget_ms} ms)</span>`;
+            if (statusTag) {
+              statusTag.textContent = 'Budget Met ✔';
+              statusTag.className = 'badge badge-classical';
+            }
+          } else {
+            execBudgetStatus.innerHTML = `<span class="text-danger">⚠ Budget Exceeded (${data.executed_latency_ms} ms > ${data.latency_budget_ms} ms)</span>`;
+            if (statusTag) {
+              statusTag.textContent = 'Budget Exceeded ⚠';
+              statusTag.className = 'badge badge-deep';
+            }
+          }
+        }
+
+        if (execVram) execVram.textContent = `${data.peak_vram_mb} MB (Capacity: ${data.vram_budget_mb} MB)`;
+        if (execDecision) execDecision.textContent = `${data.ladder_name} — ${data.explanation}`;
+        if (execDetails) execDetails.classList.remove('hidden');
+
+        // Update active ladder step
+        ladderItems.forEach((item, idx) => {
+          if (idx === (data.ladder_step - 1)) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+
+      } catch (err) {
+        clearInterval(interval);
+        if (loader) loader.classList.add('hidden');
+        if (placeholder) placeholder.classList.remove('hidden');
+        if (statusTag) {
+          statusTag.textContent = 'Error';
+          statusTag.className = 'badge badge-deep';
+        }
+        alert('Stress test generation failed: ' + err.message);
+      } finally {
+        stressBtn.disabled = false;
+        stressBtn.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>⚡ Run Live Adaptive Stress Test</span>
+        `;
+      }
+    });
+  }
 }
 
 // ==================== TAB 4: PIPELINE INSPECTOR ====================

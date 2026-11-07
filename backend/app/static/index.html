@@ -607,6 +607,25 @@
                 <div class="spec-item"><span class="spec-label">OOM Safety Margin:</span> <span id="strat-safety" class="spec-val text-success">+418 MB headroom</span></div>
               </div>
             </div>
+
+            <!-- Live Stress Test Trigger -->
+            <div class="stress-prompt-card" style="margin-top: 16px; background: #0d1117; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px;">
+              <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
+                <label for="stress-model-select" style="font-size: 0.85rem; font-weight: 600; color: #fff; white-space: nowrap;">Target Model:</label>
+                <select id="stress-model-select" style="flex: 1; background: #161b22; border: 1px solid var(--border-muted); border-radius: 4px; padding: 6px 10px; color: #fff; font-size: 0.82rem;">
+                  <option value="sd_turbo" selected>⚡ SD-Turbo (ADD 2-step Distillation Engine)</option>
+                  <option value="sd15_optimized">🚀 SD 1.5 Final Optimized (LCM-LoRA + FP16 + 8 steps)</option>
+                  <option value="sd15_adapted">🧪 SD 1.5 Adapted (LoRA + FP32 + 30 steps)</option>
+                  <option value="sd15_baseline">🏛 SD 1.5 Baseline (Original + FP32 + 30 steps)</option>
+                </select>
+              </div>
+              <label for="stress-prompt-input" style="font-size: 0.85rem; font-weight: 600; color: #fff; display: block; margin-bottom: 6px;">Prompt for Stress Generation</label>
+              <textarea id="stress-prompt-input" rows="2" style="width: 100%; background: #161b22; border: 1px solid var(--border-muted); border-radius: 4px; padding: 10px; color: #fff; font-size: 0.88rem; resize: vertical; margin-bottom: 12px;">A cybernetic cheetah sprinting through a futuristic desert, cinematic</textarea>
+              <button id="stress-generate-btn" class="btn-primary" style="background: linear-gradient(135deg, #1f6feb, #238636);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span>⚡ Run Live Adaptive Stress Test</span>
+              </button>
+            </div>
           </div>
 
           <div class="stress-display">
@@ -637,6 +656,36 @@
                 <li class="ladder-step">3. Spatial Rescaling (256px, fp16, 2 steps) → ~120 ms, 2.10 GB VRAM</li>
                 <li class="ladder-step">4. Classical Downsampling (128px + Bicubic Upscale) → ~65 ms, 1.45 GB VRAM</li>
               </ul>
+            </div>
+
+            <!-- Real-Time Execution Console & Generated Image -->
+            <div class="stress-result-console" style="margin-top: 20px; background: #0d1117; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 18px;">
+              <div class="sub-title" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <span>Live Stress Execution Result</span>
+                <span id="stress-status-tag" class="badge badge-hybrid">Ready</span>
+              </div>
+              
+              <div id="stress-image-container" style="min-height: 260px; background: #161b22; border: 1px dashed var(--border-muted); border-radius: 6px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; margin-bottom: 14px;">
+                <div id="stress-placeholder" style="text-align: center; color: var(--text-dim); padding: 20px;">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 8px;">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                  <p style="font-size: 0.85rem;">Click "Run Live Adaptive Stress Test" to test generation against your chosen budget</p>
+                </div>
+                <div id="stress-loader" class="hidden" style="text-align: center; color: var(--text-muted);">
+                  <div class="spinner"></div>
+                  <p>Evaluating adaptive budget on RTX 5050...</p>
+                  <span id="stress-timer" class="timer">0.00 s</span>
+                </div>
+                <img id="stress-result-img" class="result-image hidden" alt="Adaptive stress test output" style="max-height: 280px; width: auto; object-fit: contain; border-radius: 4px;">
+              </div>
+
+              <div id="stress-execution-details" class="hidden" style="display: flex; flex-direction: column; gap: 8px; font-size: 0.82rem; background: rgba(255,255,255,0.02); padding: 12px; border-radius: 4px;">
+                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-dim);">Execution Time:</span> <span id="stress-exec-latency" class="mono-text highlight-val">-- ms</span></div>
+                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-dim);">Budget Result:</span> <span id="stress-exec-budget-status" class="mono-text">--</span></div>
+                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-dim);">VRAM Allocation:</span> <span id="stress-exec-vram" class="mono-text">-- MB</span></div>
+                <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-dim);">Controller Decision:</span> <span id="stress-exec-decision" class="mono-text" style="color: #79c0ff;">--</span></div>
+              </div>
             </div>
           </div>
         </div>
