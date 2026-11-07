@@ -78,7 +78,7 @@ MODEL_CACHE_DIR = "/root/.cache/huggingface"
     gpu="A10G",
     volumes={MODEL_CACHE_DIR: model_volume},
     timeout=1800,  # 30 min for first-time downloads
-    secrets=[modal.Secret.from_name("imagineai-secrets", required=False)],
+    secrets=[modal.Secret.from_name("imagineai-secrets")],
 )
 def download_models():
     """Pre-warms the model cache volume with SD-Turbo and SD 1.5 weights."""
@@ -127,7 +127,7 @@ def download_models():
     timeout=300,
     # Allow extra time for model loading on cold start
     container_idle_timeout=120,
-    secrets=[modal.Secret.from_name("imagineai-secrets", required=False)],
+    secrets=[modal.Secret.from_name("imagineai-secrets")],
     # Mount the full project source into the container
     mounts=[
         modal.Mount.from_local_dir(
