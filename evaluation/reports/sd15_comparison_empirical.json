@@ -1,0 +1,38 @@
+{
+  "baseline": {
+    "name": "SD 1.5 Baseline (Unchanged)",
+    "precision": "fp32",
+    "steps": 30,
+    "latency_ms": 12429.631299998922,
+    "peak_vram_mb": 5645.02685546875,
+    "clip_score": 0.36825306216875714,
+    "model_size_mb": 4270
+  },
+  "adapted": {
+    "name": "SD 1.5 Adapted (with LoRA)",
+    "precision": "fp32",
+    "steps": 30,
+    "latency_ms": 11857.987800001865,
+    "peak_vram_mb": 5906.07373046875,
+    "clip_score": 0.3351527750492096,
+    "model_size_mb": 4405
+  },
+  "optimized": {
+    "name": "SD 1.5 Final Optimized (LoRA + FP16 + 8 steps)",
+    "precision": "fp16",
+    "steps": 8,
+    "latency_ms": 1647.1069000011387,
+    "peak_vram_mb": 3407.88916015625,
+    "clip_score": 0.32368115584055585,
+    "model_size_mb": 2270
+  },
+  "sd_turbo": {
+    "name": "SD-Turbo ADD Distilled (FP16, 2 steps)",
+    "precision": "fp16",
+    "steps": 2,
+    "latency_ms": 344.88146666262764,
+    "peak_vram_mb": 3677.56396484375,
+    "clip_score": 0.341860294342041,
+    "model_size_mb": 3678
+  }
+}

@@ -258,6 +258,106 @@
           </table>
         </div>
       </div>
+
+      <!-- Dedicated Experiment: SD 1.5 Baseline -> Adapted (LoRA) -> Final Optimized -->
+      <div class="dashboard-panel" style="margin-top: 24px;">
+        <div class="panel-header">
+          <div>
+            <div class="badge badge-hybrid" style="margin-bottom: 6px;">Problem Statement 3 Core Requirement</div>
+            <h2 class="panel-title">SD 1.5 Empirical Progression: Baseline vs Adapted vs Optimized</h2>
+            <p class="panel-description">Evaluating the exact scientific progression: <strong>SD 1.5 Baseline (FP32, 30 steps)</strong> → <strong>SD 1.5 Adapted (LoRA, 30 steps)</strong> → <strong>SD 1.5 Final Optimized (LoRA + FP16 + 8 steps)</strong> alongside <strong>SD-Turbo ADD Distillation</strong> on the NVIDIA GeForce RTX 5050 Laptop GPU.</p>
+          </div>
+        </div>
+
+        <!-- 4-Card Summary for SD 1.5 Progression -->
+        <div class="metrics-grid" style="margin-bottom: 20px;">
+          <div class="metric-card">
+            <div class="metric-label">Baseline (SD 1.5 fp32)</div>
+            <div class="metric-value">12.43 s</div>
+            <div class="metric-subtext">30 steps · 5.65 GB VRAM · CLIP: 0.368</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Adapted (SD 1.5 + LoRA)</div>
+            <div class="metric-value">11.86 s</div>
+            <div class="metric-subtext">30 steps · 5.91 GB VRAM · CLIP: 0.335</div>
+          </div>
+          <div class="metric-card" style="border-color: #3fb950; background: rgba(63, 185, 80, 0.05);">
+            <div class="metric-label" style="color: #7ee787;">Final Optimized (LoRA + fp16 + 8s)</div>
+            <div class="metric-value highlight-val">1.65 s</div>
+            <div class="metric-subtext" style="color: #7ee787;"><strong>7.55× Speedup</strong> · 3.41 GB VRAM (-39.6%) · CLIP: 0.324</div>
+          </div>
+          <div class="metric-card" style="border-color: #58a6ff; background: rgba(56, 139, 253, 0.05);">
+            <div class="metric-label" style="color: #79c0ff;">Distilled Benchmark (SD-Turbo)</div>
+            <div class="metric-value" style="color: #58a6ff;">0.34 s</div>
+            <div class="metric-subtext"><strong>36.0× Speedup</strong> · 2 steps · 3.68 GB VRAM · CLIP: 0.342</div>
+          </div>
+        </div>
+
+        <!-- Chart Graphic -->
+        <div style="margin-bottom: 24px; text-align: center; background: #0d1117; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px;">
+          <img src="/static/sd15_comparison.png" alt="Empirical Comparison Charts: Latency, VRAM, CLIP Score, Steps" style="max-width: 100%; height: auto; border-radius: var(--radius-sm); display: block; margin: 0 auto;">
+        </div>
+
+        <!-- Detailed Empirical Comparison Table -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Model Configuration</th>
+                <th>Sampling Steps</th>
+                <th>Precision</th>
+                <th>Inference Latency</th>
+                <th>Peak GPU VRAM</th>
+                <th>CLIP Score</th>
+                <th>Speedup vs Baseline</th>
+                <th>VRAM Saving</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Baseline:</strong> Stable Diffusion v1.5 (Unchanged)</td>
+                <td>30 steps</td>
+                <td>FP32</td>
+                <td class="mono-text">12,429.6 ms (12.43 s)</td>
+                <td class="mono-text">5,645.0 MB (5.65 GB)</td>
+                <td class="mono-text">0.368</td>
+                <td>1.00× (Reference)</td>
+                <td>0%</td>
+              </tr>
+              <tr>
+                <td><strong>Adapted:</strong> SD 1.5 + Domain LoRA (LCM-LoRA)</td>
+                <td>30 steps</td>
+                <td>FP32</td>
+                <td class="mono-text">11,858.0 ms (11.86 s)</td>
+                <td class="mono-text">5,906.1 MB (5.91 GB)</td>
+                <td class="mono-text">0.335</td>
+                <td>1.05×</td>
+                <td>-4.6% (LoRA overhead)</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>Final Optimized:</strong> SD 1.5 + LoRA + FP16 + LCMScheduler + CV</td>
+                <td><strong>8 steps</strong></td>
+                <td><strong>FP16</strong></td>
+                <td class="mono-text"><strong class="highlight-val">1,647.1 ms (1.65 s)</strong></td>
+                <td class="mono-text"><strong class="highlight-val">3,407.9 MB (3.41 GB)</strong></td>
+                <td class="mono-text"><strong>0.324</strong></td>
+                <td><strong class="highlight-val">7.55× Speedup</strong></td>
+                <td><strong class="highlight-val">-39.6% Reduction</strong></td>
+              </tr>
+              <tr style="background: rgba(56, 139, 253, 0.06);">
+                <td><strong>Distilled Benchmark:</strong> SD-Turbo (ADD 2-Step Architecture)</td>
+                <td><strong>2 steps</strong></td>
+                <td><strong>FP16</strong></td>
+                <td class="mono-text" style="color: #58a6ff;"><strong>344.9 ms (0.34 s)</strong></td>
+                <td class="mono-text" style="color: #58a6ff;"><strong>3,677.6 MB (3.68 GB)</strong></td>
+                <td class="mono-text" style="color: #58a6ff;"><strong>0.342</strong></td>
+                <td><strong style="color: #58a6ff;">36.0× Speedup</strong></td>
+                <td style="color: #58a6ff;"><strong>-34.9% Reduction</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
     <!-- ==================== TAB 1: GENERATE ==================== -->

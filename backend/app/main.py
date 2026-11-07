@@ -145,6 +145,15 @@ def create_app(engine: Optional[DiffusionEngine] = None, settings: Optional[Sett
             }
         }
 
+    @app.get("/api/v1/models/sd15-comparison")
+    def sd15_comparison():
+        """Empirical comparison for SD 1.5 Baseline vs Adapted vs Optimized vs Distilled."""
+        cmp_file = Path("evaluation/reports/sd15_comparison_empirical.json")
+        if cmp_file.exists():
+            import json
+            return json.loads(cmp_file.read_text(encoding="utf-8"))
+        return {"error": "Comparison file not found"}
+
     return app
 
 

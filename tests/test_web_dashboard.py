@@ -29,3 +29,16 @@ def test_metrics_summary(client):
     assert "summary_cards" in data
     assert data["summary_cards"]["best_clip_alignment"] == 0.333
     assert data["summary_cards"]["inference_speedup_x"] == 3.01
+
+
+def test_sd15_comparison(client):
+    r = client.get("/api/v1/models/sd15-comparison")
+    assert r.status_code == 200
+    data = r.json()
+    assert "baseline" in data
+    assert "adapted" in data
+    assert "optimized" in data
+    assert "sd_turbo" in data
+    assert data["baseline"]["steps"] == 30
+    assert data["optimized"]["steps"] == 8
+    assert data["optimized"]["precision"] == "fp16"
